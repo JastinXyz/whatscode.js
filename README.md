@@ -1,5 +1,3 @@
-# README
-
 ## Welcome!
 
 ## Welcome to Whatscode.js Documentation!

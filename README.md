@@ -1,5 +1,3 @@
-## Welcome!
-
 ## Welcome to Whatscode.js Documentation!
 
 Welcome to **whatscode.js**! Here you'll find all the documentation you need to get up and running with the **whatscode.js**.

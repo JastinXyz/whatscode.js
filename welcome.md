@@ -12,12 +12,12 @@ Welcome to **whatscode.js**! Here you'll find all the documentation you need to 
 
 Feeling like an eager beaver? Jump in to the quick start docs and get making your first bot:
 
-{% content-ref url="broken-reference" %}
-[Broken link](broken-reference)
+{% content-ref url="./" %}
+[.](./)
 {% endcontent-ref %}
 
 ## Want to deep dive?
 
 Dive a little deeper and start exploring our functions:
 
-[Functions](reference/functions/)
+​[​](reference/functions/)F

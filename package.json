@@ -1,0 +1,20 @@
+{
+  "name": "whatscode.js",
+  "version": "0.0.1-alpha",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@adiwajshing/baileys": "^4.1.0",
+    "@hapi/boom": "^10.0.0",
+    "axios": "^0.27.2",
+    "fs": "^0.0.1-security",
+    "pino": "^7.11.0",
+    "qrcode-terminal": "^0.12.0",
+  }
+}

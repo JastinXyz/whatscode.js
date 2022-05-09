@@ -1,8 +1,9 @@
 # Table of contents
 
 * [Quick Starts](README.md)
-* [README](welcome.md)
+* [README](readme-1.md)
 
-## Group 1
+## References
 
-* [Page 1](group-1/page-1.md)
+* [Page 2](references/page-2.md)
+* [Page 1](references/page-1.md)

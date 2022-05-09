@@ -1,4 +1,4 @@
-const { searchFunc } = require("./models/functions.js");
+//const { searchFunc } = require("./models/functions.js");
 const fs = require("fs");
 
 module.exports = async (code, msg, client, args) => {
@@ -7,8 +7,24 @@ module.exports = async (code, msg, client, args) => {
     parse = fs.readdirSync("src/functions/all"),
     f;
 
+let searched = []
+    function searchFunc(_n, _p) {
+      for (const f of _n) {
+        const func = _p.filter((filt) => filt == ("$" + f).slice(0, filt.length));
+
+        if (func.length == 1) {
+          searched.push(func[0]);
+        } else if (func.length > 1) {
+          searched.push(func.sort((a, b) => b.length - a.length)[0]);
+        }
+      }
+
+      return searched;
+    }
+
   var theFuncs = searchFunc(code.split("$"), parser);
-  for (const func of theFuncs) {
+  //console.log(theFuncs)
+  for (const func of theFuncs.reverse()) {
     var _iOne = code.split(`${func}[`)[1]
     if(!_iOne) {
       _iOne = ""

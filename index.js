@@ -1,6 +1,7 @@
-const Client = require('./src/client.js')
+const Client = require("./src/client.js");
 
 var Bot = {
-    Client: Client
-}
+  Client: Client,
+};
+
 module.exports = Bot;

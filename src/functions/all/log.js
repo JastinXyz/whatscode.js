@@ -1,4 +1,4 @@
 module.exports = async (d) => {
-  console.log(d.data[0].inside)
-  return "";
+  const inside = d.code.split("$log[")[1].split("]")[0]
+  return console.log(inside);
 };

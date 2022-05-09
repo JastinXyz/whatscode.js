@@ -1,5 +1,3 @@
-// todo: add the code to check if the bot is admin or not.
-
 module.exports = async (d) => {
   const split = d.code.split("$inviteCode").length - 1
   const after = d.code.split("$inviteCode")[split]

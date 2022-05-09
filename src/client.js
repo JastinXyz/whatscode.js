@@ -27,6 +27,7 @@ module.exports = class Client {
 
     this.NAME = opts.name;
     this.PREFIX = opts.prefix;
+    this.autoRead = opts.autoRead;
     this.CMD = new Map();
 
     this.printQRInTerminal = opts.printQRInTerminal;
@@ -57,7 +58,7 @@ module.exports = class Client {
           ? new Boom(lastDisconnect)?.output.statusCode
           : 0;
         if (reason === DisconnectReason.badSession) {
-          console.log(`Bad Session File, Please Delete Session and Scan Again`);
+          console.log(`Bad Session File, Please Delete Session and Scan Again or try restart again.`);
         } else if (reason === DisconnectReason.connectionClosed) {
           console.log("Connection closed, reconnecting....");
         } else if (reason === DisconnectReason.connectionLost) {
@@ -90,6 +91,10 @@ module.exports = class Client {
   }
   onMessage() {
     this.whats.ev.on("messages.upsert", async (m) => {
+      if(this.autoRead) {
+        this.whats.sendReadReceipt(m.messages[0].key.remoteJid, m.messages[0].key.participant, [m.messages[0].key.id]);
+      }
+
       await require("./handler/commands.js")(
         m,
         this.whats,
@@ -101,8 +106,8 @@ module.exports = class Client {
   }
   command(...args) {
     for (const w of args) {
-      if (!w.name) throw new TypeError(`name required in commands!`);
-      if (!w.code) throw new TypeError(`code required in commands!`);
+      if (!w.name) throw new Error(`name required in commands!`);
+      if (!w.code) throw new Error(`code required in commands!`);
 
       this.CMD.set(w.name.toLowerCase(), w.code);
     }

@@ -1,6 +1,6 @@
 {
   "name": "whatscode.js",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1-beta",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,8 +13,9 @@
     "@adiwajshing/baileys": "^4.1.0",
     "@hapi/boom": "^10.0.0",
     "axios": "^0.27.2",
+    "deep-weak-map": "^1.1.0",
     "fs": "^0.0.1-security",
     "pino": "^7.11.0",
-    "qrcode-terminal": "^0.12.0",
+    "qrcode-terminal": "^0.12.0"
   }
 }

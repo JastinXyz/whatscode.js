@@ -14,3 +14,5 @@
   * [$ping](references/functions/usdping.md)
   * [$ram](references/functions/usdram.md)
   * [$remoteJid](references/functions/usdremotejid.md)
+  * [$reply](references/functions/usdreply.md)
+  * [$status](references/functions/usdstatus.md)

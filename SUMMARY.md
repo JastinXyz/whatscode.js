@@ -5,5 +5,10 @@
 
 ## References
 
-* [Functions](references/functions/README.md)
+* [Functions](references/page-2.md)
   * [$boolean](references/functions/usdboolean.md)
+  * [$inviteCode](references/functions/usdinvitecode.md)
+  * [$isGroup](references/functions/usdisgroup.md)
+  * [$log](references/functions/usdlog.md)
+  * [$message](references/functions/usdmessage.md)
+  * [$ping](references/functions/usdping.md)

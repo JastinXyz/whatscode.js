@@ -5,6 +5,8 @@
 
 ## References
 
+* [Guides](references/guides/README.md)
+  * [Command Handler](references/guides/command-handler.md)
 * [Functions](references/page-2.md)
   * [$boolean](references/functions/usdboolean.md)
   * [$inviteCode](references/functions/usdinvitecode.md)

@@ -12,3 +12,5 @@
   * [$log](references/functions/usdlog.md)
   * [$message](references/functions/usdmessage.md)
   * [$ping](references/functions/usdping.md)
+  * [$ram](references/functions/usdram.md)
+  * [$remoteJid](references/functions/usdremotejid.md)

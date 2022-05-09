@@ -1,7 +1,7 @@
 # Table of contents
 
-* [Quick Starts](README.md)
-* [README](readme-1.md)
+* [Welcome!](README.md)
+* [Quick Starts](quick-starts.md)
 
 ## References
 

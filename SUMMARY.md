@@ -5,5 +5,5 @@
 
 ## References
 
-* [Page 2](references/page-2.md)
-* [Page 1](references/page-1.md)
+* [Functions](references/functions/README.md)
+  * [$boolean](references/functions/usdboolean.md)

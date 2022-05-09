@@ -1,4 +1,4 @@
-# Quick Starts
+# Welcome!
 
 ### Welcome to Whatscode.js Documentation!
 
@@ -10,11 +10,14 @@ Welcome to **whatscode.js**! Here you'll find all the documentation you need to 
 
 Feeling like an eager beaver? Jump in to the quick start docs and get making your first bot:
 
-{% content-ref url="./" %}
-[.](./)
+{% content-ref url="readme-1.md" %}
+[readme-1.md](readme-1.md)
 {% endcontent-ref %}
 
 ### Want to deep dive?
 
 Dive a little deeper and start exploring our functions:
 
+{% content-ref url="references/functions/" %}
+[functions](references/functions/)
+{% endcontent-ref %}

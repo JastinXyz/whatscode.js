@@ -14,6 +14,7 @@
   * [$inviteCode](references/functions/usdinvitecode.md)
   * [$isAdmin](references/functions/usdisadmin.md)
   * [$isGroup](references/functions/usdisgroup.md)
+  * [$jsEval](references/functions/usdjseval.md)
   * [$log](references/functions/usdlog.md)
   * [$message](references/functions/usdmessage.md)
   * [$ping](references/functions/usdping.md)
@@ -21,3 +22,4 @@
   * [$remoteJid](references/functions/usdremotejid.md)
   * [$reply](references/functions/usdreply.md)
   * [$status](references/functions/usdstatus.md)
+  * [$uptime](references/functions/usduptime.md)

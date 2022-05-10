@@ -4,7 +4,7 @@ const fs = require("fs");
 module.exports = async (code, msg, client, args) => {
   var data = [],
     parser = require("./functions/parser.js"),
-    parse = fs.readdirSync("src/functions/all"),
+    //parse = fs.readdirSync("src/functions/all"),
     f;
 
 let searched = []

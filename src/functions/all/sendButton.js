@@ -10,10 +10,10 @@ module.exports = async (d) => {
 
   const buttonMessage = {
     text: text,
-    buttons: { buttonId: id, buttonText: { displayText: dtext }, type: 1 },
+    buttons: [{ buttonId: id, buttonText: { displayText: dtext }, type: 1 }],
     footer: foot,
     headerType: 1,
   };
 
-  return buttonMessage;
+  return JSON.stringify(buttonMessage);
 };

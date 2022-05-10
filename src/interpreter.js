@@ -50,6 +50,12 @@ let searched = []
     })
   ) {
     await client.sendMessage(msg.key.remoteJid, {text: code}, { quoted: msg });
+  } else if (
+    ["$reply"].some(function (v) {
+      return theFuncs.indexOf(v) >= 0;
+    })
+  ) {
+    await client.sendMessage(msg.key.remoteJid, code);
   } else {
     await client.sendMessage(msg.key.remoteJid, {text: code});
   }

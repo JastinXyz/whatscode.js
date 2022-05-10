@@ -1,4 +1,5 @@
 module.exports = async (d) => {
+  const err = require('../../handler/errors.js')
   const { decodeJid } = require('../../models/functions.js')
   const inside = d.code.split("$onlySender[")[1].split("]")[0];
   const [error = "You can't use this command because only a few people can use it.", ...num] = inside.split(
@@ -17,17 +18,16 @@ module.exports = async (d) => {
   console.log("decoded: " + decoded)
   const c = num.includes(decoded)
 console.log("check: " + c)
-  if(!c) {
+  if(!c) return { erorr: true, text: error }
     // return {
     //   error: true,
     //   text: error
     // }
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      { text: error },
-      { quoted: d.msg }
-    )
-  } else {
-    return ""
-  }
+    // return d.client.sendMessage(
+    //   d.msg.key.remoteJid,
+    //   { text: error },
+    //   { quoted: d.msg }
+    // )
+    //d.err(error)
+    return d.code.replaceLast(`$onlySender[${inside}]`, "")
 };

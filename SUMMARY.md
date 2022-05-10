@@ -11,6 +11,7 @@
   * [$boolean](references/functions/usdboolean.md)
   * [$botJid](references/functions/usdbotjid.md)
   * [$decodedBotJid](references/functions/usddecodedbotjid.md)
+  * [$decodeJid](references/functions/usddecodejid.md)
   * [$httpRequest](references/functions/usdhttprequest.md)
   * [$inviteCode](references/functions/usdinvitecode.md)
   * [$isAdmin](references/functions/usdisadmin.md)

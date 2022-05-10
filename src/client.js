@@ -84,6 +84,9 @@ module.exports = class Client {
         }
       }
       console.log("[conn logs]", update);
+      if(update.receivedPendingNotifications) {
+        console.log("[whatscode.js] Your bot is ready now!\n[whatscode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU")
+      }
     });
   }
   onCredsUpdate() {

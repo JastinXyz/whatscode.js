@@ -15,6 +15,9 @@ First of all, install **whatscode.js** library:
 ```bash
 # Install via npm
 npm install whatscode.js
+
+# or install it from Github for more features, some bug fixes, and mybe theres some bugs too.
+npm i github:JastinXyz/whatscode
 ```
 {% endtab %}
 {% endtabs %}
@@ -46,3 +49,8 @@ bot.command({
 ```
 {% endtab %}
 {% endtabs %}
+
+## Links
+
+* Documentation: [https://whatscode.jstnlt.my.id](https://whatscode.jstnlt.my.id)
+* Discord Server: [https://discord.gg/CzqHbx7rdU](https://discord.gg/CzqHbx7rdU)

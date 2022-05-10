@@ -12,6 +12,7 @@
   * [$boolean](references/functions/usdboolean.md)
   * [$botJid](references/functions/usdbotjid.md)
   * [$decodedBotJid](references/functions/usddecodedbotjid.md)
+  * [$exec](references/functions/usdexec.md)
   * [$decodeJid](references/functions/usddecodejid.md)
   * [$httpRequest](references/functions/usdhttprequest.md)
   * [$inviteCode](references/functions/usdinvitecode.md)

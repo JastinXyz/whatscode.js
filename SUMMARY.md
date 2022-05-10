@@ -24,5 +24,6 @@
   * [$ram](references/functions/usdram.md)
   * [$remoteJid](references/functions/usdremotejid.md)
   * [$reply](references/functions/usdreply.md)
+  * [$sender](references/functions/usdsender.md)
   * [$status](references/functions/usdstatus.md)
   * [$uptime](references/functions/usduptime.md)

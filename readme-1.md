@@ -17,7 +17,7 @@ First of all, install **whatscode.js** library:
 npm install whatscode.js
 
 # or install it from Github for more features, some bug fixes, and mybe theres some bugs too.
-npm i github:JastinXyz/whatscode
+npm i github:JastinXyz/whatscode.js
 ```
 {% endtab %}
 {% endtabs %}

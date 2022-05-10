@@ -12,7 +12,7 @@
 npm install whatscode.js
 ```
 
-or install it from Github from more features and mybe theres some bugs too.
+or install it from Github for more features, some bug fixes, and mybe theres some bugs too.
 
 ```bash
 npm i github:JastinXyz/whatscode.js

@@ -40,6 +40,11 @@ bot.command({
 });
 ```
 
+## Contributors
+<a href="https://github.com/JastinXyz/whatscode.js/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=JastinXyz/whatscode.js" />
+</a>
+
 ## Links
 - Documentation: https://whatscode.jstnlt.my.id
 - Discord Server: https://discord.gg/CzqHbx7rdU

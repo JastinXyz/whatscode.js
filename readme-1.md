@@ -46,3 +46,8 @@ bot.command({
 ```
 {% endtab %}
 {% endtabs %}
+
+## Links
+
+* Documentation: [https://whatscode.jstnlt.my.id](https://whatscode.jstnlt.my.id)
+* Discord Server: [https://discord.gg/CzqHbx7rdU](https://discord.gg/CzqHbx7rdU)

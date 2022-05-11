@@ -23,6 +23,8 @@
   * [$log](references/functions/usdlog.md)
   * [$message](references/functions/usdmessage.md)
   * [$minMax](references/functions/usdminmax.md)
+  * [$onlyIf](references/functions/usdonlyif.md)
+  * [$onlySender](references/functions/usdonlysender.md)
   * [$ping](references/functions/usdping.md)
   * [$ram](references/functions/usdram.md)
   * [$remoteJid](references/functions/usdremotejid.md)

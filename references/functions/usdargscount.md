@@ -1,4 +1,4 @@
-# $boolean
+# $argsCount
 
 Returns length of the args.
 

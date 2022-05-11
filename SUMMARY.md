@@ -8,7 +8,7 @@
 * [Guides](references/guides/README.md)
   * [Client Options](references/guides/client-options.md)
   * [Command Handler](references/guides/command-handler.md)
-* [Functions](references/page-2.md)
+* [Functions](references/functions/README.md)
   * [$boolean](references/functions/usdboolean.md)
   * [$botJid](references/functions/usdbotjid.md)
   * [$decodedBotJid](references/functions/usddecodedbotjid.md)

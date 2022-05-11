@@ -1,6 +1,6 @@
 {
   "name": "whatscode.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "whatscode.js is a package to create Whatsapp bots easily and quickly, even coding experience is not needed.",
   "main": "index.js",
   "scripts": {

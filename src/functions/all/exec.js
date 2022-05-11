@@ -8,11 +8,13 @@ module.exports = async (d) => {
     try {
       var execute = await require('child_process').execSync(inside)
     } catch (err) {
+      d.isError = true;
       return d.client.sendMessage(d.msg.key.remoteJid, { text: `\`\`\`❌ [whatscode.js] | $exec error: ${err}!\`\`\`` }, { quoted: d.msg })
     }
 
     return execute;
   } else {
+    d.isError = true;
     return d.client.sendMessage(d.msg.key.remoteJid, { text: `\`\`\`❌ [whatscode.js] | Usage: $exec[code]!\`\`\`` }, { quoted: d.msg })
   }
 };

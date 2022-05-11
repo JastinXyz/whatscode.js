@@ -11,12 +11,14 @@ module.exports = async (d) => {
     "User-Agent": _s.userAgents().result,
   };
 
-  if (!url) return d.client.sendMessage(
+  if (!url) {
+    d.isError = true;
+    return d.client.sendMessage(
       d.msg.key.remoteJid,
       { text: `\`\`\`❌ [whatscode.js] | url required in $httpRequest!\`\`\`` },
       { quoted: d.msg }
     );
-
+  }
 
   for (let head of insideHeaders) {
     const [headName, ...headValue] = head.split(":");
@@ -28,6 +30,7 @@ module.exports = async (d) => {
     headers: headers,
     data: body,
   }).catch((err) => {
+    d.isError = true;
     return d.client.sendMessage(
       d.msg.key.remoteJid,
       {

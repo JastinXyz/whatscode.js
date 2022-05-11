@@ -3,6 +3,7 @@ module.exports = async (d) => {
   var inside = d.code.split(`$minMax[`)[1]
 
   if(!inside) {
+    d.isError = true;
     return d.client.sendMessage(
       d.msg.key.remoteJid,
       {
@@ -15,6 +16,7 @@ module.exports = async (d) => {
     const [min, max] = inside.split(";");
 
     if (!min || !max) {
+      d.isError = true;
       return d.client.sendMessage(
         d.msg.key.remoteJid,
         {

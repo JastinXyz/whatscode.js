@@ -36,22 +36,21 @@ module.exports = async (code, msg, client, args) => {
 
     var d = func.replace("$", "").replace("[", "");
 
-    var all = { data: data, msg: msg, client: client, code: code, args: args };
+    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false };
     var res = await require(`./functions/all/${d}.js`)(all);
     code = code.replaceLast(_iOne ? `${func}[${_iOne}]` : func, res);
+    if(all.isError) {
+      code = ""
+      break;
+    };
   }
 
-  console.log(c)
   if (
     ["$reply"].some(function (v) {
       return theFuncs.indexOf(v) >= 0;
     })
   ) {
-    await client.sendMessage(
-      msg.key.remoteJid,
-      { text: code },
-      { quoted: msg }
-    );
+    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code }, { quoted: msg });
   } // else if (
   //   ["$sendButton"].some(function (v) {
   //     return theFuncs.indexOf(v) >= 0;
@@ -67,6 +66,6 @@ module.exports = async (code, msg, client, args) => {
   //   });
   //}
    else {
-    await client.sendMessage(msg.key.remoteJid, { text: code });
+    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code });
   }
 };

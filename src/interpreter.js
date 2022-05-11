@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = async (code, msg, client, args) => {
+module.exports = async (code, msg, client, args, cmd) => {
   var data = [],
     parser = require("./functions/parser.js"),
     f;
@@ -36,7 +36,7 @@ module.exports = async (code, msg, client, args) => {
 
     var d = func.replace("$", "").replace("[", "");
 
-    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false };
+    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false, cmd: cmd };
     var res = await require(`./functions/all/${d}.js`)(all);
     code = code.replaceLast(_iOne ? `${func}[${_iOne}]` : func, res);
     if(all.isError) {
@@ -64,7 +64,7 @@ module.exports = async (code, msg, client, args) => {
   //     footer: a.footer,
   //     headerType: a.headerType,
   //   });
-  //}
+  // }
    else {
     code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() });
   }

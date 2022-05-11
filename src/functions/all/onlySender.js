@@ -6,8 +6,6 @@ module.exports = async (d) => {
     ...num
   ] = inside.split(";");
 
-  console.log("num: " + num);
-
   if (!num)
     return d.client.sendMessage(
       d.msg.key.remoteJid,

@@ -12,7 +12,7 @@ module.exports = async (d) => {
   } else {
     if(d.msg.key.remoteJid.endsWith("@g.us")) {
       const code = await d.client.groupInviteCode(d.msg.key.remoteJid)
-      console.log(code)
+      //console.log(code)
       return code
     } else {
       d.client.sendMessage(d.msg.key.remoteJid, { text: `\`\`\`❌ [whatscode.js] | The $inviteCode functions only can be used in groups!\`\`\`` }, { quoted: d.msg })

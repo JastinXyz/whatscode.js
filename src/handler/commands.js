@@ -25,6 +25,6 @@ module.exports = async (m, client, cmd, prefix, getType) => {
   const args = dy.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
     if (cmd.get(command)) {
-          require("../interpreter.js")(cmd.get(command), msg, client, args)
+          require("../interpreter.js")(cmd.get(command), msg, client, args, cmd)
         }
     }

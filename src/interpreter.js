@@ -50,7 +50,7 @@ module.exports = async (code, msg, client, args) => {
       return theFuncs.indexOf(v) >= 0;
     })
   ) {
-    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code }, { quoted: msg });
+    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() }, { quoted: msg });
   } // else if (
   //   ["$sendButton"].some(function (v) {
   //     return theFuncs.indexOf(v) >= 0;
@@ -66,6 +66,6 @@ module.exports = async (code, msg, client, args) => {
   //   });
   //}
    else {
-    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code });
+    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() });
   }
 };

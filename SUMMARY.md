@@ -15,6 +15,7 @@
   * [$boolean](references/functions/usdboolean.md)
   * [$botJid](references/functions/usdbotjid.md)
   * [$botLeave](references/functions/usdbotleave.md)
+  * [$button](references/functions/usdbutton.md)
   * [$decodedBotJid](references/functions/usddecodedbotjid.md)
   * [$decodeJid](references/functions/usddecodejid.md)
   * [$exec](references/functions/usdexec.md)

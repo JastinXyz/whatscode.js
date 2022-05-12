@@ -51,21 +51,20 @@ module.exports = async (code, msg, client, args, cmd) => {
     })
   ) {
     code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() }, { quoted: msg });
-  } // else if (
-  //   ["$sendButton"].some(function (v) {
-  //     return theFuncs.indexOf(v) >= 0;
-  //   })
-  // ) {
-  // //  console.log(JSON.parse(code));
-  //   const a = JSON.parse(code)
-  //   await client.sendMessage(msg.key.remoteJid, {
-  //     text: a.text,
-  //     buttons: a.buttons[0],
-  //     footer: a.footer,
-  //     headerType: a.headerType,
-  //   });
-  // }
-   else {
+  } else if (
+    ["$sendButton"].some(function (v) {
+      return theFuncs.indexOf(v) >= 0;
+    })
+  ) {
+    const a = JSON.parse(code)
+
+    await client.sendMessage(msg.key.remoteJid, {
+      text: a.text,
+      buttons: a.buttons,
+      footer: a.footer,
+      headerType: a.headerType,
+    });
+  } else {
     code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() });
   }
 };

@@ -2,9 +2,12 @@
 
 **whatscode.js** is a package to create Whatsapp bots easily and quickly, even coding experience is not needed...
 
-> You should know that whatscode.js is still in the testing stage and whatscode.js is a new project that was created a few days ago... So maybe there are still many bugs happening, Please report bugs or if you want to give suggestions open an issue in our Github Repository!
-
 > We are also very open to those of you who want to contribute...
+
+## Features
+- Easy and fast to use.
+- Short code.
+- Currently has more than 40+ Functions ready to use and Still will continue to add more functions!
 
 ## Instalation
 
@@ -23,6 +26,7 @@ npm i github:JastinXyz/whatscode.js
 ```js
 const { Client } = require("whatscode.js");
 
+// all Client options in docs!
 const bot = new Client({
   name: "Your bot name",
   prefix: "Your bot prefix",

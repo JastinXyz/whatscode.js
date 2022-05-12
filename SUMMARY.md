@@ -9,6 +9,7 @@
   * [Client Options](references/guides/client-options.md)
   * [Command Handler](references/guides/command-handler.md)
 * [Functions](references/functions/README.md)
+  * [$argsCheck](references/functions/usdargscheck.md)
   * [$argsCount](references/functions/usdargscount.md)
   * [$boolean](references/functions/usdboolean.md)
   * [$botJid](references/functions/usdbotjid.md)

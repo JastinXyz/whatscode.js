@@ -1,47 +1,48 @@
-//const { searchFunc } = require("./models/functions.js");
 const fs = require("fs");
 
-module.exports = async (code, msg, client, args) => {
+module.exports = async (code, msg, client, args, cmd) => {
   var data = [],
     parser = require("./functions/parser.js"),
-    //parse = fs.readdirSync("src/functions/all"),
     f;
 
-let searched = []
-    function searchFunc(_n, _p) {
-      for (const f of _n) {
-        const func = _p.filter((filt) => filt == ("$" + f).slice(0, filt.length));
+  let searched = [];
+  function searchFunc(_n, _p) {
+    for (const f of _n) {
+      const func = _p.filter((filt) => filt == ("$" + f).slice(0, filt.length));
 
-        if (func.length == 1) {
-          searched.push(func[0]);
-        } else if (func.length > 1) {
-          searched.push(func.sort((a, b) => b.length - a.length)[0]);
-        }
+      if (func.length == 1) {
+        searched.push(func[0]);
+      } else if (func.length > 1) {
+        searched.push(func.sort((a, b) => b.length - a.length)[0]);
       }
-
-      return searched;
     }
+
+    return searched;
+  }
 
   var theFuncs = searchFunc(code.split("$"), parser);
-  //console.log(theFuncs)
   for (const func of theFuncs.reverse()) {
-    var _iOne = code.split(`${func}[`)[1]
-    if(!_iOne) {
-      _iOne = ""
+    var _iOne = code.split(`${func}[`)[1];
+    if (!_iOne) {
+      _iOne = "";
     } else {
-      _iOne = _iOne.split("]")[0]
+      _iOne = _iOne.split("]")[0];
     }
 
-      data.push({
-        name: func,
-        inside: _iOne,
-      });
+    data.push({
+      name: func,
+      inside: _iOne,
+    });
 
-      var d = func.replace("$", "").replace("[", "");
+    var d = func.replace("$", "").replace("[", "");
 
-      var all = { data: data, msg: msg, client: client, code: code, args: args };
-      var res = await require(`./functions/all/${d}.js`)(all);
-      code = code.replaceLast(_iOne? `${func}[${_iOne}]` : func, res)
+    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false, cmd: cmd };
+    var res = await require(`./functions/all/${d}.js`)(all);
+    code = code.replaceLast(_iOne ? `${func}[${_iOne}]` : func, res);
+    if(all.isError) {
+      code = ""
+      break;
+    };
   }
 
   if (
@@ -49,14 +50,21 @@ let searched = []
       return theFuncs.indexOf(v) >= 0;
     })
   ) {
-    await client.sendMessage(msg.key.remoteJid, {text: code}, { quoted: msg });
+    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() }, { quoted: msg });
   } else if (
-    ["$sendbutton"].some(function (v) {
+    ["$sendButton"].some(function (v) {
       return theFuncs.indexOf(v) >= 0;
     })
   ) {
-    await client.sendMessage(msg.key.remoteJid, code);
+    const a = JSON.parse(code)
+
+    await client.sendMessage(msg.key.remoteJid, {
+      text: a.text,
+      buttons: a.buttons,
+      footer: a.footer,
+      headerType: a.headerType,
+    });
   } else {
-    await client.sendMessage(msg.key.remoteJid, {text: code});
+    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() });
   }
 };

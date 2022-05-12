@@ -1,31 +1,30 @@
 module.exports = async (d) => {
-  const _s = require("scramb");
-  var inside = d.code.split(`$minMax[`)[1]
+  var inside = d.code.split(`$randomText[`)[1]
 
   if(!inside) {
     d.isError = true;
     return d.client.sendMessage(
       d.msg.key.remoteJid,
       {
-        text: `\`\`\`❌ [whatscode.js] | Usage: $minMax[min value;max value]!\`\`\``,
+        text: `\`\`\`❌ [whatscode.js] | Usage: $randomText[text 1;text 2;text 3;...]!\`\`\``,
       },
       { quoted: d.msg }
     );
   } else {
     inside = inside.split("]")[0]
-    const [min, max] = inside.split(";");
+    const [...text] = inside.split(";");
 
-    if (!min || !max) {
+    if (!text) {
       d.isError = true;
       return d.client.sendMessage(
         d.msg.key.remoteJid,
         {
-          text: `\`\`\`❌ [whatscode.js] | Usage: $minMax[min value;max value]!\`\`\``,
+          text: `\`\`\`❌ [whatscode.js] | Usage: $randomText[text 1;text 2;text 3;...]!\`\`\``,
         },
         { quoted: d.msg }
       );
     } else {
-      return _s.minMax(Number(min), Number(max)).result;
+      return text[Math.floor(Math.random() * text.length)];
     }
   }
 };

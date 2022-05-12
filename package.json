@@ -1,6 +1,6 @@
 {
   "name": "whatscode.js",
-  "version": "0.0.1-beta",
+  "version": "0.0.4",
   "description": "whatscode.js is a package to create Whatsapp bots easily and quickly, even coding experience is not needed.",
   "main": "index.js",
   "scripts": {
@@ -14,13 +14,22 @@
     "url": "https://github.com/JastinXyz/whatscode.js/issues"
   },
   "homepage": "https://whatscode.jstnlt.my.id",
-  "keywords": [],
+  "keywords": [
+    "whatsapp",
+    "whatsapp-bot",
+    "bot",
+    "baileys",
+    "baileys-md",
+    "whatsapp-web",
+    "whatsapp-api"
+  ],
   "author": "JstnLT <jastinlinggar@gmail.com> (jstnlt.my.id)",
   "license": "MIT",
   "dependencies": {
     "@adiwajshing/baileys": "^4.1.0",
     "@hapi/boom": "^10.0.0",
     "axios": "^0.27.2",
+    "child_process": "^1.0.2",
     "fs": "^0.0.1-security",
     "pino": "^7.11.0",
     "qrcode-terminal": "^0.12.0",

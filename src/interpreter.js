@@ -3,6 +3,7 @@ const fs = require("fs");
 module.exports = async (code, msg, client, args, cmd) => {
   var data = [],
     parser = require("./functions/parser.js"),
+    obj,
     f;
 
   let searched = [];
@@ -20,6 +21,7 @@ module.exports = async (code, msg, client, args, cmd) => {
     return searched;
   }
 
+  var u = {};
   var theFuncs = searchFunc(code.split("$"), parser);
   for (const func of theFuncs.reverse()) {
     var _iOne = code.split(`${func}[`)[1];
@@ -36,8 +38,11 @@ module.exports = async (code, msg, client, args, cmd) => {
 
     var d = func.replace("$", "").replace("[", "");
 
-    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false, cmd: cmd };
+    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false, cmd: cmd, unique: false };
     var res = await require(`./functions/all/${d}.js`)(all);
+    if(all.unique) {
+      u[res.type] = res.response
+    }
     code = code.replaceLast(_iOne ? `${func}[${_iOne}]` : func, res);
     if(all.isError) {
       code = ""
@@ -50,7 +55,20 @@ module.exports = async (code, msg, client, args, cmd) => {
       return theFuncs.indexOf(v) >= 0;
     })
   ) {
-    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() }, { quoted: msg });
+     u.image ? obj = {
+       image: {url: u.image},
+       caption: code.trim(),
+       footer: u.footer ? u.footer : "",
+       buttons: u.buttons ? u.buttons : "",
+       headerType: 4
+     } : obj = {
+       text: code.trim(),
+       buttons: u.buttons ? u.buttons : "",
+       footer: u.footer ? u.footer : "",
+       headerType: 1
+     }
+
+    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj, { quoted: msg });
   } else if (
     ["$sendButton"].some(function (v) {
       return theFuncs.indexOf(v) >= 0;
@@ -59,6 +77,19 @@ module.exports = async (code, msg, client, args, cmd) => {
     const a = JSON.parse(code)
     await client.sendMessage(msg.key.remoteJid, a);
   } else {
-    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() });
+    u.image ? obj = {
+      image: {url: u.image},
+      caption: code.trim(),
+      footer: u.footer ? u.footer : "",
+      buttons: u.buttons ? u.buttons : "",
+      headerType: 4
+    } : obj = {
+      text: code.trim(),
+      buttons: u.buttons ? u.buttons : "",
+      footer: u.footer ? u.footer : "",
+      headerType: 1
+    }
+
+    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj);
   }
 };

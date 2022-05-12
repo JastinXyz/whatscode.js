@@ -118,6 +118,10 @@ module.exports = class Client {
 };
 
 String.prototype.replaceLast = function (find, replace) {
+  if(typeof replace === "object") {
+    replace = ""
+  }
+
   var index = this.lastIndexOf(find);
 
   if (index >= 0) {

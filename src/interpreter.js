@@ -57,13 +57,7 @@ module.exports = async (code, msg, client, args, cmd) => {
     })
   ) {
     const a = JSON.parse(code)
-
-    await client.sendMessage(msg.key.remoteJid, {
-      text: a.text,
-      buttons: a.buttons,
-      footer: a.footer,
-      headerType: a.headerType,
-    });
+    await client.sendMessage(msg.key.remoteJid, a);
   } else {
     code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, { text: code.trim() });
   }

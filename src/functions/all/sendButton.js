@@ -1,12 +1,15 @@
 module.exports = async (d) => {
-  const args = d.args.toString().split(",");
-  const inside = d.code.split("$sendButton[")[1].split("]")[0];
-  const [text, foot = "", ...btn] = inside.split(";");
+  var inside = d.code.split("$sendButton[")[1].split("]")[0];
+  const [text, foot = "", img = "", ...btn] = inside.split(";");
 
-  if (!text || !btn)
+  /* Actually you can send a regular message or a picture message with
+     a footer without having to include a button (give the button field blank) */
+  if (!text) {
+    d.isError = true;
     return d.client.sendMessage(
-      `\`\`\`❌ [whatscode.js] | Usage: $sendButton[text;footer (optional);buttonId:buttonText;buttonId:buttonText;...].\`\`\``
+      `\`\`\`❌ [whatscode.js] | Usage: $sendButton[text;footer (optional);image url (optional);buttonId:buttonText;buttonId:buttonText;...].\`\`\``
     );
+  }
 
     const buttons = []
 
@@ -19,12 +22,20 @@ module.exports = async (d) => {
       })
     }
 
-  const buttonMessage = {
-    text: text,
-    buttons: buttons,
-    footer: foot,
-    headerType: 1,
-  };
+    var buttonMessage;
 
- return JSON.stringify(buttonMessage);
+    img.trim() === ""? buttonMessage = {
+      text: text,
+      buttons: buttons,
+      footer: foot,
+      headerType: 1
+    } : buttonMessage = {
+      image: {url: img},
+      caption: text,
+      footer: foot,
+      buttons: buttons,
+      headerType: 4
+    }
+
+    return JSON.stringify(buttonMessage);
 };

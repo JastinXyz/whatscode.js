@@ -1,19 +1,30 @@
 module.exports = async (d) => {
   const args = d.args.toString().split(",");
   const inside = d.code.split("$sendButton[")[1].split("]")[0];
-  const [text, foot = "", id, dtext] = inside.split(";");
+  const [text, foot = "", ...btn] = inside.split(";");
 
-  if (!text || !id || !dtext)
+  if (!text || !btn)
     return d.client.sendMessage(
-      `\`\`\`❌ [whatscode.js] | Usage: $sendButton[text;footer (optional);id;text].\`\`\``
+      `\`\`\`❌ [whatscode.js] | Usage: $sendButton[text;footer (optional);buttonId:buttonText;buttonId:buttonText;...].\`\`\``
     );
+
+    const buttons = []
+
+    for (let bttns of btn) {
+      const [id, display] = bttns.split(":");
+      buttons.push({
+        buttonId: id,
+        buttonText: { displayText: display },
+        type: 1
+      })
+    }
 
   const buttonMessage = {
     text: text,
-    buttons: [{ buttonId: id, buttonText: { displayText: dtext }, type: 1 }],
+    buttons: buttons,
     footer: foot,
     headerType: 1,
   };
 
-  return JSON.stringify(buttonMessage);
+ return JSON.stringify(buttonMessage);
 };

@@ -7,12 +7,8 @@ module.exports = async (d) => {
   ] = inside.split(";");
 
   if (!num)
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      {
-        text: `\`\`\`❌ [whatscode.js] | Usage: $onlySender[error (optional);123@s.whatsapp.net]!\`\`\``,
-      },
-      { quoted: d.msg }
+    return d.error(
+      `❌ [whatscode.js] | Usage: $onlySender[error (optional);123@s.whatsapp.net]!`
     );
 
   const decoded = await decodeJid(

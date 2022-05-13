@@ -8,8 +8,8 @@ module.exports = async (d) => {
 
     if (!btn) {
       d.isError = true;
-      return d.client.sendMessage(
-        `\`\`\`❌ [whatscode.js] | Usage: $button[button id:button text;...].\`\`\``
+      return d.error(
+        `❌ [whatscode.js] | Usage: $button[button id:button text;...].`
       );
     }
 
@@ -31,12 +31,8 @@ module.exports = async (d) => {
     };
   } else {
     d.isError = true;
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      {
-        text: `\`\`\`❌ [whatscode.js] | Usage: $button[button id:button text;...]!\`\`\``,
-      },
-      { quoted: d.msg }
+    return d.error(
+      `❌ [whatscode.js] | Usage: $button[button id:button text;...]!`
     );
   }
 };

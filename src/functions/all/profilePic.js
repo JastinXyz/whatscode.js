@@ -8,9 +8,7 @@ module.exports = async (d) => {
 
     if (!inside) {
       d.isError = true;
-      return d.client.sendMessage(
-        `\`\`\`❌ [whatscode.js] | Usage: $profilePic[jid].\`\`\``
-      );
+      return d.error(`❌ [whatscode.js] | Usage: $profilePic[jid].`);
     }
 
     const num = decodeJid(inside);

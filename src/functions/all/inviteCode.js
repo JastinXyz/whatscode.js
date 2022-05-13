@@ -8,11 +8,7 @@ module.exports = async (d) => {
     const r = await d.client.groupInviteCode(inside);
     if (!r) {
       d.isError = true;
-      return d.client.sendMessage(
-        d.msg.key.remoteJid,
-        { text: `\`\`\`❌ [whatscode.js] | invalid groups jid!\`\`\`` },
-        { quoted: d.msg }
-      );
+      return d.error(`❌ [whatscode.js] | invalid groups jid!`);
     }
 
     return r;
@@ -22,12 +18,8 @@ module.exports = async (d) => {
       return code;
     } else {
       d.isError = true;
-      return d.client.sendMessage(
-        d.msg.key.remoteJid,
-        {
-          text: `\`\`\`❌ [whatscode.js] | The $inviteCode functions only can be used in groups!\`\`\``,
-        },
-        { quoted: d.msg }
+      return d.error(
+        `❌ [whatscode.js] | The $inviteCode functions only can be used in groups!`
       );
     }
   }

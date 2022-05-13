@@ -8,8 +8,8 @@ module.exports = async (d) => {
 
     if (!btn) {
       d.isError = true;
-      return d.client.sendMessage(
-        `\`\`\`❌ [whatscode.js] | Usage: $templateButtons[(url/call/quickReply):display Text:value;...].\`\`\``
+      return d.error(
+        `❌ [whatscode.js] | Usage: $templateButtons[(url/call/quickReply):display Text:value;...].`
       );
     }
 
@@ -17,11 +17,14 @@ module.exports = async (d) => {
 
     for (let bttns of btn) {
       const [index, display, v] = bttns.split(":");
-      const a = bttns.split(":")
+      const a = bttns.split(":");
       if (index === "url") {
         buttons.push({
           index: 1,
-          urlButton: { displayText: display, url: a[a.length - 2] + ":" + a[a.length - 1] },
+          urlButton: {
+            displayText: display,
+            url: a[a.length - 2] + ":" + a[a.length - 1],
+          },
         });
       } else if (index === "call") {
         buttons.push({

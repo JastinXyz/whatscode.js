@@ -6,15 +6,15 @@ module.exports = async (d) => {
     const inside = d.code.split("$exec[")[1].split("]")[0];
 
     try {
-      var execute = await require('child_process').execSync(inside)
+      var execute = await require("child_process").execSync(inside);
     } catch (err) {
       d.isError = true;
-      return d.client.sendMessage(d.msg.key.remoteJid, { text: `\`\`\`❌ [whatscode.js] | $exec error: ${err}!\`\`\`` }, { quoted: d.msg })
+      return d.error(`❌ [whatscode.js] | $exec error: ${err}!`);
     }
 
     return execute;
   } else {
     d.isError = true;
-    return d.client.sendMessage(d.msg.key.remoteJid, { text: `\`\`\`❌ [whatscode.js] | Usage: $exec[code]!\`\`\`` }, { quoted: d.msg })
+    return d.error(`❌ [whatscode.js] | Usage: $exec[code]!`);
   }
 };

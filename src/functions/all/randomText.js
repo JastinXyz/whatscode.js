@@ -1,27 +1,19 @@
 module.exports = async (d) => {
-  var inside = d.code.split(`$randomText[`)[1]
+  var inside = d.code.split(`$randomText[`)[1];
 
-  if(!inside) {
+  if (!inside) {
     d.isError = true;
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      {
-        text: `\`\`\`❌ [whatscode.js] | Usage: $randomText[text 1;text 2;text 3;...]!\`\`\``,
-      },
-      { quoted: d.msg }
+    return d.error(
+      `❌ [whatscode.js] | Usage: $randomText[text 1;text 2;text 3;...]`
     );
   } else {
-    inside = inside.split("]")[0]
+    inside = inside.split("]")[0];
     const [...text] = inside.split(";");
 
     if (!text) {
       d.isError = true;
-      return d.client.sendMessage(
-        d.msg.key.remoteJid,
-        {
-          text: `\`\`\`❌ [whatscode.js] | Usage: $randomText[text 1;text 2;text 3;...]!\`\`\``,
-        },
-        { quoted: d.msg }
+      return d.error(
+        `❌ [whatscode.js] | Usage: $randomText[text 1;text 2;text 3;...]!`
       );
     } else {
       return text[Math.floor(Math.random() * text.length)];

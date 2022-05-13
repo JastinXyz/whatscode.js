@@ -8,23 +8,15 @@ module.exports = async (d) => {
 
     if (!condition) {
       d.isError = true;
-      return d.client.sendMessage(
-        d.msg.key.remoteJid,
-        {
-          text: `\`\`\`❌ [whatscode.js] | Usage: $argsCheck[condition;error message]!\`\`\``,
-        },
-        { quoted: d.msg }
+      return d.error(
+        `❌ [whatscode.js] | Usage: $argsCheck[condition;error message]!`
       );
     }
 
     if (!error) {
       d.isError = true;
-      return d.client.sendMessage(
-        d.msg.key.remoteJid,
-        {
-          text: `\`\`\`❌ [whatscode.js] | Usage: $argsCheck[${condition};error message]!\`\`\``,
-        },
-        { quoted: d.msg }
+      return d.error(
+        `❌ [whatscode.js] | Usage: $argsCheck[${condition};error message]!`
       );
     }
 
@@ -53,12 +45,8 @@ module.exports = async (d) => {
     }
   } else {
     d.isError = true;
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      {
-        text: `\`\`\`❌ [whatscode.js] | Usage: $argsCheck[condition;error message]!\`\`\``,
-      },
-      { quoted: d.msg }
+    return d.error(
+      `❌ [whatscode.js] | Usage: $argsCheck[condition;error message]!`
     );
   }
 };

@@ -4,6 +4,7 @@ module.exports = async (code, msg, client, args, cmd) => {
   var data = [],
     parser = require("./functions/parser.js"),
     obj,
+    suppressErr,
     f;
 
   let searched = [];
@@ -38,12 +39,40 @@ module.exports = async (code, msg, client, args, cmd) => {
 
     var d = func.replace("$", "").replace("[", "");
 
-    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false, cmd: cmd, unique: false };
+    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false, cmd: cmd, unique: false,
+      error: (err) => {
+        if(!suppressErr) {
+          return client.sendMessage(
+            msg.key.remoteJid,
+            {
+              text: `\`\`\`${err}\`\`\``,
+            },
+            { quoted: msg }
+          );
+        } else {
+          return client.sendMessage(
+            msg.key.remoteJid,
+            {
+              text: `\`\`\`${suppressErr.split("{error}").join(err)}\`\`\``,
+            },
+            { quoted: msg }
+          );
+        }
+      }
+     };
+
     var res = await require(`./functions/all/${d}.js`)(all);
+
     if(all.unique) {
-      u[res.type] = res.response
+      if(res.type === "error") {
+        suppressErr = res.response
+      } else {
+          u[res.type] = res.response
+      }
     }
+
     code = code.replaceLast(_iOne ? `${func}[${_iOne}]` : func, res);
+
     if(all.isError) {
       code = ""
       break;

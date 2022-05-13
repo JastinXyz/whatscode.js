@@ -15,6 +15,6 @@ module.exports = async (d) => {
     return "";
   } else {
     d.isError = true;
-    return d.client.sendMessage(d.msg.key.remoteJid, { text: `\`\`\`❌ [whatscode.js] | Usage: $commandReact[emoji]!\`\`\`` }, { quoted: d.msg })
+    return d.error(`❌ [whatscode.js] | Usage: $commandReact[emoji]!`);
   }
 };

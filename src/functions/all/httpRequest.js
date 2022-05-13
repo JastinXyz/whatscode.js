@@ -13,11 +13,7 @@ module.exports = async (d) => {
 
   if (!url) {
     d.isError = true;
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      { text: `\`\`\`❌ [whatscode.js] | url required in $httpRequest!\`\`\`` },
-      { quoted: d.msg }
-    );
+    return d.error(`❌ [whatscode.js] | url required in $httpRequest!`);
   }
 
   for (let head of insideHeaders) {
@@ -31,13 +27,7 @@ module.exports = async (d) => {
     data: body,
   }).catch((err) => {
     d.isError = true;
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      {
-        text: `\`\`\`❌ [whatscode.js] | Cannot interact with url. ERR: ${err}\`\`\``,
-      },
-      { quoted: d.msg }
-    );
+    return d.error(`❌ [whatscode.js] | Cannot interact with url. ERR: ${err}`);
   });
 
   var res = da.data;

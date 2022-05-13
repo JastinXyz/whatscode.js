@@ -22,8 +22,8 @@ const { getWaWebVer } = require("./models/functions.js");
 
 module.exports = class Client {
   constructor(opts = {}) {
-    if (!opts.name) throw new Error("name required!");
-    if (!opts.prefix) throw new Error("prefix required!");
+    if (!opts.name) throw new Error("[whatscode.js] name required!");
+    if (!opts.prefix) throw new Error("[whatscode.js] prefix required!");
 
     this.NAME = opts.name;
     this.PREFIX = opts.prefix;

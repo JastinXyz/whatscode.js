@@ -11,12 +11,8 @@ module.exports = async (d) => {
 
   const op = operators();
   if (!operators)
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      {
-        text: `\`\`\`❌ [whatscode.js] | Usage: $onlyIf[condition;error message (optional)]!\`\`\``,
-      },
-      { quoted: d.msg }
+    return d.error(
+      `❌ [whatscode.js] | Usage: $onlyIf[condition;error message (optional)]!`
     );
 
   const fields = cond.split(op);

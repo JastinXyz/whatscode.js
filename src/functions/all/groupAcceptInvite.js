@@ -10,18 +10,16 @@ module.exports = async (d) => {
       await d.client.groupAcceptInvite(g);
     } catch (err) {
       d.isError = true;
-      return d.client.sendMessage(
-        d.msg.key.remoteJid,
-        {
-          text: `\`\`\`❌ [whatscode.js] | Something error on $groupAcceptInvite: ${err}!\`\`\``,
-        },
-        { quoted: d.msg }
+      return d.error(
+        `❌ [whatscode.js] | Something error on $groupAcceptInvite: ${err}!`
       );
     }
 
-    return ""
+    return "";
   } else {
     d.isError = true;
-    return d.client.sendMessage(d.msg.key.remoteJid, { text: `\`\`\`❌ [whatscode.js] | Usage: $groupAcceptInvite[invite link]!\`\`\`` }, { quoted: d.msg })
+    return d.error(
+      `❌ [whatscode.js] | Usage: $groupAcceptInvite[invite link]!`
+    );
   }
 };

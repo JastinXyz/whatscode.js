@@ -2,10 +2,16 @@
 
 Filters the next code with onlyIf, if the condition returns true then it issues an error message in the onlyIf, otherwise it will continue the code.
 
+
+
 ### Usage:
 
 ```
 $onlyIf[condition;error message (optional)
+```
+
+```
+$onlyIf[value1(<=/>=/==/</>/!=)value2;error message]
 ```
 
 ### Example:

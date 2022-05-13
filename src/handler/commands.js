@@ -1,4 +1,4 @@
-module.exports = async (m, client, cmd, prefix, getType) => {
+module.exports = async (m, client, cmd, prefix, getType, db) => {
   var msg = m.messages[0];
   if (!m || !msg.message) return;
   if (msg.key && msg.key.remoteJid === "status@broadcast") return;
@@ -35,6 +35,6 @@ module.exports = async (m, client, cmd, prefix, getType) => {
   } catch {}
 
   if (cmd.get(command)) {
-    require("../interpreter.js")(cmd.get(command), msg, client, args, cmd);
+    require("../interpreter.js")(cmd.get(command), msg, client, args, cmd, db);
   }
 };

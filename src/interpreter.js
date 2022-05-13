@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = async (code, msg, client, args, cmd) => {
+module.exports = async (code, msg, client, args, cmd, db) => {
   var data = [],
     parser = require("./functions/parser.js"),
     obj,
@@ -58,7 +58,8 @@ module.exports = async (code, msg, client, args, cmd) => {
             { quoted: msg }
           );
         }
-      }
+      },
+      db: db
      };
 
     var res = await require(`./functions/all/${d}.js`)(all);

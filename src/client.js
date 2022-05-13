@@ -17,6 +17,7 @@ const {
 const baileys = require("@adiwajshing/baileys");
 const { Boom } = require("@hapi/boom");
 const axios = require("axios");
+const db = require('quick.db');
 
 const { getWaWebVer } = require("./models/functions.js");
 
@@ -29,6 +30,7 @@ module.exports = class Client {
     this.PREFIX = opts.prefix;
     this.autoRead = opts.autoRead;
     this.CMD = new Map();
+    this.db = db;
 
     this.printQRInTerminal = opts.printQRInTerminal;
     if (!this.printQRInTerminal) this.printQRInTerminal = true;
@@ -103,7 +105,8 @@ module.exports = class Client {
         this.whats,
         this.CMD,
         this.PREFIX,
-        getContentType
+        getContentType,
+        this.db
       );
     });
   }
@@ -113,6 +116,11 @@ module.exports = class Client {
       if (!w.code) throw new Error(`code required in commands!`);
 
       this.CMD.set(w.name.toLowerCase(), w.code);
+    }
+  }
+  variables(opt) {
+    for (const [name, value] of Object.entries(opt)) {
+      this.db.set(name, value)
     }
   }
 };

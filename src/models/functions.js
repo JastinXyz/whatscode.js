@@ -50,4 +50,13 @@ module.exports = {
     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "0 second ";
     return dDisplay + hDisplay + mDisplay + sDisplay;
   },
+  sender: function sender(d) {
+    return d.msg.key.fromMe
+      ? d.client.user.jid
+      : d.msg.participant
+      ? d.msg.participant
+      : d.msg.key.participant
+      ? d.msg.key.participant
+      : d.msg.key.remoteJid;
+  }
 };

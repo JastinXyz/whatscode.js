@@ -55,12 +55,23 @@ module.exports = async (code, msg, client, args, cmd) => {
       return theFuncs.indexOf(v) >= 0;
     })
   ) {
-     u.image ? obj = {
+     u.image ? u.templateButtons ? obj = {
+       image: {url: u.image},
+       text: code.trim(),
+       buttons: u.buttons ? u.buttons : "",
+       footer: u.footer ? u.footer : "",
+       templateButtons: u.templateButtons
+     } : obj = {
        image: {url: u.image},
        caption: code.trim(),
        footer: u.footer ? u.footer : "",
        buttons: u.buttons ? u.buttons : "",
        headerType: 4
+     } : u.templateButtons ? obj = {
+       text: code.trim(),
+       buttons: u.buttons ? u.buttons : "",
+       footer: u.footer ? u.footer : "",
+       templateButtons: u.templateButtons
      } : obj = {
        text: code.trim(),
        buttons: u.buttons ? u.buttons : "",
@@ -77,12 +88,21 @@ module.exports = async (code, msg, client, args, cmd) => {
     const a = JSON.parse(code)
     await client.sendMessage(msg.key.remoteJid, a);
   } else {
-    u.image ? obj = {
+    u.image ? u.templateButtons ? obj = {
+      caption: code.trim(),
+      footer: u.footer ? u.footer : "",
+      templateButtons: u.templateButtons,
+      image: {url: u.image}
+    } : obj = {
       image: {url: u.image},
       caption: code.trim(),
       footer: u.footer ? u.footer : "",
       buttons: u.buttons ? u.buttons : "",
       headerType: 4
+    } : u.templateButtons ? obj = {
+      text: code.trim(),
+      footer: u.footer ? u.footer : "",
+      templateButtons: u.templateButtons
     } : obj = {
       text: code.trim(),
       buttons: u.buttons ? u.buttons : "",

@@ -12,8 +12,7 @@ module.exports = async (m, client, cmd, prefix, getType) => {
       ? msg.message.documentMessage.caption
       : type == "videoMessage" && msg.message.videoMessage.caption
       ? msg.message.videoMessage.caption
-      : type == "extendedTextMessage" &&
-        msg.message.extendedTextMessage.text
+      : type == "extendedTextMessage" && msg.message.extendedTextMessage.text
       ? msg.message.extendedTextMessage.text
       : type == "buttonsResponseMessage" &&
         msg.message.buttonsResponseMessage.selectedButtonId
@@ -22,9 +21,20 @@ module.exports = async (m, client, cmd, prefix, getType) => {
         msg.message.templateButtonReplyMessage.selectedId
       ? msg.message.templateButtonReplyMessage.selectedId
       : "";
-  const args = dy.slice(prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
-    if (cmd.get(command)) {
-          require("../interpreter.js")(cmd.get(command), msg, client, args, cmd)
-        }
+
+  let args;
+  let command;
+
+  try {
+    if (dy.startsWith(prefix)) {
+      args = dy.slice(prefix.length).trim().split(/ +/g);
+      command = args.shift().toLowerCase();
+    } else {
+      return;
     }
+  } catch {}
+
+  if (cmd.get(command)) {
+    require("../interpreter.js")(cmd.get(command), msg, client, args, cmd);
+  }
+};

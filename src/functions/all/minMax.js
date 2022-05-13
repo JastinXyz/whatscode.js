@@ -4,14 +4,14 @@ module.exports = async (d) => {
 
   if(!inside) {
     d.isError = true;
-    d.error(`❌ [whatscode.js] | Usage: $minMax[min value;max value]!`)
+    d.error(`❌ WhatscodeError: Usage: $minMax[min value;max value]!`)
   } else {
     inside = inside.split("]")[0]
     const [min, max] = inside.split(";");
 
     if (!min || !max) {
       d.isError = true;
-      d.error(`❌ [whatscode.js] | Usage: $minMax[min value;max value]!`)
+      d.error(`❌ WhatscodeError: Usage: $minMax[min value;max value]!`)
     } else {
       return _s.minMax(Number(min), Number(max)).result;
     }

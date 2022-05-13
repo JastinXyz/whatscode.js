@@ -12,7 +12,7 @@ module.exports = async (d) => {
   const op = operators();
   if (!operators)
     return d.error(
-      `❌ [whatscode.js] | Usage: $onlyIf[condition;error message (optional)]!`
+      `❌ WhatscodeError: Usage: $onlyIf[condition;error message (optional)]!`
     );
 
   const fields = cond.split(op);

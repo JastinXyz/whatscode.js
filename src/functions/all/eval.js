@@ -4,7 +4,7 @@ module.exports = async(d) => {
   const last = inside.lastIndexOf(']')
   const c = inside.slice(0, last)
 
-  const result = await require("../../interpreter.js")(c, d.msg, d.client, d.args, d.cmd)
+  const result = await require("../../interpreter.js")(c, d.msg, d.client, d.args, d.cmd, d.db)
   d.isError = true;
   return result
 };

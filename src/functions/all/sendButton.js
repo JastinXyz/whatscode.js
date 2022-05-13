@@ -7,7 +7,7 @@ module.exports = async (d) => {
   if (!text) {
     d.isError = true;
     return d.error(
-      `❌ [whatscode.js] | Usage: $sendButton[text;footer (optional);image url (optional);buttonId:buttonText;buttonId:buttonText;...].`
+      `❌ WhatscodeError: Usage: $sendButton[text;footer (optional);image url (optional);buttonId:buttonText;buttonId:buttonText;...].`
     );
   }
 

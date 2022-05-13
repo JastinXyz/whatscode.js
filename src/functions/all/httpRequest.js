@@ -13,7 +13,7 @@ module.exports = async (d) => {
 
   if (!url) {
     d.isError = true;
-    return d.error(`❌ [whatscode.js] | url required in $httpRequest!`);
+    return d.error(`❌ WhatscodeError: url required in $httpRequest!`);
   }
 
   for (let head of insideHeaders) {
@@ -27,7 +27,7 @@ module.exports = async (d) => {
     data: body,
   }).catch((err) => {
     d.isError = true;
-    return d.error(`❌ [whatscode.js] | Cannot interact with url. ERR: ${err}`);
+    return d.error(`❌ WhatscodeError: Cannot interact with url. ERR: ${err}`);
   });
 
   var res = da.data;

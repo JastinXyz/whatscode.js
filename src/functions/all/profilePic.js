@@ -8,7 +8,7 @@ module.exports = async (d) => {
 
     if (!inside) {
       d.isError = true;
-      return d.error(`❌ [whatscode.js] | Usage: $profilePic[jid].`);
+      return d.error(`❌ WhatscodeError: Usage: $profilePic[jid].`);
     }
 
     const num = decodeJid(inside);

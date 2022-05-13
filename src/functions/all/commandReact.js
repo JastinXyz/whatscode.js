@@ -15,6 +15,6 @@ module.exports = async (d) => {
     return "";
   } else {
     d.isError = true;
-    return d.error(`❌ [whatscode.js] | Usage: $commandReact[emoji]!`);
+    return d.error(`❌ WhatscodeError: Usage: $commandReact[emoji]!`);
   }
 };

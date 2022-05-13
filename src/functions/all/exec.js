@@ -9,12 +9,12 @@ module.exports = async (d) => {
       var execute = await require("child_process").execSync(inside);
     } catch (err) {
       d.isError = true;
-      return d.error(`❌ [whatscode.js] | $exec error: ${err}!`);
+      return d.error(`❌ WhatscodeError: $exec error: ${err}!`);
     }
 
     return execute;
   } else {
     d.isError = true;
-    return d.error(`❌ [whatscode.js] | Usage: $exec[code]!`);
+    return d.error(`❌ WhatscodeError: Usage: $exec[code]!`);
   }
 };

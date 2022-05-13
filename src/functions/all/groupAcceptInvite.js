@@ -11,7 +11,7 @@ module.exports = async (d) => {
     } catch (err) {
       d.isError = true;
       return d.error(
-        `❌ [whatscode.js] | Something error on $groupAcceptInvite: ${err}!`
+        `❌ WhatscodeError: Something error on $groupAcceptInvite: ${err}!`
       );
     }
 
@@ -19,7 +19,7 @@ module.exports = async (d) => {
   } else {
     d.isError = true;
     return d.error(
-      `❌ [whatscode.js] | Usage: $groupAcceptInvite[invite link]!`
+      `❌ WhatscodeError: Usage: $groupAcceptInvite[invite link]!`
     );
   }
 };

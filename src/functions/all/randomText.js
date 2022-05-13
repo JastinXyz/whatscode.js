@@ -4,7 +4,7 @@ module.exports = async (d) => {
   if (!inside) {
     d.isError = true;
     return d.error(
-      `❌ [whatscode.js] | Usage: $randomText[text 1;text 2;text 3;...]`
+      `❌ WhatscodeError: Usage: $randomText[text 1;text 2;text 3;...]`
     );
   } else {
     inside = inside.split("]")[0];
@@ -13,7 +13,7 @@ module.exports = async (d) => {
     if (!text) {
       d.isError = true;
       return d.error(
-        `❌ [whatscode.js] | Usage: $randomText[text 1;text 2;text 3;...]!`
+        `❌ WhatscodeError: Usage: $randomText[text 1;text 2;text 3;...]!`
       );
     } else {
       return text[Math.floor(Math.random() * text.length)];

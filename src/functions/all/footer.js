@@ -7,7 +7,7 @@ module.exports = async (d) => {
 
     if (!inside) {
       d.isError = true;
-      return d.error(`❌ [whatscode.js] | Usage: $footer[text].`);
+      return d.error(`❌ WhatscodeError: Usage: $footer[text].`);
     }
 
     d.unique = true;
@@ -17,6 +17,6 @@ module.exports = async (d) => {
     };
   } else {
     d.isError = true;
-    return d.error(`❌ [whatscode.js] | Usage: $footer[text]!`);
+    return d.error(`❌ WhatscodeError: Usage: $footer[text]!`);
   }
 };

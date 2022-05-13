@@ -9,14 +9,14 @@ module.exports = async (d) => {
     if (!condition) {
       d.isError = true;
       return d.error(
-        `❌ [whatscode.js] | Usage: $argsCheck[condition;error message]!`
+        `❌ WhatscodeError: Usage: $argsCheck[condition;error message]!`
       );
     }
 
     if (!error) {
       d.isError = true;
       return d.error(
-        `❌ [whatscode.js] | Usage: $argsCheck[${condition};error message]!`
+        `❌ WhatscodeError: Usage: $argsCheck[${condition};error message]!`
       );
     }
 
@@ -46,7 +46,7 @@ module.exports = async (d) => {
   } else {
     d.isError = true;
     return d.error(
-      `❌ [whatscode.js] | Usage: $argsCheck[condition;error message]!`
+      `❌ WhatscodeError: Usage: $argsCheck[condition;error message]!`
     );
   }
 };

@@ -8,12 +8,12 @@ module.exports = async (d) => {
 
     if (isNaN(n) || isNaN(i)) {
       d.isError = true;
-      return d.error(`❌ [whatscode.js] | Invalid number in: $sum[${inside}]!`);
+      return d.error(`❌ WhatscodeError: Invalid number in: $sum[${inside}]!`);
     } else {
       return Number(n) + Number(i);
     }
   } else {
     d.isError = true;
-    return d.error(`❌ [whatscode.js] | Usage: $sum[number;number]!`);
+    return d.error(`❌ WhatscodeError: Usage: $sum[number;number]!`);
   }
 };

@@ -8,7 +8,7 @@ module.exports = async (d) => {
 
   if (!num)
     return d.error(
-      `❌ [whatscode.js] | Usage: $onlySender[error (optional);123@s.whatsapp.net]!`
+      `❌ WhatscodeError: Usage: $onlySender[error (optional);123@s.whatsapp.net]!`
     );
 
   const decoded = await decodeJid(

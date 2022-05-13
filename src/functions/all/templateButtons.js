@@ -9,7 +9,7 @@ module.exports = async (d) => {
     if (!btn) {
       d.isError = true;
       return d.error(
-        `❌ [whatscode.js] | Usage: $templateButtons[(url/call/quickReply):display Text:value;...].`
+        `❌ WhatscodeError: Usage: $templateButtons[(url/call/quickReply):display Text:value;...].`
       );
     }
 
@@ -49,7 +49,7 @@ module.exports = async (d) => {
     return d.client.sendMessage(
       d.msg.key.remoteJid,
       {
-        text: `\`\`\`❌ [whatscode.js] | Usage: $templateButtons[(url/call/quickReply):display Text:value;...]!\`\`\``,
+        text: `\`\`\`❌ WhatscodeError: Usage: $templateButtons[(url/call/quickReply):display Text:value;...]!\`\`\``,
       },
       { quoted: d.msg }
     );

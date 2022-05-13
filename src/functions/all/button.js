@@ -9,7 +9,7 @@ module.exports = async (d) => {
     if (!btn) {
       d.isError = true;
       return d.error(
-        `❌ [whatscode.js] | Usage: $button[button id:button text;...].`
+        `❌ WhatscodeError: Usage: $button[button id:button text;...].`
       );
     }
 
@@ -32,7 +32,7 @@ module.exports = async (d) => {
   } else {
     d.isError = true;
     return d.error(
-      `❌ [whatscode.js] | Usage: $button[button id:button text;...]!`
+      `❌ WhatscodeError: Usage: $button[button id:button text;...]!`
     );
   }
 };

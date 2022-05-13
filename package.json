@@ -33,6 +33,7 @@
     "fs": "^0.0.1-security",
     "pino": "^7.11.0",
     "qrcode-terminal": "^0.12.0",
+    "quick.db": "^7.1.3",
     "scramb": "^3.0.6"
   }
 }

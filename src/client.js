@@ -68,19 +68,17 @@ module.exports = class Client {
             );
             process.exit();
           } else if (reason === DisconnectReason.badSession) {
-            console.log(`\x1b[31mWhatscodeError 📕: \x1b[0mBad session file... Try deleting session file and rescan!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBUT IF IT'S YOUR FIRST TIME, PLEASE WAIT THE PROCESS UNTIL THE BOTS CAN CONNECT...\n\x1b[33mWhatscodeWarning 📙: \x1b[0mIF THIS ERROR STILL HAPPEN, TRY TO DO THE WAY ABOVE IE DELETE THE SESSION FILE AND RESCAN!`);
-          if(update.receivedPendingNotifications) {
-            console.log("[whatscode.js] Connection Open after bad session! Bot ready!")
-          } else {
-            // await require('fs').unlinkSync(this.AUTH_FILE)
-            console.log(`\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnect...\n\n`);
+            console.log(`\x1b[31mWhatscodeError 📕: \x1b[0mBad session file... Try deleting session file and rescan!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBUT IF YOU ARE LINKING THE BOTT WITH WAHSTAPP THEN WAIT FOR THIS RECONNECT PROCESS TO COMPLETE!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mIF THIS ERROR STILL HAPPEN, TRY TO DO THE WAY ABOVE IE DELETE THE SESSION FILE AND RESCAN!\n\x1b[36mWhatscodeInfo 📘: \x1b[0mPrepare to Reconnect...`);
+            var reconnectAfterBadSession = setTimeout(function() {
+              // await require('fs').unlinkSync(this.AUTH_FILE)
+              console.log(`\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting...\n\n`);
 
-            require("child_process").spawn(process.argv.shift(), process.argv, {
-                cwd: process.cwd(),
-                detached: false,
-                stdio: "inherit",
-            })
-          }
+              require("child_process").spawn(process.argv.shift(), process.argv, {
+                  cwd: process.cwd(),
+                  detached: false,
+                  stdio: "inherit",
+              })
+            }, 5000)
         } else if (reason === DisconnectReason.connectionClosed) {
           console.log("Connection closed....");
         } else if (reason === DisconnectReason.connectionLost) {
@@ -102,7 +100,8 @@ module.exports = class Client {
       }
       console.log("[conn logs]", update);
       if(update.receivedPendingNotifications) {
-        console.log("\x1b[32mWhatscodeSuccess 📗: \x1b[0mYour bot is ready now!\n\x1b[32mWhatscodeSuccess 📗: \x1b[0mJoin our Discord at: https://discord.gg/CzqHbx7rdU")
+        clearTimeout(reconnectAfterBadSession)
+        console.log("\x1b[32mWhatscodeSuccess 📗: \x1b[0mYour bot is ready now!\n\x1b[32mWhatscodeSuccess 📗: \x1b[0mJoin our Discord at: https://discord.gg/CzqHbx7rdU\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBe careful if the bot is already running and you disconnect the bot from Whatsapp while the session file is still there or not, you have to stop this process to avoid generating qr or restart automatically on an ongoing basis.")
       }
     });
   }

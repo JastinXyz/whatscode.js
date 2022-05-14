@@ -1,5 +1,5 @@
 module.exports = async (d) => {
-  const { decodeJid } = require("../../models/functions.js");
+  const { decodeJid, sender } = require("../../models/functions.js");
   const split = d.code.split("$profilePic").length - 1;
   const after = d.code.split("$profilePic")[split];
 
@@ -14,25 +14,17 @@ module.exports = async (d) => {
     const num = decodeJid(inside);
 
     try {
-      var pp = await d.client.profilePictureUrl(num);
+      var pp = await d.client.profilePictureUrl(num, 'image');
     } catch (err) {
       return "https://imgdb.jstnlt.my.id/img/profile.png";
     }
 
     return pp.trim() === "" ? "https://imgdb.jstnlt.my.id/img/profile.png" : pp;
   } else {
-    const num = decodeJid(
-      d.msg.key.fromMe
-        ? d.client.user.jid
-        : d.msg.participant
-        ? d.msg.participant
-        : d.msg.key.participant
-        ? d.msg.key.participant
-        : d.msg.key.remoteJid
-    );
+    const num = decodeJid(sender(d));
 
     try {
-      var pp = await d.client.profilePictureUrl(num);
+      var pp = await d.client.profilePictureUrl(num, 'image');
     } catch (err) {
       return "https://imgdb.jstnlt.my.id/img/profile.png";
     }

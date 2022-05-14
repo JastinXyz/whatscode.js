@@ -162,14 +162,18 @@ module.exports = class Client {
       this.db.set(name, value);
     }
   }
-  onUserJoinAndLeave() {
+  onUserJoin() {
     this.whats.ev.on("group-participants.update", async (u) => {
-      //console.log(u)
       if (u.action === "add") {
         await require("./handler/userJoinCommand.js")(u, this);
-      } else {
+      } else {}
+    });
+  }
+  onUserLeave() {
+    this.whats.ev.on("group-participants.update", async (u) => {
+      if (u.action === "remove") {
         await require("./handler/userLeaveCommand.js")(u, this);
-      }
+      } else {}
     });
   }
   userJoinCommand(opt) {

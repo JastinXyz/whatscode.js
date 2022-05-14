@@ -108,11 +108,26 @@ module.exports = class Client {
     this.whats.ev.on("creds.update", this.saveState);
   }
   onMessage() {
-    this.whats.ev.on("messages.upsert", async (m) => {
+  this.whats.setStatus = (status) => {
+  this.whats.query({
+  tag: 'iq',
+  attrs: {
+  to: '@s.whatsapp.net',
+  type: 'set',
+  xmlns: 'status',
+  },
+  content: [{
+  tag: 'status',
+  attrs: {},
+  content: Buffer.from(status, 'utf-8')
+  }]
+  })
+  return ""
+  }
+  this.whats.ev.on("messages.upsert", async (m) => {
       if(this.autoRead) {
         this.whats.sendReadReceipt(m.messages[0].key.remoteJid, m.messages[0].key.participant, [m.messages[0].key.id]);
       }
-
       await require("./handler/commands.js")(
         m,
         this.whats,

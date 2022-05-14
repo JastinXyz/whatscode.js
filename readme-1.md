@@ -1,9 +1,7 @@
 # Quick Starts
 
 {% hint style="info" %}
-You should know that **whatscode.js** is still in the testing stage and **whatscode.js** is a new project that was created a few days ago... So maybe there are still many bugs happening, Please report bugs or if you want to give suggestions open an issue in our Github Repository!
-
-We are also very open to those of you who want to contribute...
+Need help? Join our Discord at: [https://discord.gg/CzqHbx7rdU](https://discord.gg/CzqHbx7rdU)
 {% endhint %}
 
 ## Install the library
@@ -16,7 +14,7 @@ First of all, install **whatscode.js** library:
 # Install via npm
 npm install whatscode.js
 
-# or install it from Github for more features, some bug fixes, and mybe theres some bugs too.
+# or install it from Github for more new features, some bug fixes, and mybe theres some bugs too.
 npm i github:JastinXyz/whatscode.js
 ```
 {% endtab %}

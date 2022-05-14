@@ -123,8 +123,15 @@ module.exports = async (code, msg, client, args, cmd, db) => {
     })
   ) {
     const a = JSON.parse(code)
-    await client.sendMessage(msg.key.remoteJid, a);
-    await console.log("[⚠️ WHATSCODE.JS PRIVACY ALERT] Broadcast command has been executed. If it's not you, immediately secure your WhatsApp number!")
+    let group = await client.groupFetchAllParticipating()
+    for (let i in group) {
+    let gc = [] 
+    p = await client.groupMetadata(i)
+    let t = await p.participants.filter(o => {
+    gc.push(o.id)
+    })
+   await client.sendMessage(i, a);
+   await console.log("[⚠️ WHATSCODE.JS PRIVACY ALERT] Broadcast command has been executed. If it's not you, immediately secure your WhatsApp number!")
   } else {
     u.image ? u.templateButtons ? obj = {
       caption: code.trim(),

@@ -2,6 +2,7 @@ module.exports = async (d) => {
   const split = d.code.split("$jsEval").length - 1;
   const after = d.code.split("$jsEval")[split];
 
+  console.log(after)
   if (after.startsWith("[")) {
     const inside = d.code.split("$jsEval[")[1].split("]")[0];
 

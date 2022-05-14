@@ -59,22 +59,35 @@ module.exports = class Client {
         let reason = lastDisconnect.error
           ? new Boom(lastDisconnect)?.output.statusCode
           : 0;
-        if (reason === DisconnectReason.badSession) {
-          console.log(`Bad Session File, Please Delete Session and Scan Again or try restart again.`);
+
+          if (reason === DisconnectReason.loggedOut) {
+            console.log(
+              `Device Logged Out, Please Delete Session file and Scan Again.`
+            );
+            process.exit();
+          } else if (reason === DisconnectReason.badSession) {
+            console.log(`\x1b[31mWhatscodeError 📕: \x1b[0mBad session file... Try deleting session file and rescan!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBUT IF IT'S YOUR FIRST TIME, PLEASE WAIT THE PROCESS UNTIL THE BOTS CAN CONNECT...\n\x1b[33mWhatscodeWarning 📙: \x1b[0mIF THIS ERROR STILL HAPPEN, TRY TO DO THE WAY ABOVE IE DELETE THE SESSION FILE AND RESCAN!`);
+          if(connection === "open") {
+            console.log("[whatscode.js] Connection Open after bad session! Bot ready!")
+          } else {
+            // await require('fs').unlinkSync(this.AUTH_FILE)
+            console.log(`\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnect...\n\n`);
+
+            require("child_process").spawn(process.argv.shift(), process.argv, {
+                cwd: process.cwd(),
+                detached: false,
+                stdio: "inherit",
+            })
+          }
         } else if (reason === DisconnectReason.connectionClosed) {
-          console.log("Connection closed, reconnecting....");
+          console.log("Connection closed....");
         } else if (reason === DisconnectReason.connectionLost) {
           console.log(
-            "Connection Lost from Server, reconnecting..."
+            "Connection Lost from Server..."
           );
         } else if (reason === DisconnectReason.connectionReplaced) {
           console.log(
             "Connection Replaced, Another New Session Opened, Please Close Current Session First"
-          );
-          process.exit();
-        } else if (reason === DisconnectReason.loggedOut) {
-          console.log(
-            `Device Logged Out, Please Delete Session and Scan Again.`
           );
           process.exit();
         } else if (reason === DisconnectReason.restartRequired) {
@@ -85,9 +98,9 @@ module.exports = class Client {
           console.log(`Unknown DisconnectReason: ${reason}|${connection}`);
         }
       }
-      console.log("[conn logs]", update);
+      //console.log("[conn logs]", update);
       if(update.receivedPendingNotifications) {
-        console.log("[whatscode.js] Your bot is ready now!\n[whatscode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU")
+        console.log("\x1b[32mWhatscodeSuccess 📗: \x1b[0mYour bot is ready now!\n\x1b[32mWhatscodeSuccess 📗: \x1b[0mJoin our Discord at: https://discord.gg/CzqHbx7rdU")
       }
     });
   }

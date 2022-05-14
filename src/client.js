@@ -30,6 +30,8 @@ module.exports = class Client {
     this.PREFIX = opts.prefix;
     this.autoRead = opts.autoRead;
     this.CMD = new Map();
+    this.userJoin = new Map();
+    this.userLeave = new Map();
     this.db = db;
 
     this.printQRInTerminal = opts.printQRInTerminal;
@@ -109,6 +111,8 @@ module.exports = class Client {
   }
   onMessage() {
     this.whats.ev.on("messages.upsert", async (m) => {
+      this.m = m;
+
       if(this.autoRead) {
         this.whats.sendReadReceipt(m.messages[0].key.remoteJid, m.messages[0].key.participant, [m.messages[0].key.id]);
       }
@@ -136,6 +140,22 @@ module.exports = class Client {
       this.db.set(name, value)
     }
   }
+  onUserJoinAndLeave() {
+    this.whats.ev.on('group-participants.update', async (u) => {
+       //console.log(u)
+       if(u.action === "add") {
+        await require("./handler/userJoinCommand.js")(u, this)
+       } else {
+         await require("./handler/userLeaveCommand.js")(u, this)
+       }
+    })
+  }
+  userJoinCommand(opt) {
+        this.userJoin.set(this.userJoin.size, opt)
+  }
+  userLeaveCommand(opt) {
+        this.userLeave.set(this.userLeave.size, opt)
+    }
 };
 
 String.prototype.replaceLast = function (find, replace) {

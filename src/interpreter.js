@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = async (code, msg, client, args, cmd, db) => {
+module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   var data = [],
     parser = require("./functions/parser.js"),
     obj,
@@ -80,66 +80,76 @@ module.exports = async (code, msg, client, args, cmd, db) => {
     };
   }
 
-  if (
-    ["$reply"].some(function (v) {
-      return theFuncs.indexOf(v) >= 0;
-    })
-  ) {
-     u.image ? u.templateButtons ? obj = {
-       image: {url: u.image},
-       text: code.trim(),
-       buttons: u.buttons ? u.buttons : "",
-       footer: u.footer ? u.footer : "",
-       templateButtons: u.templateButtons
-     } : obj = {
-       image: {url: u.image},
-       caption: code.trim(),
-       footer: u.footer ? u.footer : "",
-       buttons: u.buttons ? u.buttons : "",
-       headerType: 4
-     } : u.templateButtons ? obj = {
-       text: code.trim(),
-       buttons: u.buttons ? u.buttons : "",
-       footer: u.footer ? u.footer : "",
-       templateButtons: u.templateButtons
-     } : obj = {
-       text: code.trim(),
-       buttons: u.buttons ? u.buttons : "",
-       footer: u.footer ? u.footer : "",
-       headerType: 1
-     }
-
-    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj, { quoted: msg });
-  } else if (
-    ["$sendButton"].some(function (v) {
-      return theFuncs.indexOf(v) >= 0;
-    })
-  ) {
-    const a = JSON.parse(code)
-    await client.sendMessage(msg.key.remoteJid, a);
+  if(r) {
+    return code
   } else {
-    u.image ? u.templateButtons ? obj = {
-      caption: code.trim(),
-      footer: u.footer ? u.footer : "",
-      templateButtons: u.templateButtons,
-      image: {url: u.image}
-    } : obj = {
-      image: {url: u.image},
-      caption: code.trim(),
-      footer: u.footer ? u.footer : "",
-      buttons: u.buttons ? u.buttons : "",
-      headerType: 4
-    } : u.templateButtons ? obj = {
-      text: code.trim(),
-      footer: u.footer ? u.footer : "",
-      templateButtons: u.templateButtons
-    } : obj = {
-      text: code.trim(),
-      buttons: u.buttons ? u.buttons : "",
-      footer: u.footer ? u.footer : "",
-      headerType: 1
-    }
+    if (
+      ["$reply"].some(function (v) {
+        return theFuncs.indexOf(v) >= 0;
+      })
+    ) {
+      u.image ? u.templateButtons ? obj = {
+        caption: code.trim(),
+        footer: u.footer ? u.footer : "",
+        templateButtons: u.templateButtons,
+        image: {url: u.image},
+        mentions: mentions? mentions : ""
+      } : obj = {
+        image: {url: u.image},
+        caption: code.trim(),
+        footer: u.footer ? u.footer : "",
+        buttons: u.buttons ? u.buttons : "",
+        mentions: mentions? mentions : "",
+        headerType: 4
+      } : u.templateButtons ? obj = {
+        text: code.trim(),
+        footer: u.footer ? u.footer : "",
+        templateButtons: u.templateButtons,
+        mentions: mentions? mentions : ""
+      } : obj = {
+        text: code.trim(),
+        buttons: u.buttons ? u.buttons : "",
+        footer: u.footer ? u.footer : "",
+        mentions: mentions? mentions : "",
+        headerType: 1
+      }
 
-    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj);
+      code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj, { quoted: msg });
+    } else if (
+      ["$sendButton"].some(function (v) {
+        return theFuncs.indexOf(v) >= 0;
+      })
+    ) {
+      const a = JSON.parse(code)
+      await client.sendMessage(msg.key.remoteJid, a);
+    } else {
+      u.image ? u.templateButtons ? obj = {
+        caption: code.trim(),
+        footer: u.footer ? u.footer : "",
+        templateButtons: u.templateButtons,
+        image: {url: u.image},
+        mentions: mentions? mentions : ""
+      } : obj = {
+        image: {url: u.image},
+        caption: code.trim(),
+        footer: u.footer ? u.footer : "",
+        buttons: u.buttons ? u.buttons : "",
+        mentions: mentions? mentions : "",
+        headerType: 4
+      } : u.templateButtons ? obj = {
+        text: code.trim(),
+        footer: u.footer ? u.footer : "",
+        templateButtons: u.templateButtons,
+        mentions: mentions? mentions : ""
+      } : obj = {
+        text: code.trim(),
+        buttons: u.buttons ? u.buttons : "",
+        footer: u.footer ? u.footer : "",
+        mentions: mentions? mentions : "",
+        headerType: 1
+      }
+
+      code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj);
+    }
+  };
   }
-};

@@ -1,5 +1,5 @@
 module.exports = async (d) => {
-  var inside = d.code.split("$sendButton[")[1].split("]")[0];
+  var inside = d.code.split("$broadcast[")[1].split("]")[0];
   const [text, type] = inside.split(";");
  
 if (!text) {

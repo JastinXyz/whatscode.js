@@ -117,6 +117,14 @@ module.exports = async (code, msg, client, args, cmd, db) => {
   ) {
     const a = JSON.parse(code)
     await client.sendMessage(msg.key.remoteJid, a);
+  } else if (
+    ["$broadcast"].some(function (v) {
+      return theFuncs.indexOf(v) >= 0;
+    })
+  ) {
+    const a = JSON.parse(code)
+    await client.sendMessage(msg.key.remoteJid, a);
+    await console.log("[⚠️ WHATSCODE.JS PRIVACY ALERT] Broadcast command has been executed. If it's not you, immediately secure your WhatsApp number!")
   } else {
     u.image ? u.templateButtons ? obj = {
       caption: code.trim(),

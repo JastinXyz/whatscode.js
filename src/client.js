@@ -98,7 +98,7 @@ module.exports = class Client {
           console.log(`Unknown DisconnectReason: ${reason}|${connection}`);
         }
       }
-      //console.log("[conn logs]", update);
+      console.log("[conn logs]", update);
       if(update.receivedPendingNotifications) {
         console.log("\x1b[32mWhatscodeSuccess 📗: \x1b[0mYour bot is ready now!\n\x1b[32mWhatscodeSuccess 📗: \x1b[0mJoin our Discord at: https://discord.gg/CzqHbx7rdU")
       }

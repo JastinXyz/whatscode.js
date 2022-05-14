@@ -80,6 +80,32 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
     };
   }
 
+  u.image ? u.templateButtons ? obj = {
+    caption: code.trim(),
+    footer: u.footer ? u.footer : "",
+    templateButtons: u.templateButtons,
+    image: {url: u.image},
+    mentions: mentions? mentions : ""
+  } : obj = {
+    image: {url: u.image},
+    caption: code.trim(),
+    footer: u.footer ? u.footer : "",
+    buttons: u.buttons ? u.buttons : "",
+    mentions: mentions? mentions : "",
+    headerType: 4
+  } : u.templateButtons ? obj = {
+    text: code.trim(),
+    footer: u.footer ? u.footer : "",
+    templateButtons: u.templateButtons,
+    mentions: mentions? mentions : ""
+  } : obj = {
+    text: code.trim(),
+    buttons: u.buttons ? u.buttons : "",
+    footer: u.footer ? u.footer : "",
+    mentions: mentions? mentions : "",
+    headerType: 1
+  }
+
   if(r) {
     return code
   } else {
@@ -88,32 +114,6 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         return theFuncs.indexOf(v) >= 0;
       })
     ) {
-      u.image ? u.templateButtons ? obj = {
-        caption: code.trim(),
-        footer: u.footer ? u.footer : "",
-        templateButtons: u.templateButtons,
-        image: {url: u.image},
-        mentions: mentions? mentions : ""
-      } : obj = {
-        image: {url: u.image},
-        caption: code.trim(),
-        footer: u.footer ? u.footer : "",
-        buttons: u.buttons ? u.buttons : "",
-        mentions: mentions? mentions : "",
-        headerType: 4
-      } : u.templateButtons ? obj = {
-        text: code.trim(),
-        footer: u.footer ? u.footer : "",
-        templateButtons: u.templateButtons,
-        mentions: mentions? mentions : ""
-      } : obj = {
-        text: code.trim(),
-        buttons: u.buttons ? u.buttons : "",
-        footer: u.footer ? u.footer : "",
-        mentions: mentions? mentions : "",
-        headerType: 1
-      }
-
       code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj, { quoted: msg });
     } else if (
       ["$sendButton"].some(function (v) {
@@ -123,32 +123,6 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
       const a = JSON.parse(code)
       await client.sendMessage(msg.key.remoteJid, a);
     } else {
-      u.image ? u.templateButtons ? obj = {
-        caption: code.trim(),
-        footer: u.footer ? u.footer : "",
-        templateButtons: u.templateButtons,
-        image: {url: u.image},
-        mentions: mentions? mentions : ""
-      } : obj = {
-        image: {url: u.image},
-        caption: code.trim(),
-        footer: u.footer ? u.footer : "",
-        buttons: u.buttons ? u.buttons : "",
-        mentions: mentions? mentions : "",
-        headerType: 4
-      } : u.templateButtons ? obj = {
-        text: code.trim(),
-        footer: u.footer ? u.footer : "",
-        templateButtons: u.templateButtons,
-        mentions: mentions? mentions : ""
-      } : obj = {
-        text: code.trim(),
-        buttons: u.buttons ? u.buttons : "",
-        footer: u.footer ? u.footer : "",
-        mentions: mentions? mentions : "",
-        headerType: 1
-      }
-
       code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj);
     }
   };

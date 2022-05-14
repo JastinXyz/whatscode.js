@@ -69,7 +69,7 @@ module.exports = class Client {
             process.exit();
           } else if (reason === DisconnectReason.badSession) {
             console.log(`\x1b[31mWhatscodeError 📕: \x1b[0mBad session file... Try deleting session file and rescan!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBUT IF IT'S YOUR FIRST TIME, PLEASE WAIT THE PROCESS UNTIL THE BOTS CAN CONNECT...\n\x1b[33mWhatscodeWarning 📙: \x1b[0mIF THIS ERROR STILL HAPPEN, TRY TO DO THE WAY ABOVE IE DELETE THE SESSION FILE AND RESCAN!`);
-          if(connection === "open") {
+          if(update.receivedPendingNotifications) {
             console.log("[whatscode.js] Connection Open after bad session! Bot ready!")
           } else {
             // await require('fs').unlinkSync(this.AUTH_FILE)

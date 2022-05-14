@@ -8,6 +8,18 @@ Add a button to the message.
 $button[buttonId:buttonText;buttonId:buttonText;...]
 ```
 
+{% hint style="info" %}
+You can enter a command in the button id section so that when clicked, the button will run the command earlier.
+
+```javascript
+bot.command({
+    name: "pingbutton",
+    code: `Click the button!
+    $button[!ping:Ping]`
+});
+```
+{% endhint %}
+
 ### Example:
 
 ```javascript

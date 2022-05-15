@@ -18,6 +18,6 @@ Feeling like an eager beaver? Jump in to the quick start docs and get making you
 
 Dive a little deeper and start exploring our functions:
 
-{% content-ref url="references/page-2.md" %}
-[page-2.md](references/page-2.md)
+{% content-ref url="references/functions/" %}
+[functions](references/functions/)
 {% endcontent-ref %}

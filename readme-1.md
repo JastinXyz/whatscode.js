@@ -1,6 +1,8 @@
 # Quick Starts
 
 {% hint style="info" %}
+**Please note:** That **whatscode.js** functions code runs from the ground up.
+
 Need help? Join our Discord at: [https://discord.gg/CzqHbx7rdU](https://discord.gg/CzqHbx7rdU)
 {% endhint %}
 

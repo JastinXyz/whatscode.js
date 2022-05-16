@@ -31,6 +31,10 @@ module.exports = async (d) => {
   });
 
   var res = da.data;
-  var result = proper ? res[proper] : res;
+  var result = proper ? eval(
+            `res${
+              ["[", "."].includes(proper[0]) ? proper : `.${proper}`
+            }`
+          ) : res;
   return JSON.stringify(result);
 };

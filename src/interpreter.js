@@ -81,25 +81,25 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   }
 
   u.image ? u.templateButtons ? obj = {
-    caption: code.trim(),
+    caption: code.trim().split("\\n").join("\n"),
     footer: u.footer ? u.footer : "",
     templateButtons: u.templateButtons,
     image: {url: u.image},
     mentions: mentions? mentions : ""
   } : obj = {
     image: {url: u.image},
-    caption: code.trim(),
+    caption: code.trim().split("\\n").join("\n"),
     footer: u.footer ? u.footer : "",
     buttons: u.buttons ? u.buttons : "",
     mentions: mentions? mentions : "",
     headerType: 4
   } : u.templateButtons ? obj = {
-    text: code.trim(),
+    text: code.trim().split("\\n").join("\n"),
     footer: u.footer ? u.footer : "",
     templateButtons: u.templateButtons,
     mentions: mentions? mentions : ""
   } : obj = {
-    text: code.trim(),
+    text: code.trim().split("\\n").join("\n"),
     buttons: u.buttons ? u.buttons : "",
     footer: u.footer ? u.footer : "",
     mentions: mentions? mentions : "",

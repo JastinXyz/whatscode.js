@@ -31,7 +31,7 @@ Value will be assigned to users globally everywhere.
 #### Set:
 
 ```
-$setGlobalUserVar[name;value;user jid (optional)
+$setGlobalUserVar[name;value;user jid (optional)]
 ```
 
 #### Get:

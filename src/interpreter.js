@@ -117,7 +117,13 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   if(amap.get('mentions')) {
     mentions = []
     for (var i = 0; i < amap.get('mentions').length; i++) {
-        c[i].match(/^@\d/gm) ? mentions.push(c[i].slice(1) + "@s.whatsapp.net") : undefined
+        if(c[i].match(/^@\d/gm)) {
+          const num = c[i].slice(1)
+          const [result] = await client.onWhatsApp(num)
+          if(result) {
+              mentions.push(num + "@s.whatsapp.net")
+          }
+        }
     }
     amap.clear()
   }

@@ -32,6 +32,7 @@ module.exports = class Client {
     this.CMD = new Map();
     this.userJoin = new Map();
     this.userLeave = new Map();
+    this.anotherMap = new Map();
     this.db = db;
 
     this.printQRInTerminal = opts.printQRInTerminal;
@@ -145,7 +146,8 @@ module.exports = class Client {
         this.CMD,
         this.PREFIX,
         getContentType,
-        this.db
+        this.db,
+        this.anotherMap
       );
     });
   }

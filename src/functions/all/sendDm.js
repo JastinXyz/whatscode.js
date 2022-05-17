@@ -12,14 +12,10 @@ module.exports = async (d) => {
       return d.error(`❌ WhatscodeError: Usage: $sendDm[text;jid (optional)].`);
     }
 
-    d.unique = true;
-    return {
-      type: "sendDm",
-      response: {
-        text: text,
-        jid: decodeJid(jid)
-      }
-    }
+    // ugly way to run this function lmao
+    const code = `${text}\n$dm[${jid}]`
+    await require("../../interpreter.js")(code, d.msg, d.client, d.args, d.cmd, d.db)
+    return ""
   } else {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $sendDm[text;jid (optional)].`);

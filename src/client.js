@@ -85,16 +85,15 @@ module.exports = class Client {
               }
             );
 
-            setTimeout(
-              () => {
-                console.log("\x1b[36mWhatscodeInfo 📘: \x1b[0mIf the bot is linked to Whatsapp and then Manual Restart is required at this momment\n\n")
-                child.kill("SIGINT");
-                process.exit(0)
-              },
-              5000
-            );
+            setTimeout(() => {
+              console.log(
+                "\x1b[36mWhatscodeInfo 📘: \x1b[0mIf the bot is linked to Whatsapp and then Manual Restart is required at this momment\n\n"
+              );
+              child.kill("SIGINT");
+              process.exit(0);
+            }, 5000);
 
-//child.kill("SIGINT")
+            //child.kill("SIGINT")
           } catch (err) {
             console.log(
               `\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting Error: ${err}\n\n`
@@ -168,14 +167,16 @@ module.exports = class Client {
     this.whats.ev.on("group-participants.update", async (u) => {
       if (u.action === "add") {
         await require("./handler/userJoinCommand.js")(u, this);
-      } else {}
+      } else {
+      }
     });
   }
   onUserLeave() {
     this.whats.ev.on("group-participants.update", async (u) => {
       if (u.action === "remove") {
         await require("./handler/userLeaveCommand.js")(u, this);
-      } else {}
+      } else {
+      }
     });
   }
   userJoinCommand(opt) {

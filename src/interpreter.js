@@ -1,4 +1,5 @@
 const fs = require("fs");
+const amap = new Map()
 
 module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   var data = [],
@@ -108,6 +109,17 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
       code = "";
       break;
     }
+  }
+
+  const c = code.match(/(@[^](?![a-zA-Z]).\d*[$]*)/gm)
+  c? amap.set('mentions', c) : undefined
+
+  if(amap.get('mentions')) {
+    mentions = []
+    for (var i = 0; i < amap.get('mentions').length; i++) {
+        c[i].match(/^@\d/gm) ? mentions.push(c[i].slice(1) + "@s.whatsapp.net") : undefined
+    }
+    amap.clear()
   }
 
   u.image

@@ -3,8 +3,11 @@ const fs = require("fs");
 module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   var data = [],
     parser = require("./functions/parser.js"),
+    { array_move } = require("./models/functions.js"),
     obj,
     suppressErr,
+    sendDM,
+    theJid,
     f;
 
   let searched = [];
@@ -24,6 +27,16 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
 
   var u = {};
   var theFuncs = searchFunc(code.split("$"), parser);
+
+  if (
+    ["$dm"].some(function (v) {
+      return theFuncs.indexOf(v) >= 0;
+    })
+  ) {
+    const findDM = theFuncs.indexOf(theFuncs.filter(x => x.includes("$dm")).join(""))
+    theFuncs = array_move(theFuncs, findDM, 0)
+  }
+
   for (const func of theFuncs.reverse()) {
     var _iOne = code.split(`${func}[`)[1];
     if (!_iOne) {
@@ -59,7 +72,14 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
           );
         }
       },
-      db: db
+      db: db,
+      jid: (n) => {
+        if(!n) {
+          theJid = msg.key.remoteJid
+        } else {
+          theJid = n
+        }
+      }
      };
 
     var res = await require(`./functions/all/${d}.js`)(all);
@@ -67,6 +87,8 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
     if(all.unique) {
       if(res.type === "error") {
         suppressErr = res.response
+      } if(res.type === "sendDm") {
+        sendDM = res.response
       } else {
           u[res.type] = res.response
       }
@@ -110,12 +132,6 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
     return code
   } else {
     if (
-      ["$reply"].some(function (v) {
-        return theFuncs.indexOf(v) >= 0;
-      })
-    ) {
-      code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj, { quoted: msg });
-    } else if (
       ["$sendButton"].some(function (v) {
         return theFuncs.indexOf(v) >= 0;
       })
@@ -123,7 +139,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
       const a = JSON.parse(code)
       await client.sendMessage(msg.key.remoteJid, a);
     } else {
-      code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj);
+      code.trim() === ""? undefined : await client.sendMessage(theJid? theJid : msg.key.remoteJid, obj, ["$reply"].some(function (v) { return theFuncs.indexOf(v) >= 0; })? { quoted: msg } : undefined);
     }
   };
   }

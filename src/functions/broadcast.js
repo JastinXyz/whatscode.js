@@ -15,9 +15,14 @@ if (!text || !type) {
     if(type === "all") {
       let p = await d.client.groupMetadata(i);
       let t = await p.participants.filter((o) => {
-         d.jid(o.id)
-         return text
+         g.push(o.id)
       });
+
+      for (var j = 0; j < g.length; j++) {
+        d.jid(g[j])
+        return text
+      }
+
     } else {
       d.jid(i)
       return text

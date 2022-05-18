@@ -1,4 +1,9 @@
 module.exports = async(d) => {
-  await d.client.groupSettingUpdate(d.msg.key.remoteJid, 'not_announcement')
+  try {
+    await d.client.groupSettingUpdate(d.msg.key.remoteJid, 'not_announcement')
+  } catch(err) {
+    d.isError = true;
+    d.error('❌ Failed to open')
+  }
   return ""
 };

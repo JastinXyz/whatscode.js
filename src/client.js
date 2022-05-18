@@ -2,24 +2,13 @@ const P = require("pino");
 const {
   default: makeWASocket,
   DisconnectReason,
-  AnyMessageContent,
-  delay,
-  proto,
-  jidDecode,
   useSingleFileAuthState,
   getContentType,
-  generateForwardMessageContent,
-  generateWAMessageFromContent,
-  downloadContentFromMessage,
-  generateMessageID,
-  makeInMemoryStore,
 } = require("@adiwajshing/baileys");
-const baileys = require("@adiwajshing/baileys");
 const { Boom } = require("@hapi/boom");
-const axios = require("axios");
 const db = require("quick.db");
 
-const { getWaWebVer } = require("./models/functions.js");
+const { getWaWebVer } = require("./models/functions");
 
 module.exports = class Client {
   constructor(opts = {}) {
@@ -55,24 +44,25 @@ module.exports = class Client {
       version: getWaWebVer() || [2, 2214, 12],
     });
   }
+
   onConnectionUpdate() {
     this.whats.ev.on("connection.update", async (update) => {
       const { connection, lastDisconnect } = update;
       if (connection === "close") {
-        let reason = lastDisconnect.error
+        const reason = lastDisconnect.error
           ? new Boom(lastDisconnect)?.output.statusCode
           : 0;
 
         if (reason === DisconnectReason.loggedOut) {
           console.log(
-            `Device Logged Out, Please Delete Session file and Scan Again.`
+            "Device Logged Out, Please Delete Session file and Scan Again."
           );
           process.exit();
         } else if (reason === DisconnectReason.badSession) {
           console.log(
-            `\x1b[31mWhatscodeError 📕: \x1b[0mBad session file... Try deleting session file and rescan!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBUT IF YOU ARE LINKING THE BOTT WITH WAHSTAPP THEN WAIT FOR THIS RECONNECT PROCESS TO COMPLETE!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mIF THIS ERROR STILL HAPPEN, TRY TO DO THE WAY ABOVE IE DELETE THE SESSION FILE AND RESCAN!\n\x1b[36mWhatscodeInfo 📘: \x1b[0mPrepare to Reconnect...`
+            "\x1b[31mWhatscodeError 📕: \x1b[0mBad session file... Try deleting session file and rescan!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBUT IF YOU ARE LINKING THE BOTT WITH WAHSTAPP THEN WAIT FOR THIS RECONNECT PROCESS TO COMPLETE!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mIF THIS ERROR STILL HAPPEN, TRY TO DO THE WAY ABOVE IE DELETE THE SESSION FILE AND RESCAN!\n\x1b[36mWhatscodeInfo 📘: \x1b[0mPrepare to Reconnect..."
           );
-          console.log(`\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting...\n\n`);
+          console.log("\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting...\n\n");
 
           try {
             const child = await require("child_process").spawn(
@@ -87,7 +77,7 @@ module.exports = class Client {
 
             setTimeout(() => {
               console.log(
-                "\x1b[36mWhatscodeInfo 📘: \x1b[0mIf the bot is linked to Whatsapp and then Manual Restart is required at this momment\n\n"
+                "\x1b[36mWhatscodeInfo 📘: \x1b[0mManual Restart Required!\n\n"
               );
               child.kill("SIGINT");
               process.exit(0);
@@ -124,9 +114,11 @@ module.exports = class Client {
       }
     });
   }
+
   onCredsUpdate() {
     this.whats.ev.on("creds.update", this.saveState);
   }
+
   onMessage() {
     this.whats.ev.on("messages.upsert", async (m) => {
       this.m = m;
@@ -139,7 +131,7 @@ module.exports = class Client {
         );
       }
 
-      await require("./handler/commands.js")(
+      await require("./handler/commands")(
         m,
         this.whats,
         this.CMD,
@@ -150,38 +142,42 @@ module.exports = class Client {
       );
     });
   }
+
   command(...args) {
     for (const w of args) {
-      if (!w.name) throw new Error(`name required in commands!`);
-      if (!w.code) throw new Error(`code required in commands!`);
+      if (!w.name) throw new Error("name required in commands!");
+      if (!w.code) throw new Error("code required in commands!");
 
       this.CMD.set(w.name.toLowerCase(), w.code);
     }
   }
+
   variables(opt) {
     for (const [name, value] of Object.entries(opt)) {
       this.db.set(name, value);
     }
   }
+
   onUserJoin() {
     this.whats.ev.on("group-participants.update", async (u) => {
       if (u.action === "add") {
-        await require("./handler/userJoinCommand.js")(u, this);
-      } else {
+        await require("./handler/userJoinCommand")(u, this);
       }
     });
   }
+
   onUserLeave() {
     this.whats.ev.on("group-participants.update", async (u) => {
       if (u.action === "remove") {
         await require("./handler/userLeaveCommand.js")(u, this);
-      } else {
       }
     });
   }
+
   userJoinCommand(opt) {
     this.userJoin.set(this.userJoin.size, opt);
   }
+
   userLeaveCommand(opt) {
     this.userLeave.set(this.userLeave.size, opt);
   }
@@ -192,7 +188,7 @@ String.prototype.replaceLast = function (find, replace) {
     replace = "";
   }
 
-  var index = this.lastIndexOf(find);
+  const index = this.lastIndexOf(find);
 
   if (index >= 0) {
     return (

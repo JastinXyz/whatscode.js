@@ -67,6 +67,6 @@ module.exports = {
           }
       }
       arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-      return arr; // for testing
+      return arr;
   }
 };

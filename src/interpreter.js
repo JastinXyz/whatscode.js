@@ -1,20 +1,17 @@
-const fs = require("fs");
-const amap = new Map()
+const amap = new Map();
 
 module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
-  var data = [],
-    parser = require("./functions/parser.js"),
-    { array_move } = require("./models/functions.js"),
-    obj,
-    suppressErr,
-    sendDM = {},
-    theJid = msg.key.remoteJid,
-    f;
+  const data = [];
+  const parser = require("./functions/parser");
+  const { array_move } = require("./models/functions");
+  let obj;
+  let suppressErr;
+  let theJid = msg.key.remoteJid;
 
-  let searched = [];
+  const searched = [];
   function searchFunc(_n, _p) {
     for (const f of _n) {
-      const func = _p.filter((filt) => filt == ("$" + f).slice(0, filt.length));
+      const func = _p.filter((filt) => filt == `$${f}`.slice(0, filt.length));
 
       if (func.length == 1) {
         searched.push(func[0]);
@@ -26,14 +23,10 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
     return searched;
   }
 
-  var u = {};
-  var theFuncs = searchFunc(code.split("$"), parser);
+  const u = {};
+  let theFuncs = searchFunc(code.split("$"), parser);
 
-  if (
-    ["$dm"].some(function (v) {
-      return theFuncs.indexOf(v) >= 0;
-    })
-  ) {
+  if (["$dm"].some((v) => theFuncs.indexOf(v) >= 0)) {
     const findDM = theFuncs.indexOf(
       theFuncs.filter((x) => x.includes("$dm")).join("")
     );
@@ -41,7 +34,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   }
 
   for (const func of theFuncs.reverse()) {
-    var _iOne = code.split(`${func}[`)[1];
+    let _iOne = code.split(`${func}[`)[1];
     if (!_iOne) {
       _iOne = "";
     } else {
@@ -53,16 +46,16 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
       inside: _iOne,
     });
 
-    var d = func.replace("$", "").replace("[", "");
+    const d = func.replace("$", "").replace("[", "");
 
-    var all = {
-      data: data,
-      msg: msg,
-      client: client,
-      code: code,
-      args: args,
+    const all = {
+      data,
+      msg,
+      client,
+      code,
+      args,
       isError: false,
-      cmd: cmd,
+      cmd,
       unique: false,
       error: (err) => {
         if (!suppressErr) {
@@ -73,17 +66,16 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
             },
             { quoted: msg }
           );
-        } else {
-          return client.sendMessage(
-            msg.key.remoteJid,
-            {
-              text: `\`\`\`${suppressErr.split("{error}").join(err)}\`\`\``,
-            },
-            { quoted: msg }
-          );
         }
+        return client.sendMessage(
+          msg.key.remoteJid,
+          {
+            text: `\`\`\`${suppressErr.split("{error}").join(err)}\`\`\``,
+          },
+          { quoted: msg }
+        );
       },
-      db: db,
+      db,
       jid: (n) => {
         if (!n) {
           theJid = msg.key.remoteJid;
@@ -93,7 +85,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
       },
     };
 
-    var res = await require(`./functions/all/${d}.js`)(all);
+    const res = await require(`./functions/all/${d}.js`)(all);
 
     if (all.unique) {
       if (res.type === "error") {
@@ -111,21 +103,21 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
     }
   }
 
-  const c = code.match(/(@[^](?![a-zA-Z]).\d*[$]*)/gm)
-  c? amap.set('mentions', c) : undefined
+  const c = code.match(/(@[^](?![a-zA-Z]).\d*[$]*)/gm);
+  c ? amap.set("mentions", c) : undefined;
 
-  if(amap.get('mentions')) {
-    mentions = []
-    for (var i = 0; i < amap.get('mentions').length; i++) {
-        if(c[i].match(/^@\d/gm)) {
-          const num = c[i].slice(1)
-          const [result] = await client.onWhatsApp(num)
-          if(result) {
-              mentions.push(num + "@s.whatsapp.net")
-          }
+  if (amap.get("mentions")) {
+    mentions = [];
+    for (let i = 0; i < amap.get("mentions").length; i++) {
+      if (c[i].match(/^@\d/gm)) {
+        const num = c[i].slice(1);
+        const [result] = await client.onWhatsApp(num);
+        if (result) {
+          mentions.push(`${num}@s.whatsapp.net`);
         }
+      }
     }
-    amap.clear()
+    amap.clear();
   }
 
   u.image
@@ -135,14 +127,14 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
           footer: u.footer ? u.footer : "",
           templateButtons: u.templateButtons,
           image: { url: u.image },
-          mentions: mentions ? mentions : "",
+          mentions: mentions || "",
         })
       : (obj = {
           image: { url: u.image },
           caption: code.trim().split("\\n").join("\n"),
           footer: u.footer ? u.footer : "",
           buttons: u.buttons ? u.buttons : "",
-          mentions: mentions ? mentions : "",
+          mentions: mentions || "",
           headerType: 4,
         })
     : u.templateButtons
@@ -150,38 +142,31 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         text: code.trim().split("\\n").join("\n"),
         footer: u.footer ? u.footer : "",
         templateButtons: u.templateButtons,
-        mentions: mentions ? mentions : "",
+        mentions: mentions || "",
       })
     : (obj = {
         text: code.trim().split("\\n").join("\n"),
         buttons: u.buttons ? u.buttons : "",
         footer: u.footer ? u.footer : "",
-        mentions: mentions ? mentions : "",
+        mentions: mentions || "",
         headerType: 1,
       });
 
   if (r) {
     return code;
+  }
+  if (["$sendButton"].some((v) => theFuncs.indexOf(v) >= 0)) {
+    const a = JSON.parse(code);
+    await client.sendMessage(msg.key.remoteJid, a);
   } else {
-    if (
-      ["$sendButton"].some(function (v) {
-        return theFuncs.indexOf(v) >= 0;
-      })
-    ) {
-      const a = JSON.parse(code);
-      await client.sendMessage(msg.key.remoteJid, a);
-    } else {
-      code.trim() === ""
-        ? undefined
-        : await client.sendMessage(
-            theJid,
-            obj,
-            ["$reply"].some(function (v) {
-              return theFuncs.indexOf(v) >= 0;
-            })
-              ? { quoted: msg }
-              : undefined
-          );
-    }
+    code.trim() === ""
+      ? undefined
+      : await client.sendMessage(
+          theJid,
+          obj,
+          ["$reply"].some((v) => theFuncs.indexOf(v) >= 0)
+            ? { quoted: msg }
+            : undefined
+        );
   }
 };

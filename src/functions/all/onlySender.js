@@ -1,5 +1,5 @@
 module.exports = async (d) => {
-  const { decodeJid } = require("../../models/functions.js");
+  const { decodeJid, sender } = require("../../models/functions.js");
   const inside = d.code.split("$onlySender[")[1].split("]")[0];
   const [
     error = "You can't use this command because only a few people can use it.",
@@ -8,18 +8,10 @@ module.exports = async (d) => {
 
   if (!num)
     return d.error(
-      `❌ WhatscodeError: Usage: $onlySender[error (optional);123@s.whatsapp.net]!`
+      `❌ WhatscodeError: Usage: $onlySender[error (optional);123@s.whatsapp.net;...]!`
     );
 
-  const decoded = await decodeJid(
-    d.msg.key.fromMe
-      ? d.client.user.jid
-      : d.msg.participant
-      ? d.msg.participant
-      : d.msg.key.participant
-      ? d.msg.key.participant
-      : d.msg.key.remoteJid
-  );
+  const decoded = await decodeJid(sender(d));
   const c = num.includes(decoded);
   if (!c) {
     d.isError = true;

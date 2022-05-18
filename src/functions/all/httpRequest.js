@@ -1,5 +1,4 @@
 const axios = require("axios");
-const _s = require("scramb");
 
 // not tested yet with other method...
 module.exports = async (d) => {
@@ -8,7 +7,7 @@ module.exports = async (d) => {
     ";"
   );
   const headers = {
-    "User-Agent": _s.userAgents().result,
+    "User-Agent": `Whatsapp Bot using Whatscode.js (https://npmjs.com/whatscode.js, ${require('../../../package.json').version})`,
   };
 
   if (!url) {
@@ -31,6 +30,10 @@ module.exports = async (d) => {
   });
 
   var res = da.data;
-  var result = proper ? res[proper] : res;
+  var result = proper ? eval(
+            `res${
+              ["[", "."].includes(proper[0]) ? proper : `.${proper}`
+            }`
+          ) : res;
   return JSON.stringify(result);
 };

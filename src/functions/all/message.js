@@ -1,5 +1,5 @@
 module.exports = async (d) => {
-  const args = d.args.toString().split(",");
+  const args = d.args.join(" ");
 
   const split = d.code.split("$message").length - 1;
   const after = d.code.split("$message")[split];
@@ -9,6 +9,6 @@ module.exports = async (d) => {
 
     return args[inside - 1]? args[inside - 1] : "";
   } else {
-    return args.join(" ")? args.join(" ") : "";
+    return args? args : "";
   }
 };

@@ -1,16 +1,17 @@
-const fs = require("fs");
+const amap = new Map();
 
-module.exports = async (code, msg, client, args, cmd, db) => {
-  var data = [],
-    parser = require("./functions/parser.js"),
-    obj,
-    suppressErr,
-    f;
+module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
+  const data = [];
+  const parser = require("./functions/parser");
+  const { array_move } = require("./models/functions");
+  let obj;
+  let suppressErr;
+  let theJid = msg.key.remoteJid;
 
-  let searched = [];
+  const searched = [];
   function searchFunc(_n, _p) {
     for (const f of _n) {
-      const func = _p.filter((filt) => filt == ("$" + f).slice(0, filt.length));
+      const func = _p.filter((filt) => filt == `$${f}`.slice(0, filt.length));
 
       if (func.length == 1) {
         searched.push(func[0]);
@@ -22,10 +23,18 @@ module.exports = async (code, msg, client, args, cmd, db) => {
     return searched;
   }
 
-  var u = {};
-  var theFuncs = searchFunc(code.split("$"), parser);
+  const u = {};
+  let theFuncs = searchFunc(code.split("$"), parser);
+
+  if (["$dm"].some((v) => theFuncs.indexOf(v) >= 0)) {
+    const findDM = theFuncs.indexOf(
+      theFuncs.filter((x) => x.includes("$dm")).join("")
+    );
+    theFuncs = array_move(theFuncs, findDM, 0);
+  }
+
   for (const func of theFuncs.reverse()) {
-    var _iOne = code.split(`${func}[`)[1];
+    let _iOne = code.split(`${func}[`)[1];
     if (!_iOne) {
       _iOne = "";
     } else {
@@ -37,11 +46,19 @@ module.exports = async (code, msg, client, args, cmd, db) => {
       inside: _iOne,
     });
 
-    var d = func.replace("$", "").replace("[", "");
+    const d = func.replace("$", "").replace("[", "");
 
-    var all = { data: data, msg: msg, client: client, code: code, args: args, isError: false, cmd: cmd, unique: false,
+    const all = {
+      data,
+      msg,
+      client,
+      code,
+      args,
+      isError: false,
+      cmd,
+      unique: false,
       error: (err) => {
-        if(!suppressErr) {
+        if (!suppressErr) {
           return client.sendMessage(
             msg.key.remoteJid,
             {
@@ -49,112 +66,125 @@ module.exports = async (code, msg, client, args, cmd, db) => {
             },
             { quoted: msg }
           );
+        }
+        return client.sendMessage(
+          msg.key.remoteJid,
+          {
+            text: `\`\`\`${suppressErr.split("{error}").join(err)}\`\`\``,
+          },
+          { quoted: msg }
+        );
+      },
+      db,
+      jid: (n) => {
+        if (!n) {
+          theJid = msg.key.remoteJid;
         } else {
-          return client.sendMessage(
-            msg.key.remoteJid,
-            {
-              text: `\`\`\`${suppressErr.split("{error}").join(err)}\`\`\``,
-            },
-            { quoted: msg }
-          );
+          theJid = n;
         }
       },
-      db: db
-     };
+    };
 
-    var res = await require(`./functions/all/${d}.js`)(all);
+    const res = await require(`./functions/all/${d}.js`)(all);
 
-    if(all.unique) {
-      if(res.type === "error") {
-        suppressErr = res.response
+    if (all.unique) {
+      if (res.type === "error") {
+        suppressErr = res.response;
       } else {
-          u[res.type] = res.response
+        u[res.type] = res.response;
       }
     }
 
     code = code.replaceLast(_iOne ? `${func}[${_iOne}]` : func, res);
 
-    if(all.isError) {
-      code = ""
+    if (all.isError) {
+      code = "";
       break;
-    };
+    }
   }
 
-  if (
-    ["$reply"].some(function (v) {
-      return theFuncs.indexOf(v) >= 0;
-    })
-  ) {
-     u.image ? u.templateButtons ? obj = {
-       image: {url: u.image},
-       text: code.trim(),
-       buttons: u.buttons ? u.buttons : "",
-       footer: u.footer ? u.footer : "",
-       templateButtons: u.templateButtons
-     } : obj = {
-       image: {url: u.image},
-       caption: code.trim(),
-       footer: u.footer ? u.footer : "",
-       buttons: u.buttons ? u.buttons : "",
-       headerType: 4
-     } : u.templateButtons ? obj = {
-       text: code.trim(),
-       buttons: u.buttons ? u.buttons : "",
-       footer: u.footer ? u.footer : "",
-       templateButtons: u.templateButtons
-     } : obj = {
-       text: code.trim(),
-       buttons: u.buttons ? u.buttons : "",
-       footer: u.footer ? u.footer : "",
-       headerType: 1
-     }
+  const c = code.match(/(@[^](?![a-zA-Z]).\d*[$]*)/gm);
+  c ? amap.set("mentions", c) : undefined;
 
-    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj, { quoted: msg });
-  } else if (
-    ["$sendButton"].some(function (v) {
-      return theFuncs.indexOf(v) >= 0;
-    })
-  ) {
-    const a = JSON.parse(code)
+  if (amap.get("mentions")) {
+    mentions = [];
+    for (let i = 0; i < amap.get("mentions").length; i++) {
+      if (c[i].match(/^@\d/gm)) {
+        const num = c[i].slice(1);
+        const [result] = await client.onWhatsApp(num);
+        if (result) {
+          mentions.push(`${num}@s.whatsapp.net`);
+        }
+      }
+    }
+    amap.clear();
+  }
+
+  u.image
+    ? u.templateButtons
+      ? (obj = {
+          caption: code.trim().split("\\n").join("\n"),
+          footer: u.footer ? u.footer : "",
+          templateButtons: u.templateButtons,
+          image: { url: u.image },
+          mentions: mentions || "",
+        })
+      : (obj = {
+          image: { url: u.image },
+          caption: code.trim().split("\\n").join("\n"),
+          footer: u.footer ? u.footer : "",
+          buttons: u.buttons ? u.buttons : "",
+          mentions: mentions || "",
+          headerType: 4,
+        })
+    : u.templateButtons
+    ? (obj = {
+        text: code.trim().split("\\n").join("\n"),
+        footer: u.footer ? u.footer : "",
+        templateButtons: u.templateButtons,
+        mentions: mentions || "",
+      })
+    : (obj = {
+        text: code.trim().split("\\n").join("\n"),
+        buttons: u.buttons ? u.buttons : "",
+        footer: u.footer ? u.footer : "",
+        mentions: mentions || "",
+        headerType: 1,
+      });
+
+  if (r) {
+    return code;
+  }
+  if (["$sendButton"].some((v) => theFuncs.indexOf(v) >= 0)) {
+    const a = JSON.parse(code);
     await client.sendMessage(msg.key.remoteJid, a);
   } else if (
     ["$broadcast"].some(function (v) {
       return theFuncs.indexOf(v) >= 0;
     })
   ) {
-    const a = JSON.parse(code)
-    let group = await client.groupFetchAllParticipating()
+    const a = JSON.parse(code);
+    let group = await client.groupFetchAllParticipating();
     for (let i in group) {
-    let gc = [] 
-    p = await client.groupMetadata(i)
-    let t = await p.participants.filter(o => {
-    gc.push(o.id)
-    })
-   await client.sendMessage(i, a);
-   await console.log("[⚠️ WHATSCODE.JS PRIVACY ALERT] Broadcast command has been executed. If it's not you, immediately secure your WhatsApp number!")
-  } else {
-    u.image ? u.templateButtons ? obj = {
-      caption: code.trim(),
-      footer: u.footer ? u.footer : "",
-      templateButtons: u.templateButtons,
-      image: {url: u.image}
-    } : obj = {
-      image: {url: u.image},
-      caption: code.trim(),
-      footer: u.footer ? u.footer : "",
-      buttons: u.buttons ? u.buttons : "",
-      headerType: 4
-    } : u.templateButtons ? obj = {
-      text: code.trim(),
-      footer: u.footer ? u.footer : "",
-      templateButtons: u.templateButtons
-    } : obj = {
-      text: code.trim(),
-      buttons: u.buttons ? u.buttons : "",
-      footer: u.footer ? u.footer : "",
-      headerType: 1
+      let gc = [];
+      p = await client.groupMetadata(i);
+      let t = await p.participants.filter((o) => {
+        gc.push(o.id);
+      });
+      await client.sendMessage(i, a);
+      await console.log(
+        "[⚠️ WHATSCODE.JS PRIVACY ALERT] Broadcast command has been executed. If it's not you, immediately secure your WhatsApp number!"
+      );
     }
-
-    code.trim() === ""? undefined : await client.sendMessage(msg.key.remoteJid, obj);
+  } else {
+    code.trim() === ""
+      ? undefined
+      : await client.sendMessage(
+          theJid,
+          obj,
+          ["$reply"].some((v) => theFuncs.indexOf(v) >= 0)
+            ? { quoted: msg }
+            : undefined
+        );
   }
 };

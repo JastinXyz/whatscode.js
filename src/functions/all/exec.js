@@ -12,7 +12,7 @@ module.exports = async (d) => {
       return d.error(`❌ WhatscodeError: $exec error: ${err}!`);
     }
 
-    return execute;
+    return execute.toString();
   } else {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $exec[code]!`);

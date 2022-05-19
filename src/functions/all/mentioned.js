@@ -13,11 +13,11 @@ module.exports = async (d) => {
       d.error("❌ Invalid number in: $mentioned");
     }
 
-    const mentioned = d.msg.message.extendedTextMessage.contextInfo
+    var mentioned = d.msg.message.extendedTextMessage
       ? d.msg.message.extendedTextMessage.contextInfo.mentionedJid
       : "";
 
-    return mentioned.join("").trim() === "" ? "" : mentioned[n - 1] ? jid === "yes" ? mentioned[n - 1] : "@" + mentioned[n - 1].replace("@s.whatsapp.net", "") : "";
+    return mentioned === "" ? "" : mentioned[n - 1] ? jid === "yes" ? mentioned[n - 1] : "@" + mentioned[n - 1].replace("@s.whatsapp.net", "") : "";
   } else {
     d.isError = true;
     d.error("❌ Usage: $mentioned[number;return jid (yes/no) (optional)]");

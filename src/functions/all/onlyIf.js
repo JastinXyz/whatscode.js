@@ -16,7 +16,7 @@ module.exports = async (d) => {
     if (!operators) {
       d.isError = true;
       return d.error(
-        `❌ WhatscodeError: Usage: $onlyIf[condition;error message (optional)]!`
+        `❌ WhatscodeError: Usage: $onlyIf[value1(<=/>=/==/!=/</>)value2;error message (optional)]!`
       );
     }
 

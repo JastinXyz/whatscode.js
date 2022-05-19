@@ -20,8 +20,8 @@ module.exports = async (d) => {
   if (after.startsWith("[")) {
     const inside = d.code.split("$isAdmin[")[1].split("]")[0];
 
-    return admins.includes(inside) || ""
+    return admins.includes(inside)
   } else {
-    return admins.includes(await decodeJid(d.client.user.id)) || ""
+    return admins.includes(await decodeJid(d.client.user.id))
   }
 };

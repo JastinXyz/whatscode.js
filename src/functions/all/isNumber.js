@@ -5,7 +5,7 @@ module.exports = async (d) => {
   if (after.startsWith("[")) {
     const inside = d.code.split("$isNumber[")[1].split("]")[0];
     try {
-    const re = inside.trim() === '' ? false : isNaN(inside) ? false : true
+    var re = inside.trim() === '' ? false : isNaN(inside) ? false : true
     } catch (err) {
       d.isError = true;
       return d.error(

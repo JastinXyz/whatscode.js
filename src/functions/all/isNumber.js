@@ -17,7 +17,7 @@ module.exports = async (d) => {
   } else {
     d.isError = true;
     return d.error(
-      `❌ WhatscodeError: Usage: $isNumber[number]!`
+      `❌ WhatscodeError: Usage: $isNumber[some text]!`
     );
   }
 };

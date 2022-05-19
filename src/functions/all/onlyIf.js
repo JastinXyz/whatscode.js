@@ -23,7 +23,7 @@ module.exports = async (d) => {
   } else if (op === ">=") {
     if (Number(fields[0]) >= Number(fields[1])) pass = false;
   } else if (op === "==") {
-    if (fields[0] === Number(fields[1])) pass = false;
+    if (fields[0] === fields[1]) pass = false;
   } else if (op === "<") {
     if (Number(fields[0]) < Number(fields[1])) pass = false;
   } else if (op === ">") {

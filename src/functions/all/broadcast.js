@@ -10,22 +10,18 @@ if (!text || !type) {
   }
 
   let group = await d.client.groupFetchAllParticipating();
-  const g = []
+  var g = []
   for (let i in group) {
     if(type === "all") {
       let p = await d.client.groupMetadata(i);
       let t = await p.participants.filter((o) => {
          g.push(o.id)
       });
-
-      for (var j = 0; j < g.length; j++) {
-        d.jid(g[j])
-        return text
-      }
-
     } else {
-      d.jid(i)
-      return text
+      g.push(i)
     }
   }
+
+  d.jid(g.removeDuplicates())
+  return text
 };

@@ -159,14 +159,28 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
     const a = JSON.parse(code);
     await client.sendMessage(msg.key.remoteJid, a);
   } else {
-    code.trim() === ""
-      ? undefined
-      : await client.sendMessage(
-          theJid,
-          obj,
-          ["$reply"].some((v) => theFuncs.indexOf(v) >= 0)
-            ? { quoted: msg }
-            : undefined
-        );
+    if(typeof theJid === "array" || typeof theJid === "object") {
+      for (var i = 0; i < theJid.length; i++) {
+        code.trim() === ""
+          ? undefined
+          : await client.sendMessage(
+              theJid[i],
+              obj,
+              ["$reply"].some((v) => theFuncs.indexOf(v) >= 0)
+                ? { quoted: msg }
+                : undefined
+            );
+      }
+    } else {
+      code.trim() === ""
+        ? undefined
+        : await client.sendMessage(
+            theJid,
+            obj,
+            ["$reply"].some((v) => theFuncs.indexOf(v) >= 0)
+              ? { quoted: msg }
+              : undefined
+          );
+    }
   }
 };

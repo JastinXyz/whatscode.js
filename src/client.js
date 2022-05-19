@@ -198,3 +198,9 @@ String.prototype.replaceLast = function (find, replace) {
 
   return this.toString();
 };
+
+Array.prototype.removeDuplicates = function () {
+    return this.filter(function (item, index, self) {
+        return self.indexOf(item) == index;
+    });
+};

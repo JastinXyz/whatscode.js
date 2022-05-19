@@ -4,7 +4,11 @@ module.exports = async (d) => {
 
   if (after.startsWith("[")) {
     const inside = d.code.split("$onlyIf[")[1].split("]")[0];
-    const [cond, error = "You can't use this command!"] = inside.split(";");
+    var [cond, error = "You can't use this command!"] = inside.split(";");
+
+    if(cond.includes("$")) {
+      cond = await require("../../interpreter.js")(cond, d.msg, d.client, d.args, d.cmd, d.db, "", true)
+    }
 
     const operators = () => {
       for (const op of ["<=", ">=", "==", "!=", "<", ">"]) {

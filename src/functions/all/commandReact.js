@@ -1,9 +1,9 @@
-module.exports = async (d) => {
-  const split = d.code.split("$commandReact").length - 1;
-  const after = d.code.split("$commandReact")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$commandReact[")[1].split("]")[0];
+module.exports = async(d) => {
+  const inside = d.inside;
+  if(inside == "") {
+    d.isError = true;
+    return d.error(`❌ WhatscodeError: Usage: $commandReact[emoji]!`);
+  } else {
     const reactionMessage = {
       react: {
         text: inside,
@@ -13,8 +13,5 @@ module.exports = async (d) => {
 
     await d.client.sendMessage(d.msg.key.remoteJid, reactionMessage);
     return "";
-  } else {
-    d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $commandReact[emoji]!`);
   }
 };

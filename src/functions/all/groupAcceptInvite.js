@@ -1,10 +1,11 @@
-module.exports = async (d) => {
-  const split = d.code.split("$groupAcceptInvite").length - 1;
-  const after = d.code.split("$groupAcceptInvite")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$groupAcceptInvite[")[1].split("]")[0];
-
+module.exports = async(d) => {
+  const inside = d.inside;
+  if(inside == "") {
+    d.isError = true;
+    return d.error(
+      `❌ WhatscodeError: Usage: $groupAcceptInvite[invite link]!`
+    );
+  } else {
     try {
       let g = inside.split("https://chat.whatsapp.com/")[1];
       await d.client.groupAcceptInvite(g);
@@ -16,10 +17,5 @@ module.exports = async (d) => {
     }
 
     return "";
-  } else {
-    d.isError = true;
-    return d.error(
-      `❌ WhatscodeError: Usage: $groupAcceptInvite[invite link]!`
-    );
   }
 };

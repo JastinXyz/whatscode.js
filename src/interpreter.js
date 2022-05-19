@@ -50,6 +50,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
 
     const all = {
       data,
+      inside: _iOne,
       msg,
       client,
       code,

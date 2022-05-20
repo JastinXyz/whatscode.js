@@ -1,2 +1,2 @@
 # whatscode.js
-This branch is the branch for Github Pages.
+This branch is the branch for Whatscode.js Github Pages.

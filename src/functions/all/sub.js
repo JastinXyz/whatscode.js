@@ -1,9 +1,9 @@
 module.exports = async (d) => {
-  const split = d.code.split("$sub").length - 1;
-  const after = d.code.split("$sub")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$sub[")[1].split("]")[0];
+  const inside = d.inside;
+  if (inside == "") {
+    d.isError = true;
+    return d.error(`❌ WhatscodeError: Usage: $sub[number;number]!`);
+  } else {
     const [n, i] = inside.split(";");
 
     if (isNaN(n) || isNaN(i)) {
@@ -12,8 +12,5 @@ module.exports = async (d) => {
     } else {
       return Number(n) - Number(i);
     }
-  } else {
-    d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $sub[number;number]!`);
   }
 };

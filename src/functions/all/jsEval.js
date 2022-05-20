@@ -1,14 +1,9 @@
 module.exports = async (d) => {
-  const split = d.code.split("$jsEval").length - 1;
-  const after = d.code.split("$jsEval")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$jsEval[")[1].split("]")[0];
-
-    if (!inside) {
-      d.isError = true;
-      return d.error(`❌ WhatscodeError: Usage: $jsEval[code]!`);
-    }
+  const inside = d.inside;
+  if (inside == "") {
+    d.isError = true;
+    return d.error(`❌ WhatscodeError: Usage: $jsEval[code]!`);
+  } else {
     try {
       var evaled = await eval(inside);
     } catch (err) {
@@ -17,8 +12,5 @@ module.exports = async (d) => {
     }
 
     return require("util").inspect(evaled, { depth: 0 });
-  } else {
-    d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $jsEval[code]!`);
   }
 };

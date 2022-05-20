@@ -1,15 +1,9 @@
-module.exports = async (d) => {
-  const split = d.code.split("$setStatus").length - 1;
-  const after = d.code.split("$setStatus")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$setStatus[")[1].split("]")[0];
-
-    if(!inside) {
-      d.isError = true;
-      return d.error(`❌ WhatscodeError: Usage: $setStatus[some text]!`);
-    }
-
+module.exports = async(d) => {
+  const inside = d.inside;
+  if(inside == "") {
+    d.isError = true;
+    return d.error(`❌ WhatscodeError: Usage: $setStatus[some text]!`);
+  } else {
     try {
         d.client.query({
           tag: "iq",
@@ -32,8 +26,5 @@ module.exports = async (d) => {
     }
 
     return "";
-  } else {
-    d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $setStatus[some text]!`);
   }
 };

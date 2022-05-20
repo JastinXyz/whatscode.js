@@ -8,16 +8,11 @@ module.exports = async(d) => {
   } else {
     const [...num] = inside.split(";")
 
-    if(!num) {
-      d.isError = true;
-      d.error('❌ Usage: $demote[123@s.whatsapp.net;...]')
-    }
-
     try {
       await d.client.groupParticipantsUpdate(d.msg.key.remoteJid, num, 'demote')
     } catch(err) {
       d.isError = true;
-      d.error('❌ Failed to demote ' + num.join(", "))
+      return d.error('❌ Failed to demote ' + num.join(", "))
     }
 
     return ""

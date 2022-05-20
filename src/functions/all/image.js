@@ -1,22 +1,13 @@
 module.exports = async (d) => {
-  const split = d.code.split("$image").length - 1;
-  const after = d.code.split("$image")[split];
-
-  if (after.startsWith("[")) {
-    var inside = d.code.split("$image[")[1].split("]")[0];
-
-    if (!inside) {
-      d.isError = true;
-      return d.error(`❌ WhatscodeError: Usage: $image[image url].`);
-    }
-
+  const inside = d.inside;
+  if (inside == "") {
+    d.isError = true;
+    return d.error(`❌ WhatscodeError: Usage: $image[url]!`);
+  } else {
     d.unique = true;
     return {
       type: "image",
       response: inside,
     };
-  } else {
-    d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $image[url]!`);
   }
 };

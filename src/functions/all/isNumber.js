@@ -1,23 +1,18 @@
 module.exports = async (d) => {
-  const split = d.code.split("$isNumber").length - 1;
-  const after = d.code.split("$isNumber")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$isNumber[")[1].split("]")[0];
+  const inside = d.inside;
+  if (inside == "") {
+    d.isError = true;
+    return d.error(`❌ WhatscodeError: Usage: $isNumber[some text]!`);
+  } else {
     try {
-    var re = inside.trim() === '' ? false : isNaN(inside) ? false : true
+      var re = inside.trim() === "" ? false : isNaN(inside) ? false : true;
     } catch (err) {
       d.isError = true;
       return d.error(
-        `❌ WhatscodeError: Something error on $isNumber: ${err}!`
+        `❌ WhatscodeError: Something error on $isNumber!`
       );
     }
 
-    return re
-  } else {
-    d.isError = true;
-    return d.error(
-      `❌ WhatscodeError: Usage: $isNumber[some text]!`
-    );
+    return re;
   }
 };

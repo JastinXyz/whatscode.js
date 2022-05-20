@@ -1,9 +1,11 @@
 module.exports = async (d) => {
-  const split = d.code.split("$templateButtons").length - 1;
-  const after = d.code.split("$templateButtons")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$templateButtons[")[1].split("]")[0];
+  const inside = d.inside;
+  if (inside == "") {
+    d.isError = true;
+    return d.error(
+      `❌ WhatscodeError: Usage: $templateButtons[(url/call/quickReply):display Text:value;...]!`
+    );
+  } else {
     const [...btn] = inside.split(";");
 
     if (!btn) {
@@ -44,14 +46,5 @@ module.exports = async (d) => {
       type: "templateButtons",
       response: buttons,
     };
-  } else {
-    d.isError = true;
-    return d.client.sendMessage(
-      d.msg.key.remoteJid,
-      {
-        text: `\`\`\`❌ WhatscodeError: Usage: $templateButtons[(url/call/quickReply):display Text:value;...]!\`\`\``,
-      },
-      { quoted: d.msg }
-    );
   }
 };

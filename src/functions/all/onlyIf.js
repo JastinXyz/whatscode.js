@@ -1,13 +1,24 @@
 module.exports = async (d) => {
-  const split = d.code.split("$onlyIf").length - 1;
-  const after = d.code.split("$onlyIf")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$onlyIf[")[1].split("]")[0];
+  const inside = d.inside;
+  if (inside == "") {
+    d.isError = true;
+    return d.error(
+      `❌ WhatscodeError: Usage: $onlyIf[condition;error message (optional)]!`
+    );
+  } else {
     var [cond, error = "You can't use this command!"] = inside.split(";");
 
-    if(cond.includes("$")) {
-      cond = await require("../../interpreter.js")(cond, d.msg, d.client, d.args, d.cmd, d.db, "", true)
+    if (cond.includes("$")) {
+      cond = await require("../../interpreter.js")(
+        cond,
+        d.msg,
+        d.client,
+        d.args,
+        d.cmd,
+        d.db,
+        "",
+        true
+      );
     }
 
     const operators = () => {
@@ -52,10 +63,5 @@ module.exports = async (d) => {
     } else {
       return "";
     }
-  } else {
-    d.isError = true;
-    return d.error(
-      `❌ WhatscodeError: Usage: $onlyIf[condition;error message (optional)]!`
-    );
   }
 };

@@ -1,9 +1,11 @@
 module.exports = async (d) => {
-  const split = d.code.split("$argsCheck").length - 1;
-  const after = d.code.split("$argsCheck")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$argsCheck[")[split].split("]")[0];
+  const inside = d.inside;
+  if (inside == "") {
+    d.isError = true;
+    return d.error(
+      `❌ WhatscodeError: Usage: $argsCheck[condition;error message]!`
+    );
+  } else {
     const [condition, error] = inside.split(";");
 
     if (!condition) {
@@ -43,10 +45,5 @@ module.exports = async (d) => {
     } else {
       return "";
     }
-  } else {
-    d.isError = true;
-    return d.error(
-      `❌ WhatscodeError: Usage: $argsCheck[condition;error message]!`
-    );
   }
 };

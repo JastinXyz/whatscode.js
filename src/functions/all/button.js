@@ -1,9 +1,11 @@
 module.exports = async (d) => {
-  const split = d.code.split("$button").length - 1;
-  const after = d.code.split("$button")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$button[")[1].split("]")[0];
+  const inside = d.inside;
+  if (inside == "") {
+    d.isError = true;
+    return d.error(
+      `❌ WhatscodeError: Usage: $button[button id:button text;...]!`
+    );
+  } else {
     const [...btn] = inside.split(";");
 
     if (!btn) {
@@ -29,10 +31,5 @@ module.exports = async (d) => {
       type: "buttons",
       response: buttons,
     };
-  } else {
-    d.isError = true;
-    return d.error(
-      `❌ WhatscodeError: Usage: $button[button id:button text;...]!`
-    );
   }
 };

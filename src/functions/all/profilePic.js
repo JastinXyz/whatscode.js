@@ -1,34 +1,16 @@
 module.exports = async (d) => {
+  const inside = d.inside;
   const { decodeJid, sender } = require("../../models/functions.js");
-  const split = d.code.split("$profilePic").length - 1;
-  const after = d.code.split("$profilePic")[split];
+  var n = inside == "" ? decodeJid(sender(d)) : decodeJid(inside)
 
-  if (after.startsWith("[")) {
-    var inside = d.code.split("$profilePic[")[1].split("]")[0];
-
-    if (!inside) {
-      d.isError = true;
-      return d.error(`❌ WhatscodeError: Usage: $profilePic[jid].`);
-    }
-
-    const num = decodeJid(inside);
-
-    try {
-      var pp = await d.client.profilePictureUrl(num, 'image');
-    } catch (err) {
-      return "https://imgdb.jstnlt.my.id/img/profile.png";
-    }
-
-    return pp.trim() === "" ? "https://imgdb.jstnlt.my.id/img/profile.png" : pp;
-  } else {
-    const num = decodeJid(sender(d));
-
-    try {
-      var pp = await d.client.profilePictureUrl(num, 'image');
-    } catch (err) {
-      return "https://imgdb.jstnlt.my.id/img/profile.png";
-    }
-
-    return pp.trim() === "" ? "https://imgdb.jstnlt.my.id/img/profile.png" : pp;
+  try {
+    var pp = await d.client.profilePictureUrl(
+      n,
+      "image"
+    );
+  } catch (err) {
+    pp = ""
   }
+
+  return pp.trim() === "" ? "https://imgdb.jstnlt.my.id/img/profile.png" : pp;
 };

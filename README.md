@@ -1,13 +1,22 @@
 # whatscode.js
 
-**whatscode.js** is a package to create Whatsapp bots easily and quickly, even coding experience is not needed...
+<div align="center">
+<strong>whatscode.js</strong> is a package to create Whatsapp bots easily and quickly, even coding experience is not really needed... For further documentation you can visit <a href="https://whatscode.jstnlt.my.id" target="_blank">https://whatscode.jstnlt.my.id</a>
+<br/>
+
+<img alt="npm" src="https://img.shields.io/npm/dt/whatscode.js?style=flat-square">
+
+<a href="https://discord.gg/CzqHbx7rdU" target="_blank">
+<img alt="Discord" src="https://img.shields.io/discord/973324613851422730?color=%235865F2&label=Discord&logo=discord&style=flat-square">
+</a>
+</div>
 
 > We are also very open to those of you who want to contribute...
 
 ## Features
 - Easy and fast to use.
 - Short code.
-- In this version has more than 55+ Functions ready to use and Still will continue to add more functions!
+- In this version has more than 70 Functions ready to use and Still will continue to add more functions!
 
 ## Instalation
 
@@ -85,5 +94,6 @@ bot.variables({
 </a>
 
 ## Links
-- Documentation: https://whatscode.jstnlt.my.id
-- Discord Server: https://discord.gg/CzqHbx7rdU
+- [Documentation](https://whatscode.jstnlt.my.id)
+- [Discord Server](https://discord.gg/CzqHbx7rdU)
+- [Github](https://github.com/JastinXyz/whatscode.hs)

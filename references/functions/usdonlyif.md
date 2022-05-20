@@ -20,5 +20,5 @@ The bot will not proceed to `$ping` because the condition in onlyIf returns `tru
 
 ```
 $ping
-$onlyIf[1<2;2 is greater than 1]
+$onlyIf[2<1;2 is not smaller than 1]
 ```

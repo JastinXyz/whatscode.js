@@ -36,6 +36,6 @@ module.exports = async (d) => {
     var result = proper
       ? eval(`res${["[", "."].includes(proper[0]) ? proper : `.${proper}`}`)
       : res;
-    return JSON.stringify(result);
+    return JSON.stringify(result, null, 2);
   }
 };

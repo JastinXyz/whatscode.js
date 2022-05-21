@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting you... Pelase wait</title>
+   <meta http-equiv="refresh" content="1; url=https://discord.gg/CzqHbx7rdU">
+  </head>
+  <body>
+    <pre id="yo">Redirecting you to <a href="https://discord.gg/CzqHbx7rdU">https://discord.gg/CzqHbx7rdU</a>. Please wait... <span id="emo"></span></pre>
+
+    <script>
+      var emo = document.getElementById("emo");
+        var emojis = [
+  	       '😄','😃','😀','😊','😉','😍','😘','😚','😗','😙','😜','😝','😛','😳','😁','😔','😌','😒','😞','😣','😢','😂','😭','😪','😥','😰','😅','😓','😩','😨','😱','😠','😡','😤','😖','😆','😋','😷','😎','😴','😵','😲','😟','😮','😬','😐','😕','😯','😶','😇','😏','😑'
+        ]
+
+        setInterval(function() {
+          document.querySelector("#emo").innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        }, 150)
+    </script>
+  </body>
+</html>

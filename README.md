@@ -1,7 +1,9 @@
+# whatscode.js
+
 <div align="center">
 <img src="https://whatscode.js.org/assets/img/gambar.png" alt="whatscode.js logo" height="100"/>
 <br/>
-<p style="margin:0 50px 0 50px;"><strong>whatscode.js</strong> is a package to create Whatsapp bots easily and quickly, even coding experience is not really needed...<br/>For further documentation you can visit <a href="https://whatscode.jstnlt.my.id" target="_blank">https://whatscode.jstnlt.my.id</a></p>
+<p style="margin:0 45px 0 45px;"><strong>whatscode.js</strong> is a package to create Whatsapp bots easily and quickly, even coding experience is not really needed...<br/>For further documentation you can visit <a href="https://whatscode.jstnlt.my.id" target="_blank">https://whatscode.jstnlt.my.id</a></p>
 <br/>
 
 <a href="https://npmjs.com/package/whatscode.js" target="_blank">

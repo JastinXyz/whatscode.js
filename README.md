@@ -1,5 +1,3 @@
-# whatscode.js
-
 <div align="center">
 <img src="https://whatscode.js.org/assets/img/gambar.png" alt="whatscode.js logo" height="100"/>
 <br/>

@@ -1,21 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html class="has-navbar-fixed-top">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Whatscode.js - Home</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>whatscode.js - Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/prism.css" />
+    <script src="./assets/js/prism.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hello World
-      </h1>
-    </div>
-  </section>
+    <nav class="navbar is-transparent is-fixed-top warna-bg">
+      <div class="navbar-brand">
+        <div class="navbar-burger mr-3">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <a
+                  class="navbar-item"
+                  href="https://github.com/Macaksara"
+                  target="_blank"
+                >
+                  <i class="fab fa-lg fa-github mt-3 is-size-4"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <a
+                  class="navbar-item"
+                  href="https://github.com/JastinXyz/whatscode.js"
+                  target="_blank"
+                >
+                  <span class="icon">
+                    <i class="fab fa-lg fa-github is-size-4"></i>
+                  </span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="section" style="margin-bottom: 4em;">
+      <div class="container">
+        <h1
+          class="title has-text-centered is-uppercase has-text-weight-bold"
+          style="letter-spacing: 0.17em;"
+        >
+          whatscode.js
+        </h1>
+        <p class="subtitle has-text-centered mr-6 ml-6">
+          is a package to create Whatsapp bots easily and quickly, even coding
+          experience is not really needed...
+        </p>
+
+        <div class="mb-5">
+          <pre class="command-line" data-prompt="$"><code class="language-bash"># Install via npm
+npm install whatscode.js
+
+# or install it from Github for more new features, some bug fixes, and mybe theres some bugs too.
+npm i github:JastinXyz/whatscode.js</code></pre>
+        </div>
+
+        <div class="buttons is-centered">
+          <a
+            href="https://github.com/JastinXyz/whatscode.js"
+            target="_blank"
+            class="kotak button mr-3"
+          >
+            <span class="icon ml-1 mr-1">
+              <i class="fab fa-lg fa-github"></i>
+            </span>
+            Github
+          </a>
+          <a
+            href="https://npmjs.com/package/whatscode.js"
+            target="_blank"
+            class="kotak button is-danger mr-3"
+          >
+            <span class="icon ml-1 mr-2">
+              <i class="fab fa-lg fa-npm is-size-4"></i>
+            </span>
+            at npmjs.com
+          </a>
+          <a
+            href="https://whatscode.jstnlt.my.id"
+            target="_blank"
+            class="button kotak is-link"
+          >
+            <span class="icon ml-1 mr-1">
+              <i class="fa-solid fa-book"></i>
+            </span>
+            Docs
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p class="is-italic">
+          <span class="icon">
+            <i class="fa-solid fa-code"></i>
+          </span>
+          with
+          <span class="icon">
+            <i class="fa-solid fa-heart"></i>
+          </span>
+          by
+          <a
+            href="https://jstnlt.my.id"
+            target="_blank"
+            class="has-text-primary"
+            >JstnLT</a
+          >
+          and Other
+          <a href="" target="_blank" class="has-text-primary">Contributors</a>.
+        </p>
+        <p>
+          &copy; <span id="thn"></span>
+          <a href="/" target="_blank" class="has-text-primary">whatscode.js</a>.
+          All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("thn").innerHTML = new Date().getFullYear();
+    </script>
   </body>
 </html>

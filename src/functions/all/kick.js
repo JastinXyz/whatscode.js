@@ -1,19 +1,24 @@
 module.exports = async (d) => {
   const inside = d.inside;
-  const [...num] = inside.split(";");
   const { decodeJid, sender } = require("../../models/functions.js");
-  const s = await decodeJid(sender(d));
-
-  try {
-    await d.client.groupParticipantsUpdate(
-      d.msg.key.remoteJid,
-      inside == "" ? s : num,
-      "remove"
-    );
-  } catch (err) {
+  if(inside == "") {
     d.isError = true;
-    return d.error("❌ Failed to kick " + inside == "" ? s : num.join(", "));
-  }
+    d.error('❌ WhatscodeError: Usage: $kick[id]')
+  } else {
+    const [...num] = inside.split(";");
+    const s = await decodeJid(sender(d));
 
-  return "";
+    try {
+      await d.client.groupParticipantsUpdate(
+        d.msg.key.remoteJid,
+        inside == "" ? s : num,
+        "remove"
+      );
+    } catch (err) {
+      d.isError = true;
+      return d.error("❌ WhatscodeError: Failed to kick " + inside == "" ? s : num.join(", "));
+    }
+
+    return "";
+  }
 };

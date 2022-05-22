@@ -3,7 +3,7 @@ const amap = new Map();
 module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   const data = [];
   const parser = require("./functions/parser");
-  const { array_move } = require("./models/functions");
+  const { array_move, escapeRegex } = require("./models/functions");
   let obj;
   let suppressErr;
   let theJid = msg.key.remoteJid;
@@ -34,12 +34,10 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   }
 
   for (const func of theFuncs.reverse()) {
-    let _iOne = code.split(`${func}[`)[1];
-    if (!_iOne) {
-      _iOne = "";
-    } else {
-      _iOne = _iOne.split("]")[0];
-    }
+    let _iOne = code.split(new RegExp(escapeRegex(func), "gi"));
+    _iOne = _iOne[_iOne.length - 1];
+    const length = _iOne.split("[").length - 1;
+    _iOne = _iOne.split("]").slice(0, length).join("]").replace("[", "");
 
     data.push({
       name: func,
@@ -160,7 +158,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
     const a = JSON.parse(code);
     await client.sendMessage(msg.key.remoteJid, a);
   } else {
-    if(typeof theJid === "array" || typeof theJid === "object") {
+    if (typeof theJid === "array" || typeof theJid === "object") {
       for (var i = 0; i < theJid.length; i++) {
         code.trim() === ""
           ? undefined

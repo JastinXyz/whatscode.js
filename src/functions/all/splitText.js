@@ -8,7 +8,7 @@ module.exports = async (d) => {
       d.isError = true;
       d.error("❌ WhatscodeError: invalid number in $splitText");
     } else {
-      return d.data.splitText[inside - 1];
+      return d.data.splitText? d.data.splitText[inside - 1] : "";
     }
   }
 };

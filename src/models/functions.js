@@ -52,7 +52,7 @@ module.exports = {
   },
   sender: function sender(d) {
     return d.msg.key.fromMe
-      ? d.client.user.jid
+      ? d.client.user.id
       : d.msg.participant
       ? d.msg.participant
       : d.msg.key.participant

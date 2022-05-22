@@ -17,7 +17,7 @@ module.exports = class Client {
     if(typeof opts.prefix == "string") {
       opts.prefix = opts.prefix.split()
     }
-    
+
     if (!opts.prefix) throw new Error("[whatscode.js] prefix required!");
 
     this.NAME = opts.name;
@@ -153,7 +153,13 @@ module.exports = class Client {
       if (!w.name) throw new Error("name required in commands!");
       if (!w.code) throw new Error("code required in commands!");
 
-      this.CMD.set(w.name.toLowerCase(), w.code);
+      const obj = {
+        name: w.name.toLowerCase(),
+        aliases: w.aliases,
+        code: w.code
+      }
+
+      this.CMD.set(obj.name, obj);
     }
   }
 

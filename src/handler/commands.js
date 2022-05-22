@@ -27,20 +27,39 @@ module.exports = async (m, client, cmd, prefix, getType, db, t) => {
   let args;
   let command;
 
-  if(prefix[0] == '') {
+  if (prefix[0] == "") {
     const emptyIndex = prefix.indexOf(
       prefix.filter((x) => x.includes("")).join("")
     );
     prefix = array_move(prefix, emptyIndex - 1, prefix.length - 1);
   }
 
-  const startsP = prefix.find(p => dy.startsWith(p))
-  if(!prefix.includes(startsP)) return;
+  const startsP = prefix.find((p) => dy.startsWith(p));
+  if (!prefix.includes(startsP)) return;
 
   args = dy.slice(startsP.length).trim().split(/ +/g);
   command = args.shift().toLowerCase();
 
-  if (cmd.get(command)) {
-    require("../interpreter.js")(cmd.get(command), msg, client, args, cmd, db, "", false, t);
+  const valArr = Array.from(cmd.values());
+  const val = valArr.find(
+    (c) =>
+      c.name.toLowerCase() === command.toLowerCase() ||
+      (c.aliases && typeof c.aliases === "object"
+        ? c.aliases.includes(command.toLowerCase())
+        : c.aliases === command.toLowerCase())
+  );
+
+  if (val) {
+    require("../interpreter.js")(
+      val.code,
+      msg,
+      client,
+      args,
+      cmd,
+      db,
+      "",
+      false,
+      t
+    );
   }
 };

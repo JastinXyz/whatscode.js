@@ -136,7 +136,21 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
           mentions: mentions || "",
           headerType: 4,
         })
-    : u.templateButtons
+    : u.video? u.templateButtons? (obj = {
+        caption: code.trim().split("\\n").join("\n"),
+        footer: u.footer ? u.footer : "",
+        templateButtons: u.templateButtons,
+        video: { url: u.video.url },
+        gifPlayback: u.video.playback,
+        mentions: mentions || "",
+      }) : (obj = {
+          caption: code.trim().split("\\n").join("\n"),
+          footer: u.footer ? u.footer : "",
+          buttons: u.buttons ? u.buttons : "",
+          video: { url: u.video.url },
+          gifPlayback: u.video.playback,
+          mentions: mentions || "",
+        }) : u.templateButtons
     ? (obj = {
         text: code.trim().split("\\n").join("\n"),
         footer: u.footer ? u.footer : "",

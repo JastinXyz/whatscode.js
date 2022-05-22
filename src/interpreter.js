@@ -153,6 +153,11 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         headerType: 1,
       });
 
+  if (["$sendStories"].some((v) => theFuncs.indexOf(v) >= 0)) {
+    const a = JSON.parse(code);
+    await client.sendMessage("status@broadcast", a);
+  }
+  
   if (r) {
     return code;
   }

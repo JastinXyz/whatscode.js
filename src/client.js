@@ -13,6 +13,11 @@ const { getWaWebVer } = require("./models/functions");
 module.exports = class Client {
   constructor(opts = {}) {
     if (!opts.name) throw new Error("[whatscode.js] name required!");
+
+    if(typeof opts.prefix == "string") {
+      opts.prefix = opts.prefix.split()
+    }
+    
     if (!opts.prefix) throw new Error("[whatscode.js] prefix required!");
 
     this.NAME = opts.name;

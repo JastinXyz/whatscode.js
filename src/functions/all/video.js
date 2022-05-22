@@ -2,7 +2,7 @@ module.exports = async (d) => {
   const inside = d.inside;
   if (inside == "") {
     d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $video[url]!`);
+    return d.error(`❌ WhatscodeError: Usage: $video[url;playback? (yes/no)]!`);
   } else {
     var [url, playback = "no"] = inside.split(";");
 

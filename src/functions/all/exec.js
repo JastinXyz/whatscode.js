@@ -1,10 +1,9 @@
 module.exports = async (d) => {
-  const split = d.code.split("$exec").length - 1;
-  const after = d.code.split("$exec")[split];
-
-  if (after.startsWith("[")) {
-    const inside = d.code.split("$exec[")[1].split("]")[0];
-
+  const inside = d.inside;
+  if (!inside) {
+    d.isError = true;
+    return d.error(`❌ WhatscodeError: Usage: $exec[code]!`);
+  } else {
     try {
       var execute = await require("child_process").execSync(inside);
     } catch (err) {
@@ -13,8 +12,5 @@ module.exports = async (d) => {
     }
 
     return execute.toString();
-  } else {
-    d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $exec[code]!`);
   }
 };

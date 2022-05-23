@@ -1,6 +1,6 @@
 module.exports = async(d) => {
   const inside = d.inside;
-  if(inside == "") {
+  if(!inside) {
     d.isError = true;
     return d.error(
       `❌ WhatscodeError: Usage: $sendButton[text;footer (optional);image url (optional);buttonId:buttonText;buttonId:buttonText;...].`

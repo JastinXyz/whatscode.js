@@ -1,6 +1,6 @@
 module.exports = async (d) => {
   const inside = d.inside;
-  if (inside == "") {
+  if (!inside) {
     d.isError = true;
     d.error("❌ WhatscodeError: Usage: $getObjectProperty[property]");
   } else {

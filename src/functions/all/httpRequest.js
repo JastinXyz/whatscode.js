@@ -2,7 +2,7 @@ const axios = require("axios");
 
 module.exports = async (d) => {
   const inside = d.inside;
-  if (inside == "") {
+  if (!inside) {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $httpRequest[url;method (optional);body (optional);property (optional);headerName:headerValue;headerName:headerValue;... (optional)]`);
   } else {

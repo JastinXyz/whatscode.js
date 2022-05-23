@@ -1,7 +1,7 @@
 module.exports = async(d) => {
   const { decodeJid, sender } = require('../../models/functions.js')
   const inside = d.inside;
-  if(inside == "") {
+  if(!inside) {
     const s = await decodeJid(sender(d))
     await d.client.groupParticipantsUpdate(d.msg.key.remoteJid, [s], 'promote')
     return ""

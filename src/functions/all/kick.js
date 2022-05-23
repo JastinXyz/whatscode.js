@@ -1,7 +1,7 @@
 module.exports = async (d) => {
   const inside = d.inside;
   const { decodeJid, sender } = require("../../models/functions.js");
-  if(inside == "") {
+  if(!inside) {
     d.isError = true;
     d.error('❌ WhatscodeError: Usage: $kick[id]')
   } else {

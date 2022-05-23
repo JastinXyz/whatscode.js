@@ -1,7 +1,7 @@
 module.exports = async(d) => {
   let inside = d.inside;
   const cmd = d.cmd;
-  if(!d.inside) {
+  if(!inside) {
     d.isError = true;
     d.error('❌ WhatscodeError: Usage: $commandInfo[command name;property (optional)]');
   } else {

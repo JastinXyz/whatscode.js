@@ -1,6 +1,6 @@
 module.exports = async(d) => {
   let inside = d.inside;
-  if(inside == "") {
+  if(!inside) {
     d.isError = true;
     d.error('❌ WhatscodeError: Usage: $createObject[json object]')
   } else {

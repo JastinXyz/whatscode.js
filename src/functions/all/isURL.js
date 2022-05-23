@@ -11,7 +11,7 @@ module.exports = async (d) => {
       "i"
     );
 
-  if (inside == "") {
+  if (!inside) {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $isURL[some text]!`);
   } else {

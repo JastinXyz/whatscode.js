@@ -16,6 +16,8 @@ module.exports = async (m, client, cmd, prefix, getType, db, t) => {
       ? msg.message.videoMessage.caption
       : type == "extendedTextMessage" && msg.message.extendedTextMessage.text
       ? msg.message.extendedTextMessage.text
+      : type == "listResponseMessage"
+      ? msg.message.listResponseMessage.singleSelectReply.selectedRowId
       : type == "buttonsResponseMessage" &&
         msg.message.buttonsResponseMessage.selectedButtonId
       ? msg.message.buttonsResponseMessage.selectedButtonId

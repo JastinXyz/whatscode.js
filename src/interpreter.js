@@ -6,6 +6,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   const { array_move, escapeRegex } = require("./models/functions");
   let obj;
   let suppressErr;
+  let sections = [];
   let theJid = msg.key.remoteJid;
 
   const searched = [];
@@ -82,6 +83,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
           theJid = n;
         }
       },
+      sections,
     };
 
     const res = await require(`./functions/all/${d}.js`)(all);
@@ -136,21 +138,35 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
           mentions: mentions || "",
           headerType: 4,
         })
-    : u.video? u.templateButtons? (obj = {
-        caption: code.trim().split("\\n").join("\n"),
-        footer: u.footer ? u.footer : "",
-        templateButtons: u.templateButtons,
-        video: { url: u.video.url },
-        gifPlayback: u.video.playback,
-        mentions: mentions || "",
-      }) : (obj = {
+    : u.video
+    ? u.templateButtons
+      ? (obj = {
+          caption: code.trim().split("\\n").join("\n"),
+          footer: u.footer ? u.footer : "",
+          templateButtons: u.templateButtons,
+          video: { url: u.video.url },
+          gifPlayback: u.video.playback,
+          mentions: mentions || "",
+        })
+      : (obj = {
           caption: code.trim().split("\\n").join("\n"),
           footer: u.footer ? u.footer : "",
           buttons: u.buttons ? u.buttons : "",
           video: { url: u.video.url },
           gifPlayback: u.video.playback,
           mentions: mentions || "",
-        }) : u.templateButtons
+        })
+    : sections.length !== 0
+    ? (obj = {
+        text: code.trim().split("\\n").join("\n"),
+        buttons: u.buttons ? u.buttons : "",
+        footer: u.footer ? u.footer : "",
+        mentions: mentions || "",
+        buttonText: u.sectionsDisplayText ? u.sectionsDisplayText : "",
+        sections: sections ? sections : "",
+        headerType: 1,
+      })
+    : u.templateButtons
     ? (obj = {
         text: code.trim().split("\\n").join("\n"),
         footer: u.footer ? u.footer : "",

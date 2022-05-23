@@ -3,7 +3,7 @@ module.exports = async (d) => {
   if (!inside) {
     d.isError = true;
     return d.error(
-      `❌ WhatscodeError: Usage: $addSectionsRow[sectionsTitle;rowTitle:rowId:description;...]!\n- Optional description.`
+      `❌ WhatscodeError: Usage: $addSectionsRows[sectionsTitle;rowTitle:rowId:description;rowTitle:rowId:description;...]!\n- Optional description.`
     );
   } else {
     const [sectionTitle, ...s] = inside.split(";");
@@ -11,7 +11,7 @@ module.exports = async (d) => {
 
     if(!d.sections[findIndex]) {
       d.isError = true;
-      return d.error(`❌ WhatscodeError: invalid sections title in $addSectionsRow[${sectionTitle};${s}]`)
+      return d.error(`❌ WhatscodeError: invalid sections title in $addSectionsRows[${inside}]`)
     }
 
     for (let n of s) {

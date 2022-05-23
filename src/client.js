@@ -153,14 +153,7 @@ module.exports = class Client {
       if (!w.name) throw new Error("name required in commands!");
       if (!w.code) throw new Error("code required in commands!");
 
-      const obj = {
-        name: w.name.toLowerCase(),
-        aliases: w.aliases,
-        nonPrefixed: w.nonPrefixed,
-        code: w.code
-      }
-
-      this.CMD.set(obj.name, obj);
+      this.CMD.set(w.name, w);
     }
   }
 

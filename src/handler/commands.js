@@ -26,6 +26,7 @@ module.exports = async (m, client, cmd, prefix, getType, db, t) => {
 
   let args;
   let command;
+  const valArr = Array.from(cmd.values());
 
   if (prefix[0] == "") {
     const emptyIndex = prefix.indexOf(
@@ -35,12 +36,11 @@ module.exports = async (m, client, cmd, prefix, getType, db, t) => {
   }
 
   const startsP = prefix.find((p) => dy.startsWith(p));
-  if (!prefix.includes(startsP)) return;
+  if (!prefix.includes(startsP)) return require('./nonPrefixed')({ valArr, dy, msg, client, cmd, db, t });
 
   args = dy.slice(startsP.length).trim().split(/ +/g);
   command = args.shift().toLowerCase();
 
-  const valArr = Array.from(cmd.values());
   const val = valArr.find(
     (c) =>
       c.name.toLowerCase() === command.toLowerCase() ||

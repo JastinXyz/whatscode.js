@@ -156,6 +156,7 @@ module.exports = class Client {
       const obj = {
         name: w.name.toLowerCase(),
         aliases: w.aliases,
+        nonPrefixed: w.nonPrefixed,
         code: w.code
       }
 

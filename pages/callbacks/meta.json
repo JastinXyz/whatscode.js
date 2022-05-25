@@ -1,0 +1,7 @@
+{
+  "onconnectionupdate": "onConnectionUpdate",
+  "oncredsupdate": "onCredsUpdate",
+  "onmessage": "onMessage",
+  "onuserjoin": "onUserJoin",
+  "onuserleave": "onUserLeave"
+}

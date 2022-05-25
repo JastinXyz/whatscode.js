@@ -1,0 +1,41 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Global Variables
+
+There are 2 types of global variables, Global and Global user.
+
+<Callout emoji="⚠️">
+  Make sure you already have a variable added in `bot.variables`like in [First of All page](first-of-all)
+</Callout>
+
+## Global
+
+Value will be the same for everyone in any group.
+
+#### Set:
+
+```plain
+$setVar[name;value]
+```
+
+#### Get:
+
+```plain
+$getVar[name]
+```
+
+### Global user
+
+Value will be assigned to users globally everywhere.
+
+#### Set:
+
+```plain
+$setGlobalUserVar[name;value;user jid (optional)]
+```
+
+#### Get:
+
+```plain
+$getGlobalUserVar[name;user jid (optional)]
+```

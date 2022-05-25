@@ -1,0 +1,29 @@
+import Callout from 'nextra-theme-docs/callout'
+import Bleed from 'nextra-theme-docs/bleed'
+
+# $footer
+
+Add a footer in the message.
+
+<Callout>
+  Footer will only appear if there is a `$button`!
+</Callout>
+
+### Usage:
+
+```plain
+$footer[text]
+```
+
+### Example:
+
+```javascript
+bot.command({
+    name: "footer",
+    code: `Text and button is required!
+    $button[id1:Button 1]
+    $footer[This is footer]`
+});
+```
+
+<Bleed>![footer example](../../public/ss/footer.png)</Bleed>

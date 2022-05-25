@@ -1,0 +1,36 @@
+import Callout from 'nextra-theme-docs/callout'
+import Bleed from 'nextra-theme-docs/bleed'
+
+# $button
+
+Add a button to the message.
+
+### Usage:
+
+```plain
+$button[buttonId:buttonText;buttonId:buttonText;...]
+```
+
+<Callout>
+  You can enter a command in the button id section so that when clicked, the button will run the command earlier.
+
+```javascript
+bot.command({
+    name: "pingbutton",
+    code: `Click the button!
+    $button[!ping:Ping]`
+});
+```
+</Callout>
+
+### Example:
+
+```javascript
+bot.command({
+    name: "button",
+    code: `Text is required!
+    $button[id1:Button 1;id2:Another Button]`
+});
+```
+
+<Bleed>![button example](../../public/ss/button.png)</Bleed>

@@ -12,4 +12,4 @@ for (var i = 0; i < readDir.length; i++) {
 }
 
 fs.writeFileSync('./pages/functions/meta.json', JSON.stringify(meta, undefined, 2))
-console.log("Success updating meta.json in functions dir")
+console.log("success updating meta.json in functions dir")

@@ -1,6 +1,6 @@
 export default {
   github: 'https://github.com/JastinXyz/whatscode.js',
-  docsRepositoryBase: 'https://github.com/JastinXyz/whatscode.js/tree/main',
+  docsRepositoryBase: 'https://github.com/JastinXyz/whatscode.js/blob/docs',
   titleSuffix: ' – whatscode.js',
   logo: (
     <>

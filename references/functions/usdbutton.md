@@ -30,4 +30,4 @@ bot.command({
 });
 ```
 
-![](<../../.gitbook/assets/button (1).png>)
+![](../../.gitbook/assets/button.png)

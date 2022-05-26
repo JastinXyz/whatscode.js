@@ -74,5 +74,13 @@ module.exports = {
   },
   check: function check(n, theFuncs) {
     return [n].some((v) => theFuncs.indexOf(v) >= 0)
+  },
+  getInside: function getInside(c, code) {
+    let i = code.split(new RegExp(module.exports.escapeRegex(c), "gi"));
+    i = i[i.length - 1];
+    const length = i.split("[").length - 1;
+    i = i.split("]").slice(0, length).join("]").replace("[", "");
+
+    return i
   }
 };

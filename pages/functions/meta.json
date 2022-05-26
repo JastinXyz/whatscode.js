@@ -1,4 +1,7 @@
 {
+  "$addSections": "$addSections",
+  "$addSectionsDisplayText": "$addSectionsDisplayText",
+  "$addSectionsRows": "$addSectionsRows",
   "$argsCheck": "$argsCheck",
   "$argsCount": "$argsCount",
   "$block": "$block",

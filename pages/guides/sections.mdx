@@ -1,0 +1,42 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Sections
+Messages with sections are messages that contain a list in them. Like buttons and the like but this is a list.
+
+First of all we need the 3 functions already provided namely [`$addSections`](../functions/$addSections), [`$addSectionsDisplayText`](../functions/$addSectionsDisplayText), and [`$addSectionsRows`](../functions/$addSectionsRows).
+- [`$addSections`](../functions/$addSections) - Used to determine the index for the rows later.
+- [`$addSectionsDisplayText`](../functions/$addSectionsDisplayText) - Used to visually show text on the outside of a list. Like the text on the button.
+- [`$addSectionsRows`](../functions/$addSectionsRows) - Used to add a list to the index specified in the [`$addSections`](../functions/$addSections) section.
+
+### Functions
+
+- [`$addSections`](../functions/$addSections):<br/>
+```plain
+$addSections[title]
+```
+This "title" will later be used in `$addSectionsRows` to add a list inside this "title" index.<br/><br/>
+- [`$addSectionsDisplayText`](../functions/$addSectionsDisplayText):
+```plain
+$addSectionsDisplayText[some text]
+```
+Later "some text" will appear visually with the message.<br/><br/>
+- [`$addSectionsRows`](../functions/$addSectionsRows):
+```plain
+$addSectionsRows[title;rowTitle:rowId:rowDescription;rowTitle:rowId:rowDescription;...]
+```
+The first part inside is "title" which refers to the `$addSections` field earlier. This means that this row will be added to the list of the "title" sections earlier.
+
+<Callout>
+You can add more than 1 `$addSections` so that in the list there is not only 1 index section.
+</Callout>
+
+### Example
+```javascript
+bot.command({
+  name: "sections",
+  code: `Text is required
+$addSections[title]
+$addSectionsDisplayText[some text]
+$addSectionsRows[title;rowTitle:rowId:rowDescription]`
+})
+```

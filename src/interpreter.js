@@ -3,7 +3,7 @@ const amap = new Map();
 module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   const data = [];
   const parser = require("./functions/parser");
-  const { array_move, escapeRegex } = require("./models/functions");
+  const { array_move, escapeRegex, check } = require("./models/functions");
   let obj;
   let suppressErr;
   let sections = [];
@@ -27,7 +27,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   const u = {};
   let theFuncs = searchFunc(code.split("$"), parser);
 
-  if (["$dm"].some((v) => theFuncs.indexOf(v) >= 0)) {
+  if (check("$dm", theFuncs)) {
     const findDM = theFuncs.indexOf(
       theFuncs.filter((x) => x.includes("$dm")).join("")
     );
@@ -184,7 +184,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   if (r) {
     return code;
   }
-  if (["$sendButton"].some((v) => theFuncs.indexOf(v) >= 0)) {
+  if (check("$sendButton", theFuncs)) {
     const a = JSON.parse(code);
     await client.sendMessage(msg.key.remoteJid, a);
   } else {
@@ -195,7 +195,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
           : await client.sendMessage(
               theJid[i],
               obj,
-              ["$reply"].some((v) => theFuncs.indexOf(v) >= 0)
+              check("$reply", theFuncs)
                 ? { quoted: msg }
                 : undefined
             );
@@ -206,7 +206,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         : await client.sendMessage(
             theJid,
             obj,
-            ["$reply"].some((v) => theFuncs.indexOf(v) >= 0)
+            check("$reply", theFuncs)
               ? { quoted: msg }
               : undefined
           );

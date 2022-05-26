@@ -14,8 +14,8 @@ module.exports = class Client {
   constructor(opts = {}) {
     if (!opts.name) throw new Error("[whatscode.js] name required!");
 
-    if(typeof opts.prefix == "string") {
-      opts.prefix = opts.prefix.split()
+    if (typeof opts.prefix == "string") {
+      opts.prefix = opts.prefix.split();
     }
 
     if (!opts.prefix) throw new Error("[whatscode.js] prefix required!");
@@ -166,7 +166,7 @@ module.exports = class Client {
   onUserJoin() {
     this.whats.ev.on("group-participants.update", async (u) => {
       if (u.action === "add") {
-        await require("./handler/userJoinCommand")(u, this);
+        await require("./handler/callbacks/userJoinCommand")(u, this);
       }
     });
   }
@@ -174,7 +174,7 @@ module.exports = class Client {
   onUserLeave() {
     this.whats.ev.on("group-participants.update", async (u) => {
       if (u.action === "remove") {
-        await require("./handler/userLeaveCommand.js")(u, this);
+        await require("./handler/callbacks/userLeaveCommand.js")(u, this);
       }
     });
   }

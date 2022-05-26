@@ -19,6 +19,14 @@ module.exports = async (d) => {
 
     for (let bttns of btn) {
       const [id, display] = bttns.split(":");
+      
+      if(!id || !display) {
+        d.isError = true;
+        return d.error(
+          `❌ WhatscodeError: Usage: $button[button id:button text;...].`
+        );
+      }
+
       buttons.push({
         buttonId: id,
         buttonText: { displayText: display },

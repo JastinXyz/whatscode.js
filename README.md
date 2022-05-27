@@ -3,7 +3,6 @@
 <br/>
 <p style="margin:0 45px 0 45px;"><strong>whatscode.js</strong> is a package to create Whatsapp bots easily and quickly, even coding experience is not really needed...<br/>For further documentation you can visit <a href="https://whatscode.jstnlt.my.id" target="_blank">https://whatscode.jstnlt.my.id</a></p>
 <br/>
-
 <a href="https://npmjs.com/package/whatscode.js" target="_blank">
 <img alt="npm" src="https://img.shields.io/npm/dt/whatscode.js?logo=npm&style=for-the-badge">
 </a>
@@ -18,7 +17,7 @@
 ## Features
 - Easy and fast to use.
 - Short code.
-- In this version has more than 70 Functions ready to use and Still will continue to add more functions!
+- In this version has more than 85 Functions ready to use and Still will continue to add more functions!
 
 ## Instalation
 
@@ -43,10 +42,10 @@ const bot = new Client({
   prefix: "Your bot prefix",
 });
 
-// required callback (all callbacks available in the docs)
-bot.onConnectionUpdate(); // connection update
-bot.onCredsUpdate(); // credentials update
-bot.onMessage(); // message update
+// required callbacks (all callbacks available in the docs)
+bot.onConnectionUpdate();
+bot.onCredsUpdate();
+bot.onMessage();
 
 // example ping command
 bot.command({
@@ -56,13 +55,12 @@ bot.command({
 ```
 
 ## Callbacks
-[Callbacks](https://whatscode.jstnlt.my.id/references/callbacks) can be used to run events, sort of logging and the like. There are several callbacks that are needed when creating a bot with **whatscode.js**. But there are still some other callbacks that you can use. You can find it in the [Docs](https://whatscode.jstnlt.my.id)!
+[Callbacks](https://whatscode.jstnlt.my.id/callbacks/onconnectionupdate) can be used to run events, sort of logging and the like. There are several callbacks that are needed when creating a bot with **whatscode.js**. But there are still some other callbacks that you can use. You can find it in the [Docs](https://whatscode.jstnlt.my.id)!
+
+Here are examples of callbacks for user join and user leave. It can be used like Welcomer or Goodbye.
 
 ```js
-// here are examples of callbacks for user join and user leave.
-// it can be used like Welcomer or Goodbye.
-
-// callback
+// callbacks
 bot.onUserJoin()
 bot.onUserLeave()
 
@@ -89,6 +87,32 @@ bot.variables({
   name2: "value2"
 })
 ```
+
+## Advanced
+
+- [Buttons](https://whatscode.jstnlt.my.id/functions/$button) - Add a button to the message. (text required)
+  ```
+  $button[buttonId:button text;...]
+  ```
+
+- [Template Buttons](https://whatscode.jstnlt.my.id/functions/$templateButtons) - This function is useful for buttons that have an action such as going to a regular url, call, or quick reply. (text required)
+  ```
+  $templateButtons[(url/call/quickReply):display Text:value;...]
+  ```
+
+- [Sections](https://whatscode.jstnlt.my.id/guides/sections) - Messages with sections are messages that contain a list in them. Like buttons and the like but this is a list. (text required)
+  ```
+  $addSectionsRows[title;rowTitle:rowId:rowDescription]
+  $addSectionsDisplayText[some text]
+  $addSections[title]
+  ```
+
+- [Command React](https://whatscode.jstnlt.my.id/functions/$commandReact) - Will add a reaction to the command message.
+  ```
+  $commandReact[🤨️]
+  ```
+
+- [AND MANY MORE](https://whatscode.jstnlt.my.id/)
 
 ## Contributors
 <a href="https://github.com/JastinXyz/whatscode.js/graphs/contributors">

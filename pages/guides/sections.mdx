@@ -31,12 +31,15 @@ You can add more than 1 `$addSections` so that in the list there is not only 1 i
 </Callout>
 
 ### Example
+
+**Remember that whatscode.js code runs from the ground up.**
+
 ```javascript
 bot.command({
   name: "sections",
   code: `Text is required
-$addSections[title]
+$addSectionsRows[title;rowTitle:rowId:rowDescription]
 $addSectionsDisplayText[some text]
-$addSectionsRows[title;rowTitle:rowId:rowDescription]`
+$addSections[title]`
 })
 ```

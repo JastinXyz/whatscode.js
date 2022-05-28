@@ -2,6 +2,7 @@ const amap = new Map();
 
 module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   const data = [];
+  const fs = require('fs');
   const parser = require("./functions/parser");
   const { array_move, escapeRegex, check } = require("./models/functions");
   let obj;
@@ -86,7 +87,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
       sections,
     };
 
-    const res = await require(`./functions/all/${d}.js`)(all);
+    var res = await require(`./functions/all/${d}.js`)(all);
 
     if (all.unique) {
       if (res.type === "error") {
@@ -210,6 +211,15 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
               ? { quoted: msg }
               : undefined
           );
+    }
+  }
+
+  //check("$receivedImage", theFuncs)? u.image? fs.existsSync("./receivedImage.jpeg")? fs.unlinkSync("./receivedImage.jpeg") : undefined : undefined : undefined
+  if(check("$receivedImage", theFuncs)) {
+    if(u.image) {
+      if(fs.existsSync("./tmp/receivedImage.webp")) {
+        fs.unlinkSync("./tmp/receivedImage.webp")
+      }
     }
   }
 };

@@ -1,7 +1,7 @@
 module.exports = async(d) => {
   const returnUrl = d.inside;
   const fs = require('fs');
-  const path = './tmp/receivedImage.webp'
+  const path = './tmp/receivedImage.png'
 
   if(!d.msg.message.imageMessage) {
     return ""

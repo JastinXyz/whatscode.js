@@ -214,11 +214,10 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
     }
   }
 
-  //check("$receivedImage", theFuncs)? u.image? fs.existsSync("./receivedImage.jpeg")? fs.unlinkSync("./receivedImage.jpeg") : undefined : undefined : undefined
   if(check("$receivedImage", theFuncs)) {
     if(u.image) {
-      if(fs.existsSync("./tmp/receivedImage.webp")) {
-        fs.unlinkSync("./tmp/receivedImage.webp")
+      if(fs.existsSync("./tmp/receivedImage.png")) {
+        fs.unlinkSync("./tmp/receivedImage.png")
       }
     }
   }

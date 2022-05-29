@@ -16,8 +16,8 @@ module.exports = async (d) => {
         },
         data: {
           buffer: fs.readFileSync(url),
-          packname: packname,
-          author: author,
+          packname,
+          author,
           emoji: [""],
           id: "npmjs.com/whatscode.js",
           bufferRes: false

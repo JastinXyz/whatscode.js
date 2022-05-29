@@ -1,7 +1,8 @@
 module.exports = async (d) => {
   const inside = d.inside;
-  const { fileNameFromUrl } = require('../../models/functions.js');
-  const fs = require('fs');
+  const { fileNameFromUrl } = require("../../models/functions.js");
+  const fs = require("fs");
+  const axios = require("axios");
   if (!inside) {
     d.isError = true;
     d.error("❌ WhatscodeError: Usage: $downloadContentFromUrl[url]");
@@ -13,25 +14,45 @@ module.exports = async (d) => {
           inside
       );
     } else {
-      try {
-        var response = await require("axios")({
-          method: "get",
-          url: inside,
-          responseType: "stream",
-        })
-      } catch (e) {
+      const fileName = fileNameFromUrl(inside);
+      if (!fileName) {
         d.isError = true;
-        d.error(`❌ WhatscodeError: Something error in $downloadContentFromUrl: ${e}`)
-      }
-
-      if(!response) {
-        d.isError = true;
-        d.error(`❌ WhatscodeError: Something error in $downloadContentFromUrl: Undefined`)
+        d.error("❌ WhatscodeError: Something error in $downloadContentFromUrl: Can't match any file name.");
       } else {
-        var picStream = fs.createWriteStream("./tmp/" + fileNameFromUrl(inside));
-        response.data.pipe(picStream);
+        async function saveDownloadImage(url) {
+          const response = await axios({
+            method: "get",
+            url: url,
+            responseType: "stream",
+          }).catch((err) => {
+            d.isError = true;
+            d.error(
+              `❌ WhatscodeError: Something error in $downloadContentFromUrl: ${err}`
+            );
+          });
 
-        return "./tmp/" + fileNameFromUrl(inside)
+          if (!response) {
+            d.isError = true;
+            d.error(
+              `❌ WhatscodeError: Something error in $downloadContentFromUrl: Maybe url is incorrect? or the website is down?`
+            );
+          } else {
+            const writer = fs.createWriteStream("./tmp/" + fileName);
+            response.data.pipe(writer);
+
+            return new Promise((resolve, reject) => {
+              writer.on("finish", () => {
+                resolve();
+              });
+              writer.on("error", () => {
+                reject();
+              });
+            });
+          }
+        }
+
+        const asdf = await saveDownloadImage(inside);
+        return "./tmp/" + fileName;
       }
     }
   }

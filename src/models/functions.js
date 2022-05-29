@@ -73,6 +73,13 @@ module.exports = {
     return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
   },
   check: function check(n, theFuncs) {
-    return [n].some((v) => theFuncs.indexOf(v) >= 0)
-  }
+    return [n].some((v) => theFuncs.indexOf(v) >= 0);
+  },
+  fileNameFromUrl: function fileNameFromUrl(url) {
+    var matches = url.match(/\/([^\/?#]+)[^\/]*$/);
+    if (matches.length > 1) {
+      return matches[1];
+    }
+    return null;
+  },
 };

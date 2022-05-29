@@ -3,6 +3,11 @@ module.exports = async (d) => {
   const { fileNameFromUrl } = require("../../models/functions.js");
   const fs = require("fs");
   const axios = require("axios");
+
+  if(!fs.existsSync('./tmp')) {
+    fs.mkdirSync('./tmp')
+  }
+
   if (!inside) {
     d.isError = true;
     d.error("❌ WhatscodeError: Usage: $downloadContentFromUrl[url]");

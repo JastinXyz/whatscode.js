@@ -4,7 +4,7 @@ module.exports = async (d) => {
   const axios = require('axios')
   if (!inside) {
     d.isError = true;
-    d.error("❌ WhatscodeError: Usage: $sendSticker[image url]");
+    d.error("❌ WhatscodeError: Usage: $sendSticker[image path]");
   } else {
     var [url, packname = "Whatscode Sticker", author = "npmjs.com/whatscode.js"] = inside.split(
       ";"

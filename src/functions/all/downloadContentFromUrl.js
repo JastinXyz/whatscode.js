@@ -1,13 +1,7 @@
 module.exports = async (d) => {
-  function fileNameFromUrl(url) {
-    var matches = url.match(/\/([^\/?#]+)[^\/]*$/);
-    if (matches.length > 1) {
-      return matches[1];
-    }
-    return null;
-  }
-
   const inside = d.inside;
+  const { fileNameFromUrl } = require('../../models/functions.js');
+  const fs = require('fs');
   if (!inside) {
     d.isError = true;
     d.error("❌ WhatscodeError: Usage: $downloadContentFromUrl[url]");
@@ -34,9 +28,8 @@ module.exports = async (d) => {
         d.isError = true;
         d.error(`❌ WhatscodeError: Something error in $downloadContentFromUrl: Undefined`)
       } else {
-        response.data.pipe(
-          require("fs").createWriteStream("./tmp/" + fileNameFromUrl(inside))
-        );
+        var picStream = fs.createWriteStream("./tmp/" + fileNameFromUrl(inside));
+        response.data.pipe(picStream);
 
         return "./tmp/" + fileNameFromUrl(inside)
       }

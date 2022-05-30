@@ -2,7 +2,7 @@
 
 Unlike `$jsEval`, `$eval` will only evaluate the function of **whatscode.js**
 
-### **Usage:**
+### Usage:
 
 ```plain
 $eval[code]

@@ -2,5 +2,6 @@
   "client-options": "Client Options",
   "command-handler": "Command Handler",
   "mentions": "Mentions",
+  "sections": "Sections",
   "variables": "Variables"
 }

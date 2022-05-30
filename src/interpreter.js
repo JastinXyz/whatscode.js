@@ -202,15 +202,25 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
             );
       }
     } else {
-      code.trim() === ""
-        ? undefined
-        : await client.sendMessage(
-            theJid,
-            obj,
-            check("$reply", theFuncs)
-              ? { quoted: msg }
-              : undefined
-          );
+      try {
+        code.trim() === ""
+          ? undefined
+          : await client.sendMessage(
+              theJid,
+              obj,
+              check("$reply", theFuncs)
+                ? { quoted: msg }
+                : undefined
+            );
+      } catch(e) {
+        await client.sendMessage(
+          theJid,
+          { text: `\`\`\`❌ WhatscodeError: Something error in send the result: ${e}\`\`\`` },
+          check("$reply", theFuncs)
+            ? { quoted: msg }
+            : undefined
+        )
+      }
     }
   }
 

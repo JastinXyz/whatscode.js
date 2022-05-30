@@ -10,11 +10,11 @@ module.exports = async (d) => {
 
   if (!inside) {
     d.isError = true;
-    d.error("❌ WhatscodeError: Usage: $downloadContentFromUrl[url]");
+    return d.error("❌ WhatscodeError: Usage: $downloadContentFromUrl[url]");
   } else {
     if (!inside.match(/\.(jpeg|jpg|gif|png|mp4|webp)$/)) {
       d.isError = true;
-      d.error(
+      return d.error(
         "❌ WhatscodeError: Invalid url in $downloadContentFromUrl. Expected dot jpeg/jpg/gif/png/mp4/webp url. Received " +
           inside
       );
@@ -22,7 +22,7 @@ module.exports = async (d) => {
       const fileName = fileNameFromUrl(inside);
       if (!fileName) {
         d.isError = true;
-        d.error("❌ WhatscodeError: Something error in $downloadContentFromUrl: Can't match any file name.");
+        return d.error("❌ WhatscodeError: Something error in $downloadContentFromUrl: Can't match any file name.");
       } else {
         async function saveDownloadImage(url) {
           const response = await axios({
@@ -38,7 +38,7 @@ module.exports = async (d) => {
 
           if (!response) {
             d.isError = true;
-            d.error(
+            return d.error(
               `❌ WhatscodeError: Something error in $downloadContentFromUrl: Maybe url is incorrect? or the website is down?`
             );
           } else {

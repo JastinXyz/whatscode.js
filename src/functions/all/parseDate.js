@@ -2,7 +2,7 @@ module.exports = async(d) => {
   const inside = d.inside;
   if(!inside) {
     d.isError = true;
-    d.error(`❌ WhatscodeError: Usage: $parseDate[ms;time/date]`)
+    return d.error(`❌ WhatscodeError: Usage: $parseDate[ms;time/date]`)
   } else {
     var [ms, n] = inside.split(";");
     ms = Number(ms);

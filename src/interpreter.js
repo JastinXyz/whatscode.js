@@ -1,6 +1,6 @@
 const amap = new Map();
 
-module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
+module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObject) => {
   const data = [];
   const fs = require('fs');
   const parser = require("./functions/parser");
@@ -8,7 +8,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   let obj;
   let suppressErr;
   let sections = [];
-  let theJid = msg.key.remoteJid;
+  let theJid = msg? msg.key.remoteJid : undefined;
 
   const searched = [];
   function searchFunc(_n, _p) {
@@ -204,42 +204,45 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
 
   if (r) {
     return code;
-  }
-  if (check("$sendButton", theFuncs)) {
-    const a = JSON.parse(code);
-    await client.sendMessage(msg.key.remoteJid, a);
+  } else if(returnObject) {
+    return obj;
   } else {
-    if (typeof theJid === "array" || typeof theJid === "object") {
-      for (var i = 0; i < theJid.length; i++) {
-        code.trim() === ""
-          ? undefined
-          : await client.sendMessage(
-              theJid[i],
-              obj,
-              check("$reply", theFuncs)
-                ? { quoted: msg }
-                : undefined
-            );
-      }
+    if (check("$sendButton", theFuncs)) {
+      const a = JSON.parse(code);
+      await client.sendMessage(msg.key.remoteJid, a);
     } else {
-      try {
-        code.trim() === ""
-          ? undefined
-          : await client.sendMessage(
-              theJid,
-              obj,
-              check("$reply", theFuncs)
-                ? { quoted: msg }
-                : undefined
-            );
-      } catch(e) {
-        await client.sendMessage(
-          theJid,
-          { text: `\`\`\`❌ WhatscodeError: Something error in send the result: ${e}\`\`\`` },
-          check("$reply", theFuncs)
-            ? { quoted: msg }
-            : undefined
-        )
+      if (typeof theJid === "array" || typeof theJid === "object") {
+        for (var i = 0; i < theJid.length; i++) {
+          code.trim() === ""
+            ? undefined
+            : await client.sendMessage(
+                theJid[i],
+                obj,
+                check("$reply", theFuncs)
+                  ? { quoted: msg }
+                  : undefined
+              );
+        }
+      } else {
+        try {
+          code.trim() === ""
+            ? undefined
+            : await client.sendMessage(
+                theJid,
+                obj,
+                check("$reply", theFuncs)
+                  ? { quoted: msg }
+                  : undefined
+              );
+        } catch(e) {
+          await client.sendMessage(
+            theJid,
+            { text: `\`\`\`❌ WhatscodeError: Something error in send the result: ${e}\`\`\`` },
+            check("$reply", theFuncs)
+              ? { quoted: msg }
+              : undefined
+          )
+        }
       }
     }
   }

@@ -21,8 +21,7 @@ module.exports = async (d) => {
       d.cmd,
       d.db,
       "",
-      false,
-      d.t
+      false
     );
   }
 };

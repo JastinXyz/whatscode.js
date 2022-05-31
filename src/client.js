@@ -188,6 +188,50 @@ module.exports = class Client {
   userLeaveCommand(opt) {
     this.userLeave.set(this.userLeave.size, opt);
   }
+
+
+  async intervalCommand(opt) {
+    if(!opt.jid) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"jid" is required in "intervalCommand"')
+    if(!opt.code) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"code" is required in "intervalCommand"')
+    if(!opt.every) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"every" is required in "intervalCommand"')
+    if(!opt.executeOnStartup) opt.executeOnStartup = false;
+
+    if(!opt.executeOnStartup) {
+
+    } else {
+      const self = this
+
+      if (opt.jid.includes("$")) {
+        opt.jid = await require("./interpreter")(
+          opt.jid,
+          "",
+          this.whats,
+          "",
+          this.CMD,
+          this.db,
+          "",
+          true
+        );
+      }
+
+      setInterval(async function() {
+        const r = await require('./interpreter')(
+            opt.code,
+            "",
+            self.whats,
+            "",
+            self.CMD,
+            self.db,
+            "",
+            false,
+            true
+          );
+
+        self.whats.sendMessage(opt.jid, r)
+      }, opt.every)
+    }
+  }
+
 };
 
 require("./handler/prototype");

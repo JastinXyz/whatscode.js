@@ -8,6 +8,11 @@ module.exports = async (d) => {
   } else {
     var [url, playback = "no"] = inside.split(";");
 
+    if(!url.match(/\.(mp4)$/)) {
+      d.isError = true;
+      return d.error(`❌ WhatscodeError: Only .mp4 path/url allowed in $video!`);
+    }
+
     if(!pattern.test(url)) {
       if(!require('fs').existsSync(url)) {
         d.isError = true;

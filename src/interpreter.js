@@ -167,20 +167,30 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         sections: sections ? sections : "",
         headerType: 1,
       })
-    : u.templateButtons
+    : u.audio? u.templateButtons
     ? (obj = {
-        text: code.trim().split("\\n").join("\n"),
-        footer: u.footer ? u.footer : "",
-        templateButtons: u.templateButtons,
-        mentions: mentions || "",
+        audio: { url: u.audio.url },
+        mimetype: u.audio.mimetype,
+        ptt: u.audio.ptt
       })
     : (obj = {
-        text: code.trim().split("\\n").join("\n"),
-        buttons: u.buttons ? u.buttons : "",
-        footer: u.footer ? u.footer : "",
-        mentions: mentions || "",
-        headerType: 1,
-      });
+        audio: { url: u.audio.url },
+        mimetype: u.audio.mimetype,
+        ptt: u.audio.ptt
+      }) : u.templateButtons
+      ? (obj = {
+          text: code.trim().split("\\n").join("\n"),
+          footer: u.footer ? u.footer : "",
+          templateButtons: u.templateButtons,
+          mentions: mentions || "",
+        })
+      : (obj = {
+          text: code.trim().split("\\n").join("\n"),
+          buttons: u.buttons ? u.buttons : "",
+          footer: u.footer ? u.footer : "",
+          mentions: mentions || "",
+          headerType: 1,
+        });
 
   if (r) {
     return code;

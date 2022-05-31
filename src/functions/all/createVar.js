@@ -8,7 +8,7 @@ module.exports = async(d) => {
 
     for (const vars of v) {
       const [name, value] = vars.split(":")
-      d.db.set(name, value);
+      await d.db.set(name, value);
     }
 
     return ""

@@ -23,11 +23,13 @@ module.exports = class Client {
     this.NAME = opts.name;
     this.PREFIX = opts.prefix;
     this.autoRead = opts.autoRead;
+    this.customDatabase = opts.customDatabase;
     this.CMD = new Map();
     this.userJoin = new Map();
     this.userLeave = new Map();
     this.anotherMap = new Map();
-    this.db = db;
+    this.db = this.customDatabase;
+    if(!this.customDatabase) this.db = db;
 
     this.printQRInTerminal = opts.printQRInTerminal;
     if (!this.printQRInTerminal) this.printQRInTerminal = true;

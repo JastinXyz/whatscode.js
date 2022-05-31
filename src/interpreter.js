@@ -177,7 +177,17 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         audio: { url: u.audio.url },
         mimetype: u.audio.mimetype,
         ptt: u.audio.ptt
-      }) : u.templateButtons
+      }) : u.document? u.templateButtons
+      ? (obj = {
+          document: { url: u.document.url },
+          mimetype: u.document.mimetype,
+          fileName: u.document.filename
+        })
+      : (obj = {
+        document: { url: u.document.url },
+        mimetype: u.document.mimetype,
+        fileName: u.document.filename
+        }) : u.templateButtons
       ? (obj = {
           text: code.trim().split("\\n").join("\n"),
           footer: u.footer ? u.footer : "",

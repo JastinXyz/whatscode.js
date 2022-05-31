@@ -12,7 +12,7 @@ module.exports = async (d) => {
     d.isError = true;
     return d.error("❌ WhatscodeError: Usage: $downloadContentFromUrl[url]");
   } else {
-    if (!inside.match(/\.(jpeg|jpg|gif|png|mp4|webp)$/)) {
+    if (!inside.match(/\.(jpeg|jpg|gif|png|mp4|webp|mp3)$/)) {
       d.isError = true;
       return d.error(
         "❌ WhatscodeError: Invalid url in $downloadContentFromUrl. Expected dot jpeg/jpg/gif/png/mp4/webp url. Received " +

@@ -16,6 +16,7 @@ for (const file of reader) {
   const command = require(path + file);
   bot.command({
     name: command.name,
+    aliases: command.aliases,
     code: command.code,
   });
 }
@@ -28,6 +29,7 @@ for (const file of reader) {
 ```javascript
 module.exports = {
   name: "commandName",
+  aliases: ["Aliases1"],
   code: `command code`
 }
 ```

@@ -190,6 +190,17 @@ module.exports = class Client {
     this.userLeave.set(this.userLeave.size, opt);
   }
 
+  readyCommand(opt) {
+    if(!opt.jid) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"jid" is required in "readyCommand"')
+    if(!opt.code) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"code" is required in "readyCommand"')
+
+    var con;
+    const self = this
+    checkConnect(con, this, async function() {
+      await require("./handler/callbacks/readyCommand")(opt, self)
+    })
+
+  }
 
   async intervalCommand(opt) {
     if(!opt.jid) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"jid" is required in "intervalCommand"')

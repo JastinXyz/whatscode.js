@@ -2,6 +2,7 @@
   "onconnectionupdate": "onConnectionUpdate",
   "oncredsupdate": "onCredsUpdate",
   "onmessage": "onMessage",
+  "readycommand": "readyCommand",
   "onuserjoin": "onUserJoin",
   "onuserleave": "onUserLeave"
 }

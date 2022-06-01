@@ -246,6 +246,44 @@ module.exports = class Client {
       })
   }
 
+  status(opt) {
+    if(!opt.status) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"status" is required in "status"')
+    if(!opt.every) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"every" is required in "status"')
+
+    const self = this
+    if(typeof opt.status === "string") {
+      opt.status = opt.status.split()
+    }
+
+
+    var arr = opt.status;
+
+    var con;
+    checkConnect(con, self, function() {
+      var index = 0;
+      setInterval(function() {
+        self.whats.query({
+          tag: "iq",
+          attrs: {
+            to: "@s.whatsapp.net",
+            type: "set",
+            xmlns: "status",
+          },
+          content: [
+            {
+              tag: "status",
+              attrs: {},
+              content: Buffer.from(arr[index++], "utf-8"),
+            },
+          ],
+        });
+          if (index == arr.length)
+              index = 0
+
+      }, opt.every);
+    })
+  }
+
 };
 
 require("./handler/prototype");

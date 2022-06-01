@@ -2,6 +2,7 @@ module.exports = async (d) => {
   const inside = d.inside;
   const fs = require('fs');
   const axios = require('axios')
+  const { check } = require("../../models/functions");
   if (!inside) {
     d.isError = true;
     return d.error("❌ WhatscodeError: Usage: $sendSticker[image path]");
@@ -25,7 +26,7 @@ module.exports = async (d) => {
       })
 
       await fs.writeFileSync("./tmp/prepareStciker.webp", Buffer.from(a.data.sticker.data))
-      await d.client.sendMessage(d.msg.key.remoteJid, { sticker: { url: './tmp/prepareStciker.webp' } });
+      await d.client.sendMessage(d.msg.key.remoteJid, { sticker: { url: './tmp/prepareStciker.webp' } }, check("$reply", ["$reply"])? { quoted: d.msg } : undefined);
       await fs.unlinkSync(url)
       await fs.unlinkSync("./tmp/prepareStciker.webp")
     } catch(e) {

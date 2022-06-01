@@ -1,0 +1,19 @@
+# readyCommand
+
+This callback will listen to people who join the group.
+
+### Usage
+```js
+bot.readyCommand{(
+      jid: "", // User/Group JID
+      code: `` // Code Executed 
+      })
+```
+
+## Example
+```js
+bot.readyCommand({
+      jid: "",
+      code: `$log[$decodedBotJid Ready to use]`
+}}
+```

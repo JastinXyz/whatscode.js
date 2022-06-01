@@ -212,16 +212,6 @@ module.exports = class Client {
       }
 
       var con;
-      // function checkConnect(callback) {
-      //   var test = setInterval(function() {
-      //     if(self.connect) {
-      //       con = self.connect;
-      //       clearInterval(test);
-      //       callback(con);
-      //     }
-      //   }, 1000);
-      // }
-
       checkConnect(con, self, async function() {
         var r = await require('./interpreter')(
             opt.code,

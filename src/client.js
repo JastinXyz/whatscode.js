@@ -8,7 +8,7 @@ const {
 const { Boom } = require("@hapi/boom");
 const db = require("quick.db");
 
-const { getWaWebVer } = require("./models/functions");
+const { getWaWebVer, checkConnect } = require("./models/functions");
 
 module.exports = class Client {
   constructor(opts = {}) {
@@ -115,6 +115,7 @@ module.exports = class Client {
       }
       console.log("[conn logs]", update);
       if (update.receivedPendingNotifications) {
+        this.connect = true;
         console.log(
           "\x1b[32mWhatscodeSuccess 📗: \x1b[0mYour bot is ready now!\n\x1b[32mWhatscodeSuccess 📗: \x1b[0mJoin our Discord at: https://discord.gg/CzqHbx7rdU"
         );
@@ -196,11 +197,7 @@ module.exports = class Client {
     if(!opt.every) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"every" is required in "intervalCommand"')
     if(!opt.executeOnStartup) opt.executeOnStartup = false;
 
-    if(!opt.executeOnStartup) {
-
-    } else {
       const self = this
-
       if (opt.jid.includes("$")) {
         opt.jid = await require("./interpreter")(
           opt.jid,
@@ -214,8 +211,19 @@ module.exports = class Client {
         );
       }
 
-      setInterval(async function() {
-        const r = await require('./interpreter')(
+      var con;
+      // function checkConnect(callback) {
+      //   var test = setInterval(function() {
+      //     if(self.connect) {
+      //       con = self.connect;
+      //       clearInterval(test);
+      //       callback(con);
+      //     }
+      //   }, 1000);
+      // }
+
+      checkConnect(con, self, async function() {
+        var r = await require('./interpreter')(
             opt.code,
             "",
             self.whats,
@@ -227,9 +235,14 @@ module.exports = class Client {
             true
           );
 
-        self.whats.sendMessage(opt.jid, r)
-      }, opt.every)
-    }
+        if(opt.executeOnStartup) {
+          self.whats.sendMessage(opt.jid, r)
+        }
+
+        setInterval(function() {
+          self.whats.sendMessage(opt.jid, r)
+        }, opt.every)
+      })
   }
 
 };

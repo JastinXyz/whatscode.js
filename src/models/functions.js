@@ -99,5 +99,14 @@ module.exports = {
       );
 
     return pattern.test(i)
+  },
+  checkConnect: function checkConnect(con, self, callback) {
+    var test = setInterval(function() {
+      if(self.connect) {
+        con = self.connect;
+        clearInterval(test);
+        callback(con);
+      }
+    }, 1000);
   }
 };

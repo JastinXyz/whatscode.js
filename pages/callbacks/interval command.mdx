@@ -1,0 +1,30 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# intervalCommand
+
+Executing Code Every Second/Minute
+
+### Usage
+```js
+bot.intervalCommand({
+ jid: "", // Group/User Jid
+ code: "", 
+ every: 15000, // Execution Time In Milliseconds
+ executeOnStartUp: true/false // Executing Code When Bot Online
+})
+```
+
+<Callout type="warning" emoji="❗">
+**Sending Messages Too Fast Will Make Bots Affected by Rate Limits!**
+</Callout>
+
+## Example
+```js
+bot.intervalCommand({
+ jid: "User/Group Jid",
+ code: "Hello I'm Using Whatscode.js", 
+ every: 15000, // Execution Time In Milliseconds
+ executeOnStartUp: true // Executing Code When Bot Online
+})
+
+```

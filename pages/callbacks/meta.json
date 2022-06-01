@@ -1,6 +1,7 @@
 {
   "onconnectionupdate": "onConnectionUpdate",
   "oncredsupdate": "onCredsUpdate",
+  "intervalCommand": "intervalCommand",
   "onmessage": "onMessage",
   "readycommand": "readyCommand",
   "onuserjoin": "onUserJoin",

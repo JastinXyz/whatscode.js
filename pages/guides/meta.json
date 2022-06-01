@@ -1,6 +1,7 @@
 {
   "client-options": "Client Options",
   "command-handler": "Command Handler",
+  "client-status": "Client Status",
   "mentions": "Mentions",
   "sections": "Sections",
   "variables": "Variables"

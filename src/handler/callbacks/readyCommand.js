@@ -24,5 +24,7 @@ module.exports = async(opt, d) => {
       true
     );
 
-  d.whats.sendMessage(opt.jid, a)
+    a.text.trim() === ""
+      ? undefined
+      : d.whats.sendMessage(opt.jid, a)
 };

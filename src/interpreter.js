@@ -60,8 +60,21 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
       unique: false,
       error: (err) => {
         if (!suppressErr) {
-          suppressErr = err
+          return client.sendMessage(
+            msg.key.remoteJid,
+            {
+              text: `\`\`\`${err}\`\`\``,
+            },
+            { quoted: msg }
+          );
         }
+        return client.sendMessage(
+          msg.key.remoteJid,
+          {
+            text: `\`\`\`${suppressErr.split("{error}").join(err)}\`\`\``,
+          },
+          { quoted: msg }
+        );
       },
       db,
       jid: (n) => {
@@ -90,10 +103,6 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
       code = "";
       break;
     }
-  }
-
-  if(suppressErr) {
-    code = `\`\`\`${suppressErr.trim()}\`\`\``
   }
 
   const c = code.match(/(@[^](?![a-zA-Z]).\d*[$]*)/gm);
@@ -197,14 +206,6 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
     return code;
   } else if(returnObject) {
     return obj;
-  } else if(suppressErr) {
-    code.trim() === ""
-      ? undefined
-      : await client.sendMessage(
-          theJid,
-          obj,
-          { quoted: msg }
-        );
   } else {
     if (check("$sendButton", theFuncs)) {
       const a = JSON.parse(code);

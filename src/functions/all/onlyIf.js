@@ -55,12 +55,11 @@ module.exports = async (d) => {
     if (!pass) {
       d.isError = true;
 
-      // return d.client.sendMessage(
-      //   d.msg.key.remoteJid,
-      //   { text: error },
-      //   { quoted: d.msg }
-      // );
-      d.error(error)
+      return d.client.sendMessage(
+        d.msg.key.remoteJid,
+        { text: error },
+        { quoted: d.msg }
+      );
     } else {
       return "";
     }

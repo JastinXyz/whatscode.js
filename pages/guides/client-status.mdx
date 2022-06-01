@@ -1,0 +1,25 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Bot Status
+
+Changing Status Every Second/Minute
+
+### Usage
+```js
+bot.status({
+ status: ["Status 1", "Status 2"],
+ every: 16000 // In Milliseconds
+})
+```
+
+<Callout type="warning" emoji="❗">
+**Changing Status Too Short Will Make Bots Affected by Rate Limits!**
+</Callout>
+
+### Example
+```js
+bot.status({
+ status: ["Whatscode.js", "Hello", "Online"],
+ every: 25000 // Changing Status Every 25 Seconds
+})
+```

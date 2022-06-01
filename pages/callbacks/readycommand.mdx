@@ -1,0 +1,25 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# readyCommand
+
+Executing Code When Bot Is Online.
+
+### Usage
+```js
+bot.readyCommand({
+      jid: "", // User/Group Jud
+      code: `` // Code Executed 
+      })
+```
+
+<Callout type="warning">
+Jid is very much needed, if you leave it blank you will get an error in the console
+</Callout>
+
+## Example
+```js
+bot.readyCommand({
+      jid: "User/Group Jid",
+      code: `$log[$decodedBotJid Ready to use]`
+})
+```

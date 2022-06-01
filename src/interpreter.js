@@ -63,7 +63,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
           return client.sendMessage(
             msg.key.remoteJid,
             {
-              text: `\`\`\`${err}\`\`\``,
+              text: `\`\`\`${err.trim()}\`\`\``,
             },
             { quoted: msg }
           );
@@ -71,7 +71,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
         return client.sendMessage(
           msg.key.remoteJid,
           {
-            text: `\`\`\`${suppressErr.split("{error}").join(err)}\`\`\``,
+            text: `\`\`\`${suppressErr.trim().split("{error}").join(err)}\`\`\``,
           },
           { quoted: msg }
         );

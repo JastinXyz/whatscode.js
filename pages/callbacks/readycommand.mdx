@@ -1,3 +1,5 @@
+import Callout from 'nextra-theme-docs/callout'
+
 # readyCommand
 
 Executing Code When Bot Is Online.
@@ -9,6 +11,10 @@ bot.readyCommand({
       code: `` // Code Executed 
       })
 ```
+
+<Callout type="warning">
+Jid is very much needed, if you leave it blank you will get an error in the console
+</Callout>
 
 ## Example
 ```js

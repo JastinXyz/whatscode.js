@@ -170,10 +170,12 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
     : u.audio? u.templateButtons
     ? (obj = {
         audio: { url: u.audio.url },
+        mimetype: u.audio.mimetype,
         ptt: u.audio.ptt
       })
     : (obj = {
         audio: { url: u.audio.url },
+        mimetype: u.audio.mimetype,
         ptt: u.audio.ptt
       }) : u.document? u.templateButtons
       ? (obj = {

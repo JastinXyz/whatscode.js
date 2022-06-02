@@ -3,7 +3,7 @@ module.exports = async (d) => {
   const { decodeJid, sender } = require("../../models/functions.js");
   if(!inside) {
     d.isError = true;
-    d.error('❌ WhatscodeError: Usage: $add[id]')
+    return d.error('❌ WhatscodeError: Usage: $add[jid]')
   } else {
     const [...num] = inside.split(";");
     const s = await decodeJid(sender(d));

@@ -114,8 +114,8 @@ bot.variables({
 - [AND MANY MORE](https://whatscode.jstnlt.my.id/)
 
 ## Contributors
-<a href="https://github.com/JastinXyz/whatscode.js/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=JastinXyz/whatscode.js" />
+<a href="https://github.com/jastinxyz/whatscode.js/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jastinxyz/whatscode.js" />
 </a>
 
 ## Links

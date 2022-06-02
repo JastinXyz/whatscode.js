@@ -7,6 +7,7 @@ const {
 } = require("@adiwajshing/baileys");
 const { Boom } = require("@hapi/boom");
 const db = require("quick.db");
+const lolcatjs = require('lolcatjs')
 
 const { getWaWebVer, checkConnect } = require("./models/functions");
 
@@ -113,13 +114,16 @@ module.exports = class Client {
           console.log(`Unknown DisconnectReason: ${reason}|${connection}`);
         }
       }
-      console.log("[conn logs]", update);
-      if (update.receivedPendingNotifications) {
-        this.connect = true;
-        console.log(
+      if (update.connection == "connecting" || update.receivedPendingNotifications == "false") {
+       console.log(
           "\x1b[32mWhatscodeSuccess 📗: \x1b[0mYour bot is ready now!\n\x1b[32mWhatscodeSuccess 📗: \x1b[0mJoin our Discord at: https://discord.gg/CzqHbx7rdU"
         );
-      }
+			lolcatjs.fromString("[wait to connection whatscode]")
+		}
+		if (update.connection == "open" || update.receivedPendingNotifications == "true") {
+			lolcatjs.fromString("[Connecting to] WhatsApp web")
+			lolcatjs.fromString(`[Connected to USER ]` + JSON.stringify(this.whats.user, null, 2))
+		}
     });
   }
 

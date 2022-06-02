@@ -23,7 +23,7 @@ module.exports = async (d) => {
       d.unique = true;
       return {
         type: "audio",
-        response: { url, mimetype: `audio/${url.slice(-3)}`, ptt: vn == "yes"? true : false },
+        response: { url, mimetype: `audio/mp4`, ptt: vn == "yes"? true : false },
       };
 
   }

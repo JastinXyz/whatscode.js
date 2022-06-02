@@ -10,17 +10,17 @@ module.exports = async (d) => {
 
   if (!inside) {
     d.isError = true;
-    return d.error("❌ WhatscodeError: Usage: $downloadContentFromUrl[url]");
+    return d.error("❌ WhatscodeError: Usage: $downloadContentFromUrl[url;file name (optional)]");
   } else {
-    let check = inside.split('/').pop().indexOf('.') > -1;
+    const [l, fileName = fileNameFromUrl(inside)] = inside.split(";")
+    let check = l.split('/').pop().indexOf('.') > -1;
     if (!check) {
       d.isError = true;
       return d.error(
         "❌ WhatscodeError: Invalid url in $downloadContentFromUrl. Expected dot file extension url. Received " +
-          inside
+          l
       );
     } else {
-      const fileName = fileNameFromUrl(inside);
       if (!fileName) {
         d.isError = true;
         return d.error("❌ WhatscodeError: Something error in $downloadContentFromUrl: Can't match any file name.");

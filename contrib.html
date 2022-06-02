@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <span id="l"></span>
+  </body>
+  <script>
+    const list = [];
+    fetch("https://api.github.com/repos/JastinXyz/whatscode.js/contributors?page=1&per_page=100")
+      .then((x) => x.json())
+      .then((res) => {
+        for (var i = 0; i < res.length; i++) {
+          list.push(`<a href="${res[i].html_url}"><img height="64" alt="${res[i].login}" src="${res[i].avatar_url}&s=117" style="border-radius: 50%"/></a>`)
+        }
+
+        document.getElementById('l').innerHTML = list.join(" ")
+      })
+  </script>
+</html>

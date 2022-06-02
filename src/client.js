@@ -115,12 +115,10 @@ module.exports = class Client {
         }
       }
       if (update.connection == "connecting" || update.receivedPendingNotifications == "false") {
-       console.log(
-          "\x1b[32mWhatscodeSuccess 📗: \x1b[0mYour bot is ready now!\n\x1b[32mWhatscodeSuccess 📗: \x1b[0mJoin our Discord at: https://discord.gg/CzqHbx7rdU"
-        );
 			lolcatjs.fromString("[wait to connection whatscode]")
 		}
 		if (update.connection == "open" || update.receivedPendingNotifications == "true") {
+			this.connect = true;
 			lolcatjs.fromString("[Connecting to] WhatsApp web")
 			lolcatjs.fromString(`[Connected to USER ]` + JSON.stringify(this.whats.user, null, 2))
 		}

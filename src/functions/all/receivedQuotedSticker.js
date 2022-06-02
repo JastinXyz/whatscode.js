@@ -4,7 +4,7 @@ module.exports = async(d) => {
   const path = './tmp/recivedQuotedSticker.webp'
   const { check } = require("../../models/functions");
 
-  if(!d.msg.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage) {
+  if(!d.msg.message.extendedTextMessage) {
     return ""
   }
 

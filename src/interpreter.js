@@ -85,6 +85,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
         }
       },
       sections,
+      theFuncs,
     };
 
     var res = await require(`./functions/all/${d}.js`)(all);

@@ -26,7 +26,7 @@ module.exports = async (d) => {
       })
 
       await fs.writeFileSync("./tmp/prepareStciker.webp", Buffer.from(a.data.sticker.data))
-      await d.client.sendMessage(d.msg.key.remoteJid, { sticker: { url: './tmp/prepareStciker.webp' } }, check("$reply", ["$reply"])? { quoted: d.msg } : undefined);
+      await d.client.sendMessage(d.msg.key.remoteJid, { sticker: { url: './tmp/prepareStciker.webp' } }, check("$reply", d.theFuncs)? { quoted: d.msg } : undefined);
       await fs.unlinkSync(url)
       await fs.unlinkSync("./tmp/prepareStciker.webp")
     } catch(e) {

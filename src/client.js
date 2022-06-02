@@ -120,7 +120,8 @@ module.exports = class Client {
 		if (update.connection == "open" || update.receivedPendingNotifications == "true") {
 			this.connect = true;
 			lolcatjs.fromString("[Connecting to] WhatsApp web")
-			lolcatjs.fromString(`[Connected to USER ]` + JSON.stringify(this.whats.user, null, 2))
+			lolcatjs.fromString(`[Connected to USER ] ` + JSON.stringify(this.whats.user, null, 2))
+			lolcatjs.fromString(`[Whatcode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU`)
 		}
     });
   }

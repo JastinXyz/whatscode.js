@@ -9,7 +9,7 @@ const { Boom } = require("@hapi/boom");
 const db = require("quick.db");
 const lolcatjs = require('lolcatjs')
 
-const { getWaWebVer, checkConnect } = require("./models/functions");
+const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray } = require("./models/functions");
 
 module.exports = class Client {
   constructor(opts = {}) {
@@ -132,6 +132,7 @@ module.exports = class Client {
 
   onMessage() {
     this.whats.ev.on("messages.upsert", async (m) => {
+      this.PREFIX = await execInterpreterIfAnDollarInArray(this.PREFIX, this.db)
       this.m = m;
 
       if (this.autoRead) {

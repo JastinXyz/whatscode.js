@@ -108,5 +108,23 @@ module.exports = {
         callback(con);
       }
     }, 1000);
+  },
+  execInterpreterIfAnDollarInArray: async function execInterpreterIfAnDollarInArray(arr, db) {
+    for (var i = 0; i < arr.length; i++) {
+      if(arr[i].includes("$")) {
+          arr[i] = await require("../interpreter")(
+              arr[i],
+              "",
+              "",
+              "",
+              "",
+              db,
+              "",
+              true
+            );
+      }
+    }
+
+    return arr
   }
 };

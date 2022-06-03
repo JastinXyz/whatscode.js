@@ -250,7 +250,7 @@ module.exports = class Client {
       })
   }
 
-  status(opt) {
+  async status(opt) {
     if(!opt.status) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"status" is required in "status"')
     if(!opt.every) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"every" is required in "status"')
 
@@ -259,8 +259,7 @@ module.exports = class Client {
       opt.status = opt.status.split()
     }
 
-
-    var arr = opt.status;
+    var arr = await execInterpreterIfAnDollarInArray(opt.status, this.db)
 
     var con;
     checkConnect(con, self, function() {

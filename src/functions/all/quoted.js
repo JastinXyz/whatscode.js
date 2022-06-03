@@ -1,6 +1,6 @@
 /* for now only supports: conversations text, text contain mentions,
                           contacts, contacts array, image, video, audio,
-                          document, sticker, locations.
+                          document, sticker, locations, buttons.
 */
 
 module.exports = async (d) => {

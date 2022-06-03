@@ -188,7 +188,12 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
         document: { url: u.document.url },
         mimetype: u.document.mimetype,
         fileName: u.document.filename
-        }) : u.templateButtons
+      }) : u.sticker? u.templateButtons
+      ? (obj = {
+        sticker: u.sticker
+      }) : (obj = {
+        sticker: u.sticker
+      }) : u.templateButtons
       ? (obj = {
           text: code.trim().split("\\n").join("\n"),
           footer: u.footer ? u.footer : "",

@@ -171,12 +171,12 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
     : u.audio? u.templateButtons
     ? (obj = {
         audio: { url: u.audio.url },
-        mimetype: u.audio.mimetype,
+        mimetype: u.audio.mimetype? u.audio.mimetype : "audio/mp4",
         ptt: u.audio.ptt
       })
     : (obj = {
         audio: { url: u.audio.url },
-        mimetype: u.audio.mimetype,
+        mimetype: u.audio.mimetype? u.audio.mimetype : "audio/mp4",
         ptt: u.audio.ptt
       }) : u.document? u.templateButtons
       ? (obj = {
@@ -193,7 +193,8 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
         sticker: u.sticker
       }) : (obj = {
         sticker: u.sticker
-      }) : u.templateButtons
+      }) : u.allInOne? u.templateButtons
+      ? (obj = u.allInOne) : (obj = u.allInOne) : u.templateButtons
       ? (obj = {
           text: code.trim().split("\\n").join("\n"),
           footer: u.footer ? u.footer : "",
@@ -208,6 +209,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
           headerType: 1,
         });
 
+        // console.log(obj);
   if (r) {
     return code;
   } else if(returnObject) {

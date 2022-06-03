@@ -31,9 +31,6 @@ module.exports = async(d) => {
     if(returnPath === "yes") {
       return path
     } else {
-      // await d.client.sendMessage(d.msg.key.remoteJid, { sticker: { url: './tmp/recivedQuotedSticker.webp' } }, check("$reply", d.theFuncs)? { quoted: d.msg } : undefined);
-      // await fs.unlinkSync(path)
-      // return ""
       d.unique = true;
       return {
         type: "sticker",

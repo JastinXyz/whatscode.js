@@ -21,13 +21,13 @@ module.exports = async (d) => {
       );
     }
 
-    if (!d.db.has(name)) {
+    if (!await d.db.has(name)) {
       d.isError = true;
       return d.error(`❌ WhatscodeError: variable ${name} not found!`);
     }
 
-    return d.db.has(`${name}_${groupJid}`) === false
-      ? d.db.get(name)
-      : d.db.get(`${name}_${groupJid}`);
+    return await d.db.has(`${name}_${groupJid}`) === false
+      ? await d.db.get(name)
+      : await d.db.get(`${name}_${groupJid}`);
   }
 };

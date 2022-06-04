@@ -11,7 +11,7 @@ module.exports = async (d) => {
       return d.error(`❌ WhatscodeError: Usage: $setVar[name;value]!`);
     }
 
-    if (!d.db.has(name)) {
+    if (!await d.db.has(name)) {
       d.isError = true;
       return d.error(`❌ WhatscodeError: variable ${inside} not found!`);
     }

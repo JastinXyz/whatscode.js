@@ -7,15 +7,16 @@ const {
 } = require("@adiwajshing/baileys");
 const { Boom } = require("@hapi/boom");
 const db = require("quick.db");
+const lolcatjs = require('lolcatjs')
 
-const { getWaWebVer } = require("./models/functions");
+const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray } = require("./models/functions");
 
 module.exports = class Client {
   constructor(opts = {}) {
     if (!opts.name) throw new Error("[whatscode.js] name required!");
 
-    if(typeof opts.prefix == "string") {
-      opts.prefix = opts.prefix.split()
+    if (typeof opts.prefix == "string") {
+      opts.prefix = opts.prefix.split();
     }
 
     if (!opts.prefix) throw new Error("[whatscode.js] prefix required!");
@@ -23,11 +24,13 @@ module.exports = class Client {
     this.NAME = opts.name;
     this.PREFIX = opts.prefix;
     this.autoRead = opts.autoRead;
+    this.customDatabase = opts.customDatabase;
     this.CMD = new Map();
     this.userJoin = new Map();
     this.userLeave = new Map();
     this.anotherMap = new Map();
-    this.db = db;
+    this.db = this.customDatabase;
+    if(!this.customDatabase) this.db = db;
 
     this.printQRInTerminal = opts.printQRInTerminal;
     if (!this.printQRInTerminal) this.printQRInTerminal = true;
@@ -111,12 +114,15 @@ module.exports = class Client {
           console.log(`Unknown DisconnectReason: ${reason}|${connection}`);
         }
       }
-      console.log("[conn logs]", update);
-      if (update.receivedPendingNotifications) {
-        console.log(
-          "\x1b[32mWhatscodeSuccess 📗: \x1b[0mYour bot is ready now!\n\x1b[32mWhatscodeSuccess 📗: \x1b[0mJoin our Discord at: https://discord.gg/CzqHbx7rdU"
-        );
-      }
+      if (update.connection == "connecting" || update.receivedPendingNotifications == "false") {
+			lolcatjs.fromString("[wait to connection whatscode]")
+		}
+		if (update.connection == "open" || update.receivedPendingNotifications == "true") {
+			this.connect = true;
+			lolcatjs.fromString("[Connecting to] WhatsApp web")
+			lolcatjs.fromString(`[Connected to USER ] ` + JSON.stringify(this.whats.user, null, 2))
+			lolcatjs.fromString(`[Whatscode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU`)
+		}
     });
   }
 
@@ -126,6 +132,7 @@ module.exports = class Client {
 
   onMessage() {
     this.whats.ev.on("messages.upsert", async (m) => {
+      this.PREFIX = await execInterpreterIfAnDollarInArray(this.PREFIX, this.db)
       this.m = m;
 
       if (this.autoRead) {
@@ -166,7 +173,7 @@ module.exports = class Client {
   onUserJoin() {
     this.whats.ev.on("group-participants.update", async (u) => {
       if (u.action === "add") {
-        await require("./handler/userJoinCommand")(u, this);
+        await require("./handler/callbacks/userJoinCommand")(u, this);
       }
     });
   }
@@ -174,7 +181,7 @@ module.exports = class Client {
   onUserLeave() {
     this.whats.ev.on("group-participants.update", async (u) => {
       if (u.action === "remove") {
-        await require("./handler/userLeaveCommand.js")(u, this);
+        await require("./handler/callbacks/userLeaveCommand.js")(u, this);
       }
     });
   }
@@ -186,6 +193,100 @@ module.exports = class Client {
   userLeaveCommand(opt) {
     this.userLeave.set(this.userLeave.size, opt);
   }
+
+  readyCommand(opt) {
+    if(!opt.jid) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"jid" is required in "readyCommand"')
+    if(!opt.code) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"code" is required in "readyCommand"')
+
+    var con;
+    const self = this
+    checkConnect(con, this, async function() {
+      await require("./handler/callbacks/readyCommand")(opt, self)
+    })
+
+  }
+
+  async intervalCommand(opt) {
+    if(!opt.jid) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"jid" is required in "intervalCommand"')
+    if(!opt.code) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"code" is required in "intervalCommand"')
+    if(!opt.every) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"every" is required in "intervalCommand"')
+    if(!opt.executeOnStartup) opt.executeOnStartup = false;
+
+      const self = this
+      if (opt.jid.includes("$")) {
+        opt.jid = await require("./interpreter")(
+          opt.jid,
+          "",
+          this.whats,
+          "",
+          this.CMD,
+          this.db,
+          "",
+          true
+        );
+      }
+
+      var con;
+      checkConnect(con, self, async function() {
+        var r = await require('./interpreter')(
+            opt.code,
+            "",
+            self.whats,
+            "",
+            self.CMD,
+            self.db,
+            "",
+            false,
+            true
+          );
+
+        if(opt.executeOnStartup) {
+          self.whats.sendMessage(opt.jid, r)
+        }
+
+        setInterval(function() {
+          self.whats.sendMessage(opt.jid, r)
+        }, opt.every)
+      })
+  }
+
+  async status(opt) {
+    if(!opt.status) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"status" is required in "status"')
+    if(!opt.every) throw new Error('\x1b[31mWhatscodeError 📕: \x1b[0m"every" is required in "status"')
+
+    const self = this
+    if(typeof opt.status === "string") {
+      opt.status = opt.status.split()
+    }
+
+    var arr = await execInterpreterIfAnDollarInArray(opt.status, this.db)
+
+    var con;
+    checkConnect(con, self, function() {
+      var index = 0;
+      setInterval(function() {
+        self.whats.query({
+          tag: "iq",
+          attrs: {
+            to: "@s.whatsapp.net",
+            type: "set",
+            xmlns: "status",
+          },
+          content: [
+            {
+              tag: "status",
+              attrs: {},
+              content: Buffer.from(arr[index++], "utf-8"),
+            },
+          ],
+        });
+          if (index == arr.length)
+              index = 0
+
+      }, opt.every);
+    })
+  }
+
 };
 
 require("./handler/prototype");

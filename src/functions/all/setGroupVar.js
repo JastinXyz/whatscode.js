@@ -22,7 +22,7 @@ module.exports = async (d) => {
       );
     }
 
-    if (!d.db.has(name)) {
+    if (!await d.db.has(name)) {
       d.isError = true;
       return d.error(`❌ WhatscodeError: variable ${name} not found!`);
     }

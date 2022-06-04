@@ -1,9 +1,22 @@
 module.exports = async (d) => {
-  const inside = d.inside;
+  var inside = d.inside;
   if (!inside) {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $jsEval[code]!`);
   } else {
+    if (inside.includes("$")) {
+      inside = await require("../../interpreter")(
+        inside,
+        d.msg,
+        d.client,
+        d.args,
+        d.cmd,
+        d.db,
+        "",
+        true
+      );
+    }
+
     try {
       var evaled = await eval(inside);
     } catch (err) {

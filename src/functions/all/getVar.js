@@ -4,11 +4,11 @@ module.exports = async (d) => {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $getVar[name]!`);
   } else {
-    if (!d.db.has(inside)) {
+    if (!await d.db.has(inside)) {
       d.isError = true;
       return d.error(`❌ WhatscodeError: variable ${inside} not found!`);
     }
 
-    return d.db.get(inside);
+    return await d.db.get(inside);
   }
 };

@@ -25,6 +25,6 @@ module.exports = async(d) => {
       return d.error(`❌ WhatscodeError: Failed to set status!`);
     }
 
-    return "";
+    return inside;
   }
 };

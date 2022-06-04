@@ -1,6 +1,6 @@
 module.exports = async (u, t) => {
-  const { decodeJid } = require("../models/functions.js");
-  const cmds = t.userJoin.values();
+  const { decodeJid } = require("../../models/functions.js");
+  const cmds = t.userLeave.values();
   for (const cmd of cmds) {
     var gjid = cmd?.groupJid;
 
@@ -10,12 +10,12 @@ module.exports = async (u, t) => {
     }
 
     if (cmd?.groupJid?.includes("$")) {
-      gjid = await require("../interpreter.js")(
+      gjid = await require("../../interpreter.js")(
         cmd?.groupJid,
         t.m.messages[0],
         t.whats,
         "",
-        t.userJoin,
+        t.userLeave,
         t.db,
         "",
         true
@@ -24,7 +24,7 @@ module.exports = async (u, t) => {
 
     if (gjid.includes(groupJid)) {
       const groupN = await t.whats.groupMetadata(groupJid);
-      await require("../interpreter.js")(
+      await require("../../interpreter.js")(
         cmd?.code
           .split("{userJid}")
           .join(jid)
@@ -37,7 +37,7 @@ module.exports = async (u, t) => {
         t.m.messages[0],
         t.whats,
         "",
-        t.userJoin,
+        t.userLeave,
         t.db,
         jid
       );

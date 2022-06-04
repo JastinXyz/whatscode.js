@@ -1,18 +1,19 @@
 const amap = new Map();
 
-module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
+module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObject) => {
   const data = [];
+  const fs = require('fs');
   const parser = require("./functions/parser");
   const { array_move, escapeRegex, check } = require("./models/functions");
   let obj;
   let suppressErr;
   let sections = [];
-  let theJid = msg.key.remoteJid;
+  let theJid = msg? msg.key.remoteJid : undefined;
 
   const searched = [];
   function searchFunc(_n, _p) {
     for (const f of _n) {
-      const func = _p.filter((filt) => filt == `$${f}`.slice(0, filt.length));
+      let func = _p.filter((filt) => filt === f.slice(0, filt.length));
 
       if (func.length == 1) {
         searched.push(func[0]);
@@ -25,7 +26,8 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
   }
 
   const u = {};
-  let theFuncs = searchFunc(code.split("$"), parser);
+  var searchCode = code.replace(/\$/gi, ",$");
+  let theFuncs = searchFunc(searchCode.split(","), parser);
 
   if(check("$if", theFuncs)) {
     return await require('./handler/if.js')({ msg, client, code, args, cmd, db });
@@ -66,7 +68,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
           return client.sendMessage(
             msg.key.remoteJid,
             {
-              text: `\`\`\`${err}\`\`\``,
+              text: `\`\`\`${err.trim()}\`\`\``,
             },
             { quoted: msg }
           );
@@ -74,7 +76,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         return client.sendMessage(
           msg.key.remoteJid,
           {
-            text: `\`\`\`${suppressErr.split("{error}").join(err)}\`\`\``,
+            text: `\`\`\`${suppressErr.trim().split("{error}").join(err)}\`\`\``,
           },
           { quoted: msg }
         );
@@ -88,9 +90,10 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         }
       },
       sections,
+      theFuncs,
     };
 
-    const res = await require(`./functions/all/${d}.js`)(all);
+    var res = await require(`./functions/all/${d}.js`)(all);
 
     if (all.unique) {
       if (res.type === "error") {
@@ -170,50 +173,97 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r) => {
         sections: sections ? sections : "",
         headerType: 1,
       })
-    : u.templateButtons
+    : u.audio? u.templateButtons
     ? (obj = {
-        text: code.trim().split("\\n").join("\n"),
-        footer: u.footer ? u.footer : "",
-        templateButtons: u.templateButtons,
-        mentions: mentions || "",
+        audio: { url: u.audio.url },
+        mimetype: u.audio.mimetype? u.audio.mimetype : "audio/mp4",
+        ptt: u.audio.ptt
       })
     : (obj = {
-        text: code.trim().split("\\n").join("\n"),
-        buttons: u.buttons ? u.buttons : "",
-        footer: u.footer ? u.footer : "",
-        mentions: mentions || "",
-        headerType: 1,
-      });
+        audio: { url: u.audio.url },
+        mimetype: u.audio.mimetype? u.audio.mimetype : "audio/mp4",
+        ptt: u.audio.ptt
+      }) : u.document? u.templateButtons
+      ? (obj = {
+          document: { url: u.document.url },
+          mimetype: u.document.mimetype,
+          fileName: u.document.filename
+        })
+      : (obj = {
+        document: { url: u.document.url },
+        mimetype: u.document.mimetype,
+        fileName: u.document.filename
+      }) : u.sticker? u.templateButtons
+      ? (obj = {
+        sticker: u.sticker
+      }) : (obj = {
+        sticker: u.sticker
+      }) : u.allInOne? u.templateButtons
+      ? (obj = u.allInOne) : (obj = u.allInOne) : u.templateButtons
+      ? (obj = {
+          text: code.trim().split("\\n").join("\n"),
+          footer: u.footer ? u.footer : "",
+          templateButtons: u.templateButtons,
+          mentions: mentions || "",
+        })
+      : (obj = {
+          text: code.trim().split("\\n").join("\n"),
+          buttons: u.buttons ? u.buttons : "",
+          footer: u.footer ? u.footer : "",
+          mentions: mentions || "",
+          headerType: 1,
+        });
 
   if (r) {
     return code;
-  }
-  if (check("$sendButton", theFuncs)) {
-    const a = JSON.parse(code);
-    await client.sendMessage(msg.key.remoteJid, a);
+  } else if(returnObject) {
+    return obj;
   } else {
-    if (typeof theJid === "array" || typeof theJid === "object") {
-      for (var i = 0; i < theJid.length; i++) {
-        code.trim() === ""
-          ? undefined
-          : await client.sendMessage(
-              theJid[i],
-              obj,
-              check("$reply", theFuncs)
-                ? { quoted: msg }
-                : undefined
-            );
-      }
+    if (check("$sendButton", theFuncs)) {
+      const a = JSON.parse(code);
+      await client.sendMessage(msg.key.remoteJid, a);
     } else {
-      code.trim() === ""
-        ? undefined
-        : await client.sendMessage(
+      if (typeof theJid === "array" || typeof theJid === "object") {
+        for (var i = 0; i < theJid.length; i++) {
+          code.trim() === ""
+            ? undefined
+            : await client.sendMessage(
+                theJid[i],
+                obj,
+                check("$reply", theFuncs)
+                  ? { quoted: msg }
+                  : undefined
+              );
+        }
+      } else {
+        try {
+          code.trim() === ""
+            ? undefined
+            : await client.sendMessage(
+                theJid,
+                obj,
+                check("$reply", theFuncs)
+                  ? { quoted: msg }
+                  : undefined
+              );
+        } catch(e) {
+          await client.sendMessage(
             theJid,
-            obj,
+            { text: `\`\`\`❌ WhatscodeError: Something error in send the result: ${e}\`\`\`` },
             check("$reply", theFuncs)
               ? { quoted: msg }
               : undefined
-          );
+          )
+        }
+      }
+    }
+  }
+
+  if(check("$receivedImage", theFuncs)) {
+    if(u.image) {
+      if(fs.existsSync("./tmp/receivedImage.png")) {
+        fs.unlinkSync("./tmp/receivedImage.png")
+      }
     }
   }
 };

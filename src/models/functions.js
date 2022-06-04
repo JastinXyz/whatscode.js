@@ -73,14 +73,58 @@ module.exports = {
     return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
   },
   check: function check(n, theFuncs) {
-    return [n].some((v) => theFuncs.indexOf(v) >= 0)
+    return [n].some((v) => theFuncs.indexOf(v) >= 0);
   },
-  getInside: function getInside(c, code) {
-    let i = code.split(new RegExp(module.exports.escapeRegex(c), "gi"));
-    i = i[i.length - 1];
-    const length = i.split("[").length - 1;
-    i = i.split("]").slice(0, length).join("]").replace("[", "");
+  fileNameFromUrl: function fileNameFromUrl(url) {
+    var matches = url.match(/\/([^\/?#]+)[^\/]*$/);
+    if(!matches) {
+      return undefined;
+    } else {
+      if (matches.length > 1) {
+        return matches[1];
+      }
+      return null;
+    }
+  },
+  isUrl: function isUrl(i) {
+    var pattern = new RegExp(
+        "^(https?:\\/\\/)?" +
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+        "((\\d{1,3}\\.){3}\\d{1,3}))|" +
+        "localhost" +
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+        "(\\?[;&a-z\\d%_.~+=-]*)?" +
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      );
 
-    return i
+    return pattern.test(i)
+  },
+  checkConnect: function checkConnect(con, self, callback) {
+    var test = setInterval(function() {
+      if(self.connect) {
+        con = self.connect;
+        clearInterval(test);
+        callback(con);
+      }
+    }, 1000);
+  },
+  execInterpreterIfAnDollarInArray: async function execInterpreterIfAnDollarInArray(arr, db) {
+    for (var i = 0; i < arr.length; i++) {
+      if(arr[i].includes("$")) {
+          arr[i] = await require("../interpreter")(
+              arr[i],
+              "",
+              "",
+              "",
+              "",
+              db,
+              "",
+              true
+            );
+      }
+    }
+
+    return arr
   }
 };

@@ -210,7 +210,6 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
           headerType: 1,
         });
 
-        // console.log(obj);
   if (r) {
     return code;
   } else if(returnObject) {

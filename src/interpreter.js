@@ -29,10 +29,6 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
   var searchCode = code.replace(/\$/gi, ",$");
   let theFuncs = searchFunc(searchCode.split(","), parser);
 
-  if(check("$if", theFuncs)) {
-    return await require('./handler/if.js')({ msg, client, code, args, cmd, db });
-  }
-
   if (check("$dm", theFuncs)) {
     const findDM = theFuncs.indexOf(
       theFuncs.filter((x) => x.includes("$dm")).join("")

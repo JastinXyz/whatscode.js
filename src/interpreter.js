@@ -13,7 +13,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
   const searched = [];
   function searchFunc(_n, _p) {
     for (const f of _n) {
-      const func = _p.filter((filt) => filt == `$${f}`.slice(0, filt.length));
+      let func = _p.filter((filt) => filt === f.slice(0, filt.length));
 
       if (func.length == 1) {
         searched.push(func[0]);
@@ -26,7 +26,8 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
   }
 
   const u = {};
-  let theFuncs = searchFunc(code.split("$"), parser);
+  var searchCode = code.replace(/\$/gi, ",$");
+  let theFuncs = searchFunc(searchCode.split(","), parser);
 
   if (check("$dm", theFuncs)) {
     const findDM = theFuncs.indexOf(

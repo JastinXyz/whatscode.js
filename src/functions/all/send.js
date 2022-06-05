@@ -3,13 +3,13 @@ module.exports = async (d) => {
   const { decodeJid, sender } = require("../../models/functions.js");
   if (!inside) {
     d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $sendDm[text;jid (optional)].`);
+    return d.error(`❌ WhatscodeError: Usage: $send[text;jid (optional)].`);
   } else {
     const [text, jid = decodeJid(sender(d))] = inside.split(";");
 
     if (!inside || !text) {
       d.isError = true;
-      return d.error(`❌ WhatscodeError: Usage: $sendDm[text;jid (optional)].`);
+      return d.error(`❌ WhatscodeError: Usage: $send[text;jid (optional)].`);
     }
 
     // ugly way to run this function lmao

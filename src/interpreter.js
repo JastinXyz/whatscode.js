@@ -60,22 +60,24 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
       cmd,
       unique: false,
       error: (err) => {
-        if (!suppressErr) {
+        if(err) {
+          if (!suppressErr) {
+            return client.sendMessage(
+              msg.key.remoteJid,
+              {
+                text: `\`\`\`${err.trim()}\`\`\``,
+              },
+              { quoted: msg }
+            );
+          }
           return client.sendMessage(
             msg.key.remoteJid,
             {
-              text: `\`\`\`${err.trim()}\`\`\``,
+              text: `\`\`\`${suppressErr.trim().split("{error}").join(err)}\`\`\``,
             },
             { quoted: msg }
           );
         }
-        return client.sendMessage(
-          msg.key.remoteJid,
-          {
-            text: `\`\`\`${suppressErr.trim().split("{error}").join(err)}\`\`\``,
-          },
-          { quoted: msg }
-        );
       },
       db,
       jid: (n) => {

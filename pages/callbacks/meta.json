@@ -1,9 +1,10 @@
 {
   "onconnectionupdate": "onConnectionUpdate",
   "oncredsupdate": "onCredsUpdate",
-  "intervalCommand": "intervalCommand",
   "onmessage": "onMessage",
-  "readycommand": "readyCommand",
   "onuserjoin": "onUserJoin",
-  "onuserleave": "onUserLeave"
+  "onuserleave": "onUserLeave",
+  "intervalCommand": "intervalCommand",
+  "readycommand": "readyCommand",
+  "status": "status"
 }

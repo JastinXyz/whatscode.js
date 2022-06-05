@@ -1,0 +1,42 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# status
+
+Setting your bot status (info)
+
+### Usage
+
+```js
+bot.intervalCommand({
+ status: [""] // can be a string or an array if you want your bot status to change.
+ every: 15000, // how long will the status change in mi
+})
+```
+
+<Callout type="warning" emoji="❗">
+**set the status Too Fast Will Make Bots Affected by Rate Limits!**
+</Callout>
+
+## Example
+
+```js
+bot.status({
+ status: ["abc", "def", "ghi", "..."]
+ every: 15000, // Execution Time In Milliseconds
+})
+```
+
+With variable:
+
+```js
+bot.variables({
+  sone: "abc",
+  stwo: "def"
+  sthree: "ghi"
+})
+
+bot.status({
+ status: ["$getVar[sone]", "$getVar[stwo]", "$getVar[sthree]", "..."]
+ every: 15000, // Execution Time In Milliseconds
+})
+```

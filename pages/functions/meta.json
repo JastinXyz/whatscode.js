@@ -77,8 +77,8 @@
   "$remoteJid": "$remoteJid",
   "$replaceText": "$replaceText",
   "$reply": "$reply",
+  "$send": "$send",
   "$sendButton": "$sendButton",
-  "$sendDm": "$sendDm",
   "$sendDocument": "$sendDocument",
   "$sendSticker": "$sendSticker",
   "$sender": "$sender",
@@ -99,5 +99,6 @@
   "$unBlock": "$unBlock",
   "$uptime": "$uptime",
   "$video": "$video",
+  "$wait": "$wait",
   "$year": "$year"
 }

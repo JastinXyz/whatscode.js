@@ -1,6 +1,6 @@
 # $wait
 
-Wait <milliseconds> to execute next code.
+Wait \<milliseconds\> to execute next code.
 
 ### Usage:
 

@@ -25,7 +25,7 @@ module.exports = async (d) => {
     let da = await axios(url, {
       method,
       headers,
-      body
+      data: body
     }).catch((err) => {
       d.isError = true;
       return d.error(

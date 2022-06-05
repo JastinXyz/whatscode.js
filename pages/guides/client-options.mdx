@@ -1,3 +1,5 @@
+import Callout from 'nextra-theme-docs/callout'
+
 # Client Options
 
 There are several additional options you can use in the client constructor.
@@ -9,7 +11,11 @@ There are several additional options you can use in the client constructor.
 * printQRInTerminal (optional Boolean) - Print the QR code to terminal?
 * autoRead (optional Boolean) - Auto read the message?
 * authFile (optional Strings) - Path to session file.
+* customDatabase (optional Object) - A collection of functions in objects that function to control the database (variables)
 
+<Callout>
+**Guides to custom database? [click me](custom-database)**
+</Callout>
 
 | Name              | Default        |
 | :---------------- | :------------: |
@@ -18,3 +24,4 @@ There are several additional options you can use in the client constructor.
 | printQRInTerminal | `true`         |
 | autoRead          | `false`        |
 | authFile          | `./state.json` |
+| customDatabase          | `require('quick.db')` |

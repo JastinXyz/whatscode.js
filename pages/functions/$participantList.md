@@ -1,6 +1,6 @@
 # $participantList
 
-Returns all jid in that conversation or in that <jid> if there is an jid provided.
+Returns all jid in that conversation or in that \<jid\> if there is an jid provided.
 
 ### Usage:
 

@@ -1,6 +1,6 @@
 const amap = new Map();
 
-module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObject) => {
+module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObject, val) => {
   const data = [];
   const fs = require('fs');
   const parser = require("./functions/parser");
@@ -89,6 +89,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
       },
       sections,
       theFuncs,
+      command: val
     };
 
     var res = await require(`./functions/all/${d}.js`)(all);

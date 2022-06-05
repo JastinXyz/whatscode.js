@@ -60,7 +60,9 @@ module.exports = async (m, client, cmd, prefix, getType, db, t) => {
       cmd,
       db,
       "",
-      false
+      false,
+      false,
+      val
     );
   }
 };

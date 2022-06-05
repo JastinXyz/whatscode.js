@@ -4,17 +4,19 @@ module.exports = async (d) => {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $jsEval[code]!`);
   } else {
-    if (code.includes("$")) {
-      code = await require("../../interpreter")(
-        code,
-        d.msg,
-        d.client,
-        d.args,
-        d.cmd,
-        d.db,
-        "",
-        true
-      );
+    if(d.command.jsEvalFuncExec) {
+      if (code.includes("$")) {
+        code = await require("../../interpreter")(
+          code,
+          d.msg,
+          d.client,
+          d.args,
+          d.cmd,
+          d.db,
+          "",
+          true
+        );
+      }
     }
 
     try {

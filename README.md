@@ -16,7 +16,7 @@
 ## Features
 - Easy and fast to use.
 - Short code.
-- In this version has more than 85 Functions ready to use and Still will continue to add more functions!
+- In this version has more than **110 Functions** ready to use and Still will continue to add more functions!
 
 ## Instalation
 
@@ -92,6 +92,11 @@ bot.variables({
 - [Buttons](https://whatscode.jstnlt.my.id/functions/$button) - Add a button to the message. (text required)
   ```
   $button[buttonId:button text;...]
+  ```
+
+- [Sticker](https://whatscode.jstnlt.my.id/functions/$sendSticker) - Send a sticker.
+  ```
+  $sendSticker[image path;pack name;author name]
   ```
 
 - [Template Buttons](https://whatscode.jstnlt.my.id/functions/$templateButtons) - This function is useful for buttons that have an action such as going to a regular url, call, or quick reply. (text required)

@@ -6,15 +6,16 @@ module.exports = async (d) => {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $httpRequest[url;method (optional);body (optional);property (optional);headerName:headerValue;headerName:headerValue;... (optional)]`);
   } else {
-    const [url, method = "GET", body, proper, ...insideHeaders] = inside.split(";");
-    const headers = {
-      "User-Agent": `Whatsapp Bot using Whatscode.js (https://npmjs.com/whatscode.js, ${require("../../../package.json").version})`,
-    };
+    var [url, method = "GET", body, proper, ...insideHeaders] = inside.split(";");
+    const headers = {};
 
     if (!url) {
       d.isError = true;
       return d.error(`❌ WhatscodeError: url required in $httpRequest!`);
     }
+
+    url = decodeURI(url);
+    url = encodeURI(url);
 
     for (let head of insideHeaders) {
       const [headName, ...headValue] = head.split(":");
@@ -22,9 +23,9 @@ module.exports = async (d) => {
     }
 
     let da = await axios(url, {
-      method: method,
-      headers: headers,
-      data: body,
+      method,
+      headers,
+      body
     }).catch((err) => {
       d.isError = true;
       return d.error(

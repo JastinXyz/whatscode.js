@@ -1,11 +1,11 @@
 module.exports = async (d) => {
   const inside = d.inside;
-  const { decodeJid, sender } = require("../../models/functions.js");
+  const { decodeJid } = require("../../models/functions.js");
   if (!inside) {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $send[text;jid (optional)].`);
   } else {
-    const [text, jid = decodeJid(sender(d))] = inside.split(";");
+    const [text, jid = decodeJid(d.msg.key.remoteJid)] = inside.split(";");
 
     if (!inside || !text) {
       d.isError = true;

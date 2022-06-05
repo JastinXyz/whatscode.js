@@ -1,6 +1,7 @@
 {
   "client-options": "Client Options",
   "client-status": "Client Status",
+  "custom-database": "Custom Database",
   "command-handler": "Command Handler",
   "mentions": "Mentions",
   "sections": "Sections",

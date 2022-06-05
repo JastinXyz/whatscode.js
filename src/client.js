@@ -6,7 +6,7 @@ const {
   getContentType,
 } = require("@adiwajshing/baileys");
 const { Boom } = require("@hapi/boom");
-const db = require("quick.db");
+const db = require("whatscode.db");
 const lolcatjs = require('lolcatjs')
 
 const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray } = require("./models/functions");

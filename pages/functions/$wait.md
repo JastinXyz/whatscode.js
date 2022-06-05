@@ -9,6 +9,7 @@ $wait[ms]
 ```
 
 ### Example:
+
 ```javascript
 bot.command({
     name: "waitgobrrr",

@@ -115,12 +115,12 @@ module.exports = class Client {
         }
       }
       if (update.connection == "connecting" || update.receivedPendingNotifications == "false") {
-			lolcatjs.fromString("[wait to connection whatscode]")
+			lolcatjs.fromString("[waiting for connection]")
 		}
 		if (update.connection == "open" || update.receivedPendingNotifications == "true") {
 			this.connect = true;
 			lolcatjs.fromString("[Connecting to] WhatsApp web")
-			lolcatjs.fromString(`[Connected to USER ] ` + JSON.stringify(this.whats.user, null, 2))
+			lolcatjs.fromString(`[Ready On Client] ${this.whats.user.verifiedName} || ${this.whats.user.id}`)
 			lolcatjs.fromString(`[Whatscode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU`)
 		}
     });

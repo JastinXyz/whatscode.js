@@ -212,6 +212,12 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
           headerType: 1,
         });
 
+      if(obj.sticker || obj.document || obj.audio || u.allInOne) {
+        if(!code) {
+          code = "placeholder"
+        }
+      }
+
   if (r) {
     return code;
   } else if(returnObject) {

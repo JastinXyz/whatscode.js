@@ -1,12 +1,9 @@
 module.exports = async (d) => {
-  var inside = d.inside;
-  if (!inside) {
+  var code = d.inside;
+  if (!code) {
     d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $jsEval[code;exec whatscode functions? (yes/no)]!`);
+    return d.error(`❌ WhatscodeError: Usage: $jsEval[code]!`);
   } else {
-    const [code, execF = "no"] = inside.split(";");
-    
-   if(execF === "yes") {
     if (code.includes("$")) {
       code = await require("../../interpreter")(
         code,
@@ -19,7 +16,6 @@ module.exports = async (d) => {
         true
       );
     }
-   }
 
     try {
       var evaled = await eval(code);

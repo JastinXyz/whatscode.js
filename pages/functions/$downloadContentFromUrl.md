@@ -1,6 +1,6 @@
 # $downloadContentFromUrl
 
-Save Files jpeg/jpg/gif/png/mp3/mp4/webp Into Folder ./tmp
+Save anything files Into Folder ./tmp
 
 ### Usage:
 

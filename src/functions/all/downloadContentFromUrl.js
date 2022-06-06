@@ -3,7 +3,6 @@ module.exports = async (d) => {
   const { fileNameFromUrl } = require("../../models/functions.js");
   const fs = require("fs");
   const axios = require("axios");
-
   if (!fs.existsSync("./tmp")) {
     fs.mkdirSync("./tmp");
   }
@@ -11,25 +10,26 @@ module.exports = async (d) => {
   if (!inside) {
     d.isError = true;
     return d.error(
-      "❌ WhatscodeError: Usage: $downloadContentFromUrl[url;file name (optional)]"
+      "❌ WhatscodeError: Usage: $downloadContentFromUrl[url;file name with file extension]"
     );
   } else {
-    const [l, fileName = fileNameFromUrl(inside)] = inside.split(";");
-    const check = fileName.indexOf('.') > -1
-    if (!check) {
+    var [l, fileName] = inside.split(";");
+    if (!fileName) {
       d.isError = true;
       return d.error(
-        "❌ WhatscodeError: Something error in $downloadContentFromUrl: Can't match any file name. Try using filename and extension in it."
+        "❌ WhatscodeError: Something error in $downloadContentFromUrl: Can't match any file name. Try using file name and file extension in it. Usage: $downloadContentFromUrl[url;file name with file extension]"
       );
     } else {
-      async function saveDownloadImage(url) {
+      async function saveDownloadContent(url, f) {
+        url = new URL(url);
+
         const response = await axios({
           method: "get",
-          url: url,
-          responseType: "stream",
+          url: url.href,
+          responseType: "arraybuffer",
         }).catch((err) => {
           d.isError = true;
-          d.error(
+          return d.error(
             `❌ WhatscodeError: Something error in $downloadContentFromUrl: ${err}`
           );
         });
@@ -40,21 +40,21 @@ module.exports = async (d) => {
             `❌ WhatscodeError: Something error in $downloadContentFromUrl: Maybe url is incorrect? or the website is down?`
           );
         } else {
-          const writer = fs.createWriteStream("./tmp/" + fileName);
-          response.data.pipe(writer);
-
-          return new Promise((resolve, reject) => {
-            writer.on("finish", () => {
-              resolve();
+          if(Buffer.isBuffer(response.data)) {
+            return new Promise(async (resolve, reject) => {
+              fs.writeFile(`./tmp/${f}`, response.data, function(err) {
+                if (err) reject();
+                else resolve();
+              });
             });
-            writer.on("error", () => {
-              reject();
-            });
-          });
+          } else {
+            d.isError = true;
+            return d.error(`❌ WhatscodeError: Something error in $downloadContentFromUrl: Response is not a buffer.`)
+          }
         }
       }
 
-      const asdf = await saveDownloadImage(inside);
+      const asdf = await saveDownloadContent(l, fileName);
       return "./tmp/" + fileName;
     }
   }

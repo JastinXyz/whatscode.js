@@ -14,6 +14,14 @@ module.exports = async (d) => {
     );
   } else {
     var [l, fileName] = inside.split(";");
+    const check = /^https?:\/\//.test(l);
+    if(!check) {
+      d.isError = true;
+      return d.error(
+        "❌ WhatscodeError: Usage: $downloadContentFromUrl[URL;file name with file extension]"
+      );
+    }
+
     if (!fileName) {
       d.isError = true;
       return d.error(

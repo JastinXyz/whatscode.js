@@ -7,7 +7,6 @@ const {
 } = require("@adiwajshing/baileys");
 const { Boom } = require("@hapi/boom");
 const db = require("whatscode.db");
-const lolcatjs = require('lolcatjs')
 
 const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray } = require("./models/functions");
 
@@ -115,13 +114,13 @@ module.exports = class Client {
         }
       }
       if (update.connection == "connecting" || update.receivedPendingNotifications == "false") {
-			lolcatjs.fromString("[waiting for connection]")
+			console.log("[waiting for connection]")
 		}
 		if (update.connection == "open" || update.receivedPendingNotifications == "true") {
 			this.connect = true;
-			lolcatjs.fromString("[Connecting to] WhatsApp web")
-			lolcatjs.fromString(`[Ready On Client] ${this.whats.user.verifiedName} || ${this.whats.user.id}`)
-			lolcatjs.fromString(`[Whatscode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU`)
+			console.log("[Connecting to] WhatsApp web")
+			console.log(`[Ready On Client] ${this.whats.user.verifiedName} || ${this.whats.user.id}`)
+			console.log(`[Whatscode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU`)
 		}
     });
   }

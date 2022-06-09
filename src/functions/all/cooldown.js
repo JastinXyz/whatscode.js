@@ -5,13 +5,13 @@ module.exports = async(d) => {
   const { decodeJid, sender } = require("../../models/functions");
   if(!inside) {
     d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $cooldown[milliseconds;error]!`);
+    return d.error(`❌ WhatscodeError: Usage: $cooldown[time (e.g 10s/1m/etc);error]!`);
   } else {
     var [n, i] = inside.split(";");
 
     if(!n || !i) {
       d.isError = true;
-      return d.error(`❌ WhatscodeError: Usage: $cooldown[milliseconds;error]!`);
+      return d.error(`❌ WhatscodeError: Usage: $cooldown[time (e.g 10s/1m/etc);error]!`);
     }
 
     n = msParser(n.replace(/\s/g, '')).ms

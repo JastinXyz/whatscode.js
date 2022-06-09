@@ -8,7 +8,7 @@ const {
 const { Boom } = require("@hapi/boom");
 const db = require("whatscode.db");
 
-const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray } = require("./models/functions");
+const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray, checkQR } = require("./models/functions");
 
 module.exports = class Client {
   constructor(opts = {}) {
@@ -32,7 +32,9 @@ module.exports = class Client {
     if(!this.customDatabase) this.db = db;
 
     this.printQRInTerminal = opts.printQRInTerminal;
-    if (!this.printQRInTerminal) this.printQRInTerminal = true;
+
+    this.printQRToWeb = opts.printQRToWeb;
+    if (!this.printQRToWeb) this.printQRToWeb = false;
 
     this.AUTH_FILE = opts.authFile;
     if (!this.AUTH_FILE) this.AUTH_FILE = "./state.json";
@@ -52,8 +54,16 @@ module.exports = class Client {
     });
   }
 
-  onConnectionUpdate() {
+  onConnectionUpdate(c) {
     this.whats.ev.on("connection.update", async (update) => {
+      let qr;
+      let self = this;
+      checkQR(qr, update, function(con) {
+        if(!self.printQRInTerminal) {
+          c(con)
+        }
+      })
+
       const { connection, lastDisconnect } = update;
       if (connection === "close") {
         const reason = lastDisconnect.error

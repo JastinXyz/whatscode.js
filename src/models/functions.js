@@ -109,6 +109,17 @@ module.exports = {
       }
     }, 1000);
   },
+  checkQR: function checkQR(con, self, callback) {
+    if(!self.connect) {
+      var checkQr = setInterval(function() {
+        if(self.qr) {
+          con = self.qr;
+          clearInterval(checkQr);
+          callback(con);
+        }
+      }, 1000);
+    }
+  },
   execInterpreterIfAnDollarInArray: async function execInterpreterIfAnDollarInArray(arr, db) {
     for (var i = 0; i < arr.length; i++) {
       if(arr[i].includes("$")) {

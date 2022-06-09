@@ -1,4 +1,5 @@
 const amap = new Map();
+const cldn = new Map();
 
 module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObject, val) => {
   const data = [];
@@ -89,7 +90,8 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
       },
       sections,
       theFuncs,
-      command: val
+      command: val,
+      cldn
     };
 
     var res = await require(`./functions/all/${d}.js`)(all);

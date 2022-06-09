@@ -33,6 +33,7 @@
     "@adiwajshing/baileys": "^4.1.0",
     "@hapi/boom": "^10.0.0",
     "axios": "^0.27.2",
+    "ms-parser": "^1.0.5",
     "pino": "^7.11.0",
     "qrcode-terminal": "^0.12.0",
     "whatscode.db": "^1.5.0"

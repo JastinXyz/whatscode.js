@@ -15,7 +15,7 @@ module.exports = async(d) => {
     }
 
     n = msParser(n.replace(/\s/g, '')).ms
-    const cooldown = d.cldn.get(`cooldown_${decodeJid(d.msg.key.remoteJid)}_${decodeJid(sender(d))}`)
+    const cooldown = d.cldn.get(`cooldown_${d.command.name}_${decodeJid(d.msg.key.remoteJid)}_${decodeJid(sender(d))}`)
 
     if(cooldown) {
       const timeRemaining = cooldown - Date.now();
@@ -24,8 +24,8 @@ module.exports = async(d) => {
       d.isError = true;
       return d.error(i.split("%time%").join(time.replace(/\s\s+/g, '')))
     } else {
-      d.cldn.set(`cooldown_${decodeJid(d.msg.key.remoteJid)}_${decodeJid(sender(d))}`, Date.now() + n);
-      setTimeout(() => d.cldn.delete(`cooldown_${decodeJid(d.msg.key.remoteJid)}_${decodeJid(sender(d))}`), n);
+      d.cldn.set(`cooldown_${d.command.name}_${decodeJid(d.msg.key.remoteJid)}_${decodeJid(sender(d))}`, Date.now() + n);
+      setTimeout(() => d.cldn.delete(`cooldown_${d.command.name}_${decodeJid(d.msg.key.remoteJid)}_${decodeJid(sender(d))}`), n);
       return "";
     }
   }

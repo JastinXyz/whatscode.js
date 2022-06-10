@@ -32,7 +32,7 @@ module.exports = class Client {
     if(!this.customDatabase) this.db = db;
 
     this.printQRInTerminal = opts.printQRInTerminal;
-    
+
     this.AUTH_FILE = opts.authFile;
     if (!this.AUTH_FILE) this.AUTH_FILE = "./state.json";
     const { state, loadState, saveState } = useSingleFileAuthState(

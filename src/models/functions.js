@@ -137,5 +137,14 @@ module.exports = {
     }
 
     return arr
+  },
+  makeSocket: function makeSocket(makeWASocket, P, t, callback) {
+    return makeWASocket({
+      logger: P({ level: "fatal" }),
+      printQRInTerminal: t.printQRInTerminal,
+      auth: t.state,
+      browser: [t.NAME, "Safari", "1.0.0"],
+      version: module.exports.getWaWebVer() || [2, 2214, 12],
+    });
   }
 };

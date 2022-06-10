@@ -8,7 +8,7 @@ const {
 const { Boom } = require("@hapi/boom");
 const db = require("whatscode.db");
 
-const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray, checkQR } = require("./models/functions");
+const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray, checkQR, makeSocket } = require("./models/functions");
 
 module.exports = class Client {
   constructor(opts = {}) {
@@ -43,13 +43,7 @@ module.exports = class Client {
     this.loadState = loadState;
     this.saveState = saveState;
 
-    this.whats = makeWASocket({
-      logger: P({ level: "fatal" }),
-      printQRInTerminal: this.printQRInTerminal,
-      auth: this.state,
-      browser: [this.NAME, "Safari", "1.0.0"],
-      version: getWaWebVer() || [2, 2214, 12],
-    });
+    this.whats = makeSocket(makeWASocket, P, this)
   }
 
   onConnectionUpdate(c) {
@@ -77,35 +71,12 @@ module.exports = class Client {
           process.exit();
         } else if (reason === DisconnectReason.badSession) {
           console.log(
-            "\x1b[31mWhatscodeError 📕: \x1b[0mBad session file... Try deleting session file and rescan!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBUT IF YOU ARE LINKING THE BOTT WITH WAHSTAPP THEN WAIT FOR THIS RECONNECT PROCESS TO COMPLETE!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mIF THIS ERROR STILL HAPPEN, TRY TO DO THE WAY ABOVE IE DELETE THE SESSION FILE AND RESCAN!\n\x1b[36mWhatscodeInfo 📘: \x1b[0mPrepare to Reconnect..."
+            "\x1b[31mWhatscodeError 📕: \x1b[0mBad session file... Try deleting session file and rescan!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mBUT IF YOU ARE LINKING THE BOTT WITH WAHSTAPP THEN WAIT FOR THIS RECONNECT PROCESS TO COMPLETE!\n\x1b[33mWhatscodeWarning 📙: \x1b[0mIF THIS ERROR STILL HAPPEN, TRY TO DO THE WAY ABOVE IE DELETE THE SESSION FILE AND RESCAN!\n"
           );
           console.log("\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting...\n\n");
 
-          try {
-            const child = await require("child_process").spawn(
-              process.argv.shift(),
-              process.argv,
-              {
-                cwd: process.cwd(),
-                detached: true,
-                stdio: "inherit",
-              }
-            );
-
-            setTimeout(() => {
-              console.log(
-                "\x1b[36mWhatscodeInfo 📘: \x1b[0mManual Restart Required!\n\n"
-              );
-              child.kill("SIGINT");
-              process.exit(0);
-            }, 5000);
-
-            //child.kill("SIGINT")
-          } catch (err) {
-            console.log(
-              `\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting Error: ${err}\n\n`
-            );
-          }
+          makeSocket(makeWASocket, P, this);
+          // console.log("\x1b[36mWhatscodeInfo 📘: \x1b[0mRestart Required!");
         } else if (reason === DisconnectReason.connectionClosed) {
           console.log("Connection closed....");
         } else if (reason === DisconnectReason.connectionLost) {

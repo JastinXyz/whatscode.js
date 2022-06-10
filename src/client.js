@@ -32,6 +32,7 @@ module.exports = class Client {
     if(!this.customDatabase) this.db = db;
 
     this.printQRInTerminal = opts.printQRInTerminal;
+    if(this.printQRInTerminal === undefined) this.printQRInTerminal = true
 
     this.AUTH_FILE = opts.authFile;
     if (!this.AUTH_FILE) this.AUTH_FILE = "./state.json";
@@ -57,7 +58,9 @@ module.exports = class Client {
       let self = this;
       checkQR(qr, update, function(con) {
         if(!self.printQRInTerminal) {
-          c(con)
+          if(c) {
+            c(con)
+          }
         }
       })
 

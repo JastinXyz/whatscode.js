@@ -2,7 +2,7 @@ module.exports = async (d) => {
   const inside = d.inside;
   if (!inside) {
     d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $sub[number;number]!`);
+    return d.error(`❌ WhatscodeError: Usage: $sub[number;number;...]!`);
   } else {
     const [...i] = inside.split(";");
 

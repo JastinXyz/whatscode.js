@@ -4,13 +4,13 @@ module.exports = async (d) => {
     d.isError = true;
     return d.error(`❌ WhatscodeError: Usage: $sub[number;number]!`);
   } else {
-    const [n, i] = inside.split(";");
+    const [...i] = inside.split(";");
 
-    if (isNaN(n) || isNaN(i)) {
+    if (i.some((n) => isNaN(Number(n)))) {
       d.isError = true;
       return d.error(`❌ WhatscodeError: Invalid number in: $sub[${inside}]!`);
     } else {
-      return Number(n) + Number(i);
+      return i.reduce((x, y) => Number(x) + Number(y));
     }
   }
 };

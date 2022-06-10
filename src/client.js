@@ -34,7 +34,6 @@ module.exports = class Client {
     this.printQRInTerminal = opts.printQRInTerminal;
 
     this.printQRToWeb = opts.printQRToWeb;
-    if (!this.printQRToWeb) this.printQRToWeb = false;
 
     this.AUTH_FILE = opts.authFile;
     if (!this.AUTH_FILE) this.AUTH_FILE = "./state.json";

@@ -9,6 +9,7 @@ const { Boom } = require("@hapi/boom");
 const db = require("whatscode.db");
 
 const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray, checkQR } = require("./models/functions");
+const { toLog } = require("./models/terminal");
 
 module.exports = class Client {
   constructor(opts = {}) {
@@ -124,13 +125,12 @@ module.exports = class Client {
         }
       }
       if (update.connection == "connecting" || update.receivedPendingNotifications == "false") {
-			console.log("[waiting for connection]")
+			toLog(1, 0, "waiting for connection")
 		}
 		if (update.connection == "open" || update.receivedPendingNotifications == "true") {
 			this.connect = true;
-			console.log("[Connecting to] WhatsApp web")
-			console.log(`[Ready On Client] ${this.whats.user.verifiedName} || ${this.whats.user.id}`)
-			console.log(`[Whatscode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU`)
+			toLog(2, `ready on client`, `${this.whats.user.verifiedName} || ${this.whats.user.id}`)
+			toLog(2, `whatscode.js`, `Join our Discord at: https://discord.gg/CzqHbx7rdU`)
 		}
     });
   }

@@ -49,6 +49,8 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
     });
 
     const d = func.replace("$", "").replace("[", "");
+    let line = code.split("\n").findIndex(element => element.includes(func))
+    line = parseInt(line === -1? 1 : line + 1)
 
     const all = {
       data,
@@ -66,7 +68,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
             return client.sendMessage(
               msg.key.remoteJid,
               {
-                text: `\`\`\`${err.trim()}\`\`\``,
+                text: `\`\`\`${err.trim() + " Line " +  line}\`\`\``,
               },
               { quoted: msg }
             );
@@ -74,7 +76,7 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
           return client.sendMessage(
             msg.key.remoteJid,
             {
-              text: `\`\`\`${suppressErr.trim().split("{error}").join(err)}\`\`\``,
+              text: `\`\`\`${suppressErr.trim().split("{error}").join(err).split("{line}").join(line)}\`\`\``,
             },
             { quoted: msg }
           );

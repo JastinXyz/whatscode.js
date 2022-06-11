@@ -34,6 +34,9 @@ module.exports = class Client {
     this.printQRInTerminal = opts.printQRInTerminal;
     if(this.printQRInTerminal === undefined) this.printQRInTerminal = true
 
+    this.useChildProcess = opts.useChildProcess;
+    if(this.useChildProcess === undefined) this.useChildProcess = true
+
     this.AUTH_FILE = opts.authFile;
     if (!this.AUTH_FILE) this.AUTH_FILE = "./state.json";
     const { state, loadState, saveState } = useSingleFileAuthState(
@@ -75,8 +78,41 @@ module.exports = class Client {
           );
           console.log("\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting...\n\n");
 
-          makeSocket(makeWASocket, P, this);
-          // console.log("\x1b[36mWhatscodeInfo 📘: \x1b[0mRestart Required!");
+          if(!this.useChildProcess) {
+            let reconn = makeSocket(makeWASocket, P, this);
+            var checkWhatsAfterBadReq = setInterval(function() {
+              if(reconn) {
+                console.log("Restart required now!");
+                clearInterval(checkWhatsAfterBadReq);
+              }
+            }, 1000);
+          } else {
+              try {
+              const child = await require("child_process").spawn(
+                process.argv.shift(),
+                process.argv,
+                {
+                  cwd: process.cwd(),
+                  detached: true,
+                  stdio: "inherit",
+                }
+              );
+
+              setTimeout(() => {
+                console.log(
+                  "\x1b[36mWhatscodeInfo 📘: \x1b[0mManual Restart Required!\n\n"
+                );
+                child.kill("SIGINT");
+                process.exit(0);
+              }, 5000);
+
+              //child.kill("SIGINT")
+            } catch (err) {
+              console.log(
+                `\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting Error: ${err}\n\n`
+              );
+            }
+          }
         } else if (reason === DisconnectReason.connectionClosed) {
           console.log("Connection closed....");
         } else if (reason === DisconnectReason.connectionLost) {

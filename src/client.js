@@ -51,6 +51,14 @@ module.exports = class Client {
       browser: [this.NAME, "Safari", "1.0.0"],
       version: getWaWebVer() || [2, 2214, 12],
     });
+
+    require('axios').get('https://registry.npmjs.org/whatscode.js').then((x) => {
+      let ver = require('../package.json').version;
+      const latest = x.data['dist-tags'].latest
+      if(latest !== ver) {
+        toLog(3, undefined, `Latest whatscode.js version found: ${latest}! You can update it using <b>npm install whatscode.js@${latest}`)
+      }
+    });
   }
 
   onConnectionUpdate(c) {

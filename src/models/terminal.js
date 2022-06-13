@@ -66,6 +66,13 @@ module.exports = {
     const list = ['info', 'success', 'warning', 'error']
     const choice = list[type]
     const col = choice === 'info'? 'cyan' : choice === 'success'? 'green' : choice === 'warning'? 'yellow' : choice === 'error'? 'red' : 'white'
-    console.log(get('color', col, 0) + `[${typeof cust === 'string'? cust : choice? choice : "whatscode.js"}] ${inp}` + get2('color', col, 1));
+    let text = get('color', col, 0) + `[${typeof cust === 'string'? cust : choice? choice : "whatscode.js"}] ${inp}` + get2('color', col, 1)
+    if(inp.includes("<b>")) {
+      const insideBold = inp.split('<b>')[1].split('</b>')[0]
+      const boldText = get('modifier', 'bold', 1) + insideBold + get2('modifier', 'bold', 1)
+      text = text.replace(/(<b>|<\/b>)/g, "").replace(insideBold, boldText)
+    }
+
+    console.log(text);
   }
 }

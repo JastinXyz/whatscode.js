@@ -8,7 +8,8 @@ const {
 const { Boom } = require("@hapi/boom");
 const db = require("whatscode.db");
 
-const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray, checkQR, makeSocket } = require("./models/functions");
+const { getWaWebVer, checkConnect, execInterpreterIfAnDollarInArray, checkQR } = require("./models/functions");
+const { toLog } = require("./models/terminal");
 
 module.exports = class Client {
   constructor(opts = {}) {
@@ -46,7 +47,21 @@ module.exports = class Client {
     this.loadState = loadState;
     this.saveState = saveState;
 
-    this.whats = makeSocket(makeWASocket, P, this)
+    this.whats = makeWASocket({
+      logger: P({ level: "fatal" }),
+      printQRInTerminal: this.printQRInTerminal,
+      auth: this.state,
+      browser: [this.NAME, "Safari", "1.0.0"],
+      version: getWaWebVer() || [2, 2214, 12],
+    });
+
+    require('axios').get('https://registry.npmjs.org/whatscode.js').then((x) => {
+      let ver = require('../package.json').version;
+      const latest = x.data['dist-tags'].latest
+      if(latest !== ver) {
+        toLog(3, undefined, `Latest whatscode.js version found: ${latest}! You can update it using <b>npm install whatscode.js@${latest}</b>`)
+      }
+    });
   }
 
   onConnectionUpdate(c) {
@@ -131,13 +146,12 @@ module.exports = class Client {
         }
       }
       if (update.connection == "connecting" || update.receivedPendingNotifications == "false") {
-			console.log("[waiting for connection]")
+			toLog(1, 0, "waiting for connection")
 		}
 		if (update.connection == "open" || update.receivedPendingNotifications == "true") {
 			this.connect = true;
-			console.log("[Connecting to] WhatsApp web")
-			console.log(`[Ready On Client] ${this.whats.user.verifiedName} || ${this.whats.user.id}`)
-			console.log(`[Whatscode.js] Join our Discord at: https://discord.gg/CzqHbx7rdU`)
+			toLog(2, `ready on client`, `${this.whats.user.verifiedName} || ${this.whats.user.id}`)
+			toLog(2, `whatscode.js`, `Join our Discord at: https://discord.gg/CzqHbx7rdU`)
 		}
     });
   }

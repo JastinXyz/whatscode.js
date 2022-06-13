@@ -56,7 +56,7 @@ module.exports = class Client {
       let ver = require('../package.json').version;
       const latest = x.data['dist-tags'].latest
       if(latest !== ver) {
-        toLog(3, undefined, `Latest whatscode.js version found: ${latest}! You can update it using <b>npm install whatscode.js@${latest}`)
+        toLog(3, undefined, `Latest whatscode.js version found: ${latest}! You can update it using <b>npm install whatscode.js@${latest}</b>`)
       }
     });
   }

@@ -2,7 +2,7 @@ module.exports = async (d) => {
   var code = d.inside;
   if (!code) {
     d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $jsEval[code;show return? (yes/no) (optional, default: yes)]!`);
+    return d.error(`❌ WhatscodeError: Usage: $jsEval[code;show return? (yes/no) (optional, default: no)]!`);
   } else {
     code = code.split(";");
     var opts = "no"

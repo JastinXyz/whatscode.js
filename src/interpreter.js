@@ -62,13 +62,14 @@ module.exports = async (code, msg, client, args, cmd, db, mentions, r, returnObj
       isError: false,
       cmd,
       unique: false,
-      error: (err) => {
+      error: (err, notShowingLine) => {
         if(err) {
           if (!suppressErr) {
+            var def = notShowingLine? "" : " Line " + line
             return client.sendMessage(
               msg.key.remoteJid,
               {
-                text: `\`\`\`${err.trim() + " Line " +  line}\`\`\``,
+                text: `\`\`\`${err.trim() + def}\`\`\``,
               },
               { quoted: msg }
             );

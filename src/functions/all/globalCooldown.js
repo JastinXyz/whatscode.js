@@ -22,7 +22,7 @@ module.exports = async(d) => {
       const dhms = Math.floor(timeRemaining / 86400000) + "d " + Math.floor(timeRemaining / 3600000 % 24) + "h " + Math.floor(timeRemaining / 60000 % 60) + "m " + Math.floor(timeRemaining / 1000 % 60) + "s";
       var time = dhms.replace(/0(d|h|m)/g, "")
       d.isError = true;
-      return d.error(i.split("%time%").join(time.replace(/\s\s+/g, '')))
+      return d.error(i.split("%time%").join(time.replace(/\s\s+/g, '')), true)
     } else {
       d.cldn.set(`cooldown_${d.command.name}_${decodeJid(sender(d))}`, Date.now() + n);
       setTimeout(() => d.cldn.delete(`cooldown_${d.command.name}_${decodeJid(sender(d))}`), n);

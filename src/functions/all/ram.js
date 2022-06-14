@@ -1,3 +1,6 @@
 module.exports = async (d) => {
-  return (process.memoryUsage().rss / 1024 / 1024).toFixed(2)
+  let inside = d.inside;
+  let { bytesToSize } = require("../../models/functions");
+
+  return inside? inside === "usage"? bytesToSize(process.memoryUsage().rss) : bytesToSize(require('os').totalmem()) : bytesToSize(process.memoryUsage().rss)
 };

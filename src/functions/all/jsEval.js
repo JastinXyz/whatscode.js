@@ -2,8 +2,17 @@ module.exports = async (d) => {
   var code = d.inside;
   if (!code) {
     d.isError = true;
-    return d.error(`❌ WhatscodeError: Usage: $jsEval[code]!`);
+    return d.error(`❌ WhatscodeError: Usage: $jsEval[code;show return? (yes/no) (optional, default: yes)]!`);
   } else {
+    code = code.split(";");
+    var opts = "no"
+    if (["yes", "no"].includes(code[code.length - 1])) {
+      opts = code[code.length - 1];
+      code.pop();
+    }
+
+    code = code.join(";")
+
     if(d.command.jsEvalFuncExec) {
       if (code.includes("$")) {
         code = await require("../../interpreter")(
@@ -26,6 +35,10 @@ module.exports = async (d) => {
       return d.error(`❌ WhatscodeError: $jsEval error: ${err}!`);
     }
 
-    return require("util").inspect(evaled, { depth: 0 });
+    if(opts === "yes") {
+      return require("util").inspect(evaled, { depth: 0 });
+    } else {
+      return ""
+    }
   }
 };

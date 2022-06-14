@@ -109,7 +109,7 @@ module.exports = class Client {
               process.exit(0);
             }, 5000);
 
-            //child.kill("SIGINT")
+            child.kill("SIGINT")
           } catch (err) {
             console.log(
               `\x1b[36mWhatscodeInfo 📘: \x1b[0mReconnecting Error: ${err}\n\n`

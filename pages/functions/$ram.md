@@ -1,9 +1,9 @@
 # $ram
 
-Returns ram usage.
+Returns ram usage or total.
 
 ### Usage:
 
 ```plain
-$ram
+$ram[usage/total (optional) (default: usage)]
 ```

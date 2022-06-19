@@ -5,5 +5,5 @@ Evaluate Javascript code.
 ### Usage:
 
 ```plain
-$jsEval[code]
+$jsEval[code;return code? yes/no (default: no)]
 ```

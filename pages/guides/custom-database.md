@@ -1,6 +1,6 @@
 # Custom Database
 
-Don't want to use the built-in database of whatscode.js i.e. quick.db? now you can use the custom database available. The use of the function is the same, only differs in where the database is stored.
+Don't want to use the built-in database of whatscode.js i.e. whatscode.db? now you can use the custom database available. The use of the function is the same, only differs in where the database is stored.
 
 You can just make your own package for this whatscode.js custom database. But it requires some adequate functions. Have a look at [create your own custom whatscode database](#create-your-own)
 
